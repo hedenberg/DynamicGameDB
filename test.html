@@ -1,0 +1,189 @@
+<div id="content-inner">
+        <div id="content-main">
+  <div class="view api-docs">
+    <div class="content">
+<table class="views-table cols-2">
+      <caption><a title="Timelines" id="109" name="109"></a><strong>Backend</strong><p> Backend does backend stuff </p></caption>
+    <thead>
+    <tr>
+              <th class="views-field views-field-title">
+          Resource        </th>
+              <th class="views-field views-field-body">
+          Description        </th>
+              <th class="views-field views-field-params">
+          Parameters        </th>
+              <th class="views-field views-field-response">
+          Respsonses        </th>
+              <th class="views-field views-field-auth">
+          Authentication        </th>
+          </tr>
+  </thead>
+  <tbody>
+          <tr class="odd views-row-first">
+                  <td class="views-field views-field-title">
+            <a href="/docs/api/1.1/get/statuses/mentions_timeline">GET /api/games</a>          </td>
+                  <td class="views-field views-field-body">
+                  <hr> <!-- for now to make more clear without css -->
+            Returns all games in the database <br> </td>
+
+             <td class="views-field views-field-response"> </td>
+             <td class="views-field views-field-response">
+              <div >
+                <span class="param"><b> JSON </b></span>
+                <p> A list of JSON information about all games in the database  </p>
+              </div>
+                <p><strong>Example Values</strong>: <tt> <br>{"games": <br>
+                                                        [{"title": "Zelda: A Link to the Past", <br>
+                                                        "platform" : "SNES"}, <br>
+                                                        {"title": "Diablo 2", <br>
+                                                        "platform" : "PC"}]}</tt></p>   
+              
+              </td>
+             <td class="views-field views-field-auth"> None</td>
+             </tr>
+<!-- *************************************DONE********************************************************************** -->
+
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="/docs/api/1.1/get/statuses/user_timeline">GET /api/game/:id/ </a>          </td>
+                  <td class="views-field views-field-body">
+              <hr> <!-- for now to make more clear without css -->  
+              Returns a game specified with the id parameter <br> </td>
+
+              <td class="views-field views-field-params">
+                <hr> <!-- for now to make more clear without css -->
+              <div class="parameter" id="api-param-search_query">
+                <span class="param"><b>id</b> <span class="required">required</span></span>
+                <p> Specific identifier for the game selected  </p>
+                <p><strong>Example Values</strong>: <tt>123</tt></p>
+              </div> </td>
+
+              <td class="views-field views-field-response">
+
+                <hr> <!-- for now to make more clear without css -->
+              <div >
+                <span class="param"><b> JSON </b></span>
+                <p> Json message with information about specified game  </p>
+              </div>
+                <p><strong>Example Values</strong>: <tt> <br>{"title": "Zelda: A Link to the Past", <br>
+                                                        "platform" : "SNES"}</tt></p>                         <!-- TODO: add all fields to example -->
+              </td>
+              <td class="views-field views-field-auth"> None</td>
+              </tr>
+<!-- *********************************************************************************************************** -->
+
+          <tr class="odd">
+                  <td class="views-field views-field-title">
+            <a href="/docs/api/1.1/get/statuses/home_timeline">POST /api/game/add</a>          </td>
+                  <td class="views-field views-field-body">
+
+                    <hr> <!-- for now to make more clear without css --> 
+              Add a game with a specified title to a specified platform </td>
+              <td class="views-field views-field-params">
+              <div class="parameter" id="api-param-search_query">
+                <span class="param"> <b>title</b> <span class="required">required</span></span>
+                <p> The title specified in the Add game form input field  </p>
+                <p><strong>Example Values</strong>: <tt>"Zelda: A Link to the Past"</tt></p>
+              </div>
+
+              <div class="parameter" id="api-param-search_query">
+                <span class="param"><b>platform</b> <span class="required">required</span></span>
+                <p> The platform that was specified to add the game on  </p>
+                <p><strong>Example Values</strong>: <tt>"SNES"</tt></p>
+              </div>
+
+              </td>
+              <td class="views-field views-field-response">
+              <div >
+                <span class="param"><b> 200, OK </b></span>
+                <p> If game was successfully added  </p>
+              </div>
+
+              <div >
+                <span class="param"> <b>Error</b> </span>
+                <p> Game allready exists for specified platform  </p>
+              </div>
+              </td> 
+              <td class="views-field views-field-auth">
+              <div >
+                <span class="param"><b> User </b> <span class="required">required</span> </span>
+                <p> Needs to be logged in as a user in order to edit games  </p>
+              </div>
+                </td>
+              </tr>
+
+<!-- *********************************************************************************************************** -->
+
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="/docs/api/1.1/get/statuses/home_timeline">POST /api/game/:id/edit</a>          </td>
+                  <td class="views-field views-field-body">
+                  <hr> <!-- for now to make more clear without css -->
+            Edit/Add additional information about the game specified with the id  <br>
+
+            <strong>Parameters</strong>
+              <div class="parameter" id="api-param-search_query">
+                <span class="param"> <b>id</b> <span class="required">required</span></span>
+                <p> Id for the specific game that should be edited  </p>
+                <p><strong>Example Values</strong>: <tt>123</tt></p>
+              </div>
+
+
+              <strong>Responses</strong>
+              <div >
+                <span class="param"><b> 200, OK </b></span>
+                <p> If game was successfully edited  </p>
+              </div>
+
+              <div >
+                <span class="param"> <b>Error</b> </span>
+                <p> No such game_id exists  </p>
+              </div>
+
+              <strong>Authentication</strong>
+              <div >
+                <span class="param"><b> User </b> <span class="required">required</span> </span>
+                <p> Needs to be logged in as a user in order to edit games  </p>
+              </div>
+
+
+
+
+
+            </td>
+              </tr>
+
+
+<!-- *********************************************************************************************************** -->
+
+          <tr class="odd views-row-last">
+                  <td class="views-field views-field-title">
+            <a href="/docs/api/1.1/get/statuses/user_timeline">POST /api/game/:id/connection </a>          </td>
+                  <td class="views-field views-field-body">
+                  <hr> <!-- for now to make more clear without css -->
+            Creates a connect between the id specified and the game choose to make connection towards on the webpage  <br>
+
+
+
+                </td>
+              </tr>
+
+
+
+              <div class="field text field-doc-params">
+
+
+
+
+
+
+
+      </tbody>
+</table>
+
+      
+      </tbody>
+</table>
+    </div>
+  </div>         </div>
+      </div>
