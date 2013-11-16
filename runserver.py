@@ -2,7 +2,7 @@ from dynamicgamedb.backend import backend
 from dynamicgamedb.frontend import frontend
 from flask import Flask
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='dynamicgamedb/static')
 
 app.debug = True
 app.secret_key = 'I like turtles'
