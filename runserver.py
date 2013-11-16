@@ -8,4 +8,4 @@ app.debug = True
 app.secret_key = 'I like turtles'
 app.register_blueprint(backend)
 app.register_blueprint(frontend)
-app.run()
+app.run(port=5500)
