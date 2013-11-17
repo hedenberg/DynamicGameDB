@@ -4,6 +4,8 @@
 .LSOverride
 Icon
 
+# SQL
+*.db
 
 # Thumbnails
 ._*
