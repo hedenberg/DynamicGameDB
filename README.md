@@ -5,7 +5,6 @@ For more information please visit [DynamicGameDB](https://sites.google.com/site/
 We now use gunicorn instead of flasks `app.run` with eventlet workers to allow the server to handle two calls at one time.
 ```
 pip install -r requirements.txt 
-~~python runserver.py~~
 gunicorn -w 2 --worker-class eventlet runserver:app
 ```
 Now visit `127.0.0.1:8000` in your favorit browser.
