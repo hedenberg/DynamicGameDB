@@ -2,11 +2,13 @@
 For more information please visit [DynamicGameDB](https://sites.google.com/site/dynamicgamedb/) 
 
 ## Testing
+We now use gunicorn instead of flasks `app.run` with eventlet workers to allow the server to handle two calls at one time.
 ```
 pip install -r requirements.txt 
-python runserver.py
+~~python runserver.py~~
+gunicorn -w 2 --worker-class eventlet runserver:app
 ```
-Now visit `127.0.0.1:5500` in your favorit browser.
+Now visit `127.0.0.1:8000` in your favorit browser.
 
 ### Backend - Platform
 Three endpoints implemented for platform: 
@@ -28,4 +30,8 @@ Three endpoints implemented for game:
 
 ### Frontend - API 
 `docs/api` - `GET` shows current API from frontend to backend 
+
+`games` - `GET` for now it just returns a string with info of all games
+
+`game/<id>` - `GET` for now it just returns a string with info of that game
 
