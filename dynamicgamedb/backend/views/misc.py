@@ -4,10 +4,7 @@ from dynamicgamedb.backend.model import Game, Platform
 from dynamicgamedb.backend.database import db_session
 from flask import request, jsonify, redirect, url_for
 
-@backend.route('/', methods=['GET'])
-def home():
-    print "Katten"
-    return "Hello there"
+
 
 @backend.route('/initp', methods=['GET'])
 def initp():
