@@ -1,0 +1,14 @@
+#navbar_container {
+  /*max-width:1920px; */
+  /*padding-left:475px; */
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+body {
+  padding-top: 70px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
