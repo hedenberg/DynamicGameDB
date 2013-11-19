@@ -9,11 +9,27 @@
         <p class="lead">Many game page
       </div>
 
-      <div class="container">
-	    {% for game in games %}
-         Title: {{game.title}} Platform: {{game.platform}} Developer: {{game.developer}} <br>
-	    {% endfor%}
-	  </div>
+      <div class="row">
+      	<div class="col-md-12" style="background-color: yellow; " >
+          <div class="row" style="background-color: teal; margin-top: 15px;" >
+            {% set column = 1 %}
+            {% for game in games %}
+              <div class="col-md-4" style="height:400px; background-color:red; " >
+                {{game.title}}
+              </div>
+              {% set column = column+1 %}
+              {% if column==4 %}
+                {% set column=1 %}
+                </div>
+                <div class="row" style="background-color: teal; margin-top: 15px;" >
+              {% endif %} 
+            {% endfor%}
+          </div>
+        </div>
+      </div>
+
+
+
 
 
 

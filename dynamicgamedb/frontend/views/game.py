@@ -1,6 +1,7 @@
 from dynamicgamedb.frontend import frontend, dgdb
 from flask import request, jsonify, redirect, url_for, render_template
 from dynamicgamedb.frontend.api_com import DynamicGameDB, Game
+import sys, traceback
 
 @frontend.route('/games', methods=['GET'])
 def games():
@@ -10,7 +11,14 @@ def games():
     # games_list = []
     # for game in games:
     #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
-    return render_template("games.html", games=games)
+    try:
+        return render_template("games.html", games=games)
+    except:
+        print "Exception in user code:"
+        print '-'*60
+        traceback.print_exc(file=sys.stdout)
+        print '-'*60
+    #return render_template("games.html", games=games)
 
 @frontend.route('/game/<int:id>', methods=['GET'])
 def game(id):
