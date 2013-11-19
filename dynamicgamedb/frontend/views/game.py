@@ -21,9 +21,17 @@ def game(id):
 @frontend.route('/game/add', methods=['GET','POST'])
 def add_game():
     game = dgdb.add_game(title="Ett nytt spel", platform_id=2)
+    platforms=["SNES","NES","PC"]
     print "Gameid: ", game.id
-    #TODO: form page for Adding games
-    return "add game"
+    if request.method == 'POST':
+        title = request.form['title']
+        platform = request.form['platform']
+        print "title:", title
+        print "platform:", platform
+        return render_template('add_game.html', platforms=platforms)
+    else:
+        #TODO: form page for Adding games
+        return render_template('add_game.html', platforms=platforms)
 
 @frontend.route('/game/<int:id>/edit', methods=['POST'])
 def edit_game():
