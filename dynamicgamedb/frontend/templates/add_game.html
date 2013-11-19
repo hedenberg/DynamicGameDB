@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% set active_page = "index" %}
+{% block body %} 
+    
+  
+
+      <div class="starter-template">
+        <h1>Add game</h1>
+        <p class="lead">Add a new game
+          <div class="container" style="align:center;">
+          <form action="{{ url_for('frontend.add_game') }}" class="form-horizontal" id="registration" method='post' >   
+            <div class="form-group">
+              <label for="title" class="col-sm-2 control-label">Title:</label> 
+              <div class="col-xs-6">
+                <input type=text class="form-control" id="title_form" placeholder="Title" name="title" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="" class="col-sm-2 control-label">Platform:</label> 
+                <div class="col-xs-6">
+                  <select class="form-control">
+                  {% for  platform in platforms %}
+                    <option>{{platform}}</option>
+                  {% endfor %}
+                  </select>
+                </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-10 ">
+                <button type=submit class="btn btn-success" >Submit</button>
+              </div>
+            </div>  
+          </form>
+          </div>
+      </div>
+   
+
+
+
+
+{% endblock %}
