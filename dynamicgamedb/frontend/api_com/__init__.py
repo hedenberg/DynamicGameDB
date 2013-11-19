@@ -34,11 +34,11 @@ class DynamicGameDB(object):
 
     def request(self, endpoint, method="GET", headers=dict(), body=None):
         http = httplib2.Http()
-        #if body:
-        #    body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
-        headers.update = {content_type:"application/x-www-form-urlencoded"}
+        if body:
+            body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
+        headers.update({"Content-Type":"application/x-www-form-urlencoded"})
         response, content = http.request("http://127.0.0.1:8000/api"+endpoint,
                                          method=method,
                                          headers=headers,
-                                         body=urllib.urlencode(body))
+                                         body=body)
         return response, content

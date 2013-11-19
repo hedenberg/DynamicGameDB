@@ -4,7 +4,9 @@ from dynamicgamedb.frontend.api_com import DynamicGameDB, Game
 
 @frontend.route('/games', methods=['GET'])
 def games():
+    print "games"
     games = dgdb.games()
+    print "games return"
     # games_list = []
     # for game in games:
     #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
@@ -18,7 +20,8 @@ def game(id):
 
 @frontend.route('/game/add', methods=['GET','POST'])
 def add_game():
-    game = dgdb.add_game(title="BOBGAME", platform_id=2)
+    game = dgdb.add_game(title="Ett nytt spel", platform_id=2)
+    print "Gameid: ", game.id
     #TODO: form page for Adding games
     return "add game"
 
