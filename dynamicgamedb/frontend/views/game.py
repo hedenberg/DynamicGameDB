@@ -5,9 +5,9 @@ from dynamicgamedb.frontend.api_com import DynamicGameDB, Game
 @frontend.route('/games', methods=['GET'])
 def games():
     games = dgdb.games()
-	# games_list = []
-	# for game in games:
-	#     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
+    # games_list = []
+    # for game in games:
+    #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
     return render_template("games.html", games=games)
 
 @frontend.route('/game/<int:id>', methods=['GET'])
@@ -16,19 +16,20 @@ def game(id):
     #game_str = "%d %s %s %s" % (game.id, game.title, game.platform, game.developer)
     return render_template("game.html", game=game)
 
-@frontend.route('/game/add', methods=['POST'])
+@frontend.route('/game/add', methods=['GET','POST'])
 def add_game():
-	print "add game"
-	#TODO: form page for Adding games
-
+    game = dgdb.add_game(title="BOBGAME", platform_id=2)
+    #TODO: form page for Adding games
+    return "add game"
 
 @frontend.route('/game/<int:id>/edit', methods=['POST'])
 def edit_game():
-	print "edit game"
-	#TODO: extended form page for editing games and givinhg additional data
-
+    print "edit game"
+    #TODO: extended form page for editing games and givinhg additional data
+    return "edit game"
 
 @frontend.route('/game/<int:id>/connection', methods=['POST'])
 def connect_game():
-	print "Connecting Games :D"
-	#TODO: connection mechanics
+    print "Connecting Games :D"
+    #TODO: connection mechanics
+    return "connect game"
