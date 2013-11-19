@@ -12,15 +12,17 @@ def games():
                               "platform":game.platform.name,
                               "developer":game.developer} for game in games]})
 
-@backend.route('/api/game/add', methods=['POST'])
+@backend.route('/api/game/add', methods=['GET','POST'])
 def add_game():
+    print "Backend add_game: ", request.form
     platform = db_session.query(Platform).get(request.form['platform_id'])
-    game = Game(request.form['title'])
+    game = Game(request.form['title'], platform)
     db_session.add(game)
     try:
         db_session.commit()
     except Exception, e:
         return "Failed"
+    print "here2"
     return jsonify({"game_id":game.id,
                     "game_title":game.title,
                     "platform":game.platform.name,

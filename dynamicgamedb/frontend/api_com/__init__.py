@@ -23,10 +23,22 @@ class DynamicGameDB(object):
             pass
         return Game.from_dict(json.loads(content))
 
-    def request(self, endpoint):
+    def add_game(self, title, platform_id):
+        game_dict = dict(title=title, platform_id=str(platform_id))
+        response, content = self.request("/game/add", method="POST", body=game_dict)
+        if not response.status == 200:
+            print "/game/add/ error"
+            pass
+        return Game.from_dict(json.loads(content))
+
+
+    def request(self, endpoint, method="GET", headers=dict(), body=None):
         http = httplib2.Http()
+        #if body:
+        #    body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
+        headers.update = {content_type:"application/x-www-form-urlencoded"}
         response, content = http.request("http://127.0.0.1:8000/api"+endpoint,
-                                         method="GET",
-                                         headers=dict(),
-                                         body=None)
+                                         method=method,
+                                         headers=headers,
+                                         body=urllib.urlencode(body))
         return response, content
