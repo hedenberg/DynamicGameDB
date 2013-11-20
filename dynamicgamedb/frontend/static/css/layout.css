@@ -26,4 +26,37 @@ body {
     max-width: 350px; 
 }
 
+#game_container {
+  position: relative;
+}
+
+
+.picture_container, 
+.info_container {
+    width: 298px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+
+
+.info_container {
+    opacity: 0.8;
+    background-color:black; 
+    color:white;
+    
+  /* z-index:9; */ 
+}
+
+.picture_container {
+    z-index: 10; 
+}
+
+.picture_container:hover .info_container  {
+   /* display:block; */
+    
+}
 
