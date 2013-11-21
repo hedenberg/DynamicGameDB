@@ -4,31 +4,39 @@
 
       <script src="/dynamicgamedb/frontend/static/js/games.js"></script>
 
-      <div class="starter-template">
-        <h1>Games</h1>
-        <p class="lead">Many game page
+      <div>
+      {% if search == "GET" %}
+        Most popular.
+      {% else %}
+        Search results for "{{search}}".
+      {% endif %}    
+      
+      
+        
       </div>
 
-      <div class="row">
-      	<div class="col-md-12" style="background-color: yellow; " >
-          <div class="row" style="background-color: teal; margin-top: 15px;" >
+      <div class="row" id="search_results">
+      	<div class="col-xs-12" id="games_row_container"  >
+          <div class="row" id="games_row"  >
             {% set column = 1 %}
             {% for game in games %}
 
-              <div class="col-md-4" id="game_container"  style="height:400px;" >
+              <div class="col-xs-4" id="game_container">
                 <div class="picture_container" id="picture_{{game.id}}" onmouseover='moveInfoFront({{game.id}})'>
                   <img src="/dynamicgamedb/frontend/static/img/bf4.jpg" height="400" width="298" />
                 </div>
-                <div class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})' >
-                Title: {{game.title}} <br>
-                Platform: {{game.platform}}
-                </div>
+                <a href="/game/{{game.id}}">
+                  <div  class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})' >
+                    Title: {{game.title}} <br>
+                    Platform: {{game.platform}}
+                  </div> 
+                </a>
               </div>
               {% set column = column+1 %}
               {% if column==4 %}
                 {% set column=1 %}
                 </div>
-                <div class="row" style="background-color: teal; margin-top: 15px;" >
+                <div class="row" id="games_row"   >
               {% endif %} 
             {% endfor%}
           </div>

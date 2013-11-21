@@ -3,21 +3,23 @@ from flask import request, jsonify, redirect, url_for, render_template
 from dynamicgamedb.frontend.api_com import DynamicGameDB, Game
 import sys, traceback
 
-@frontend.route('/games', methods=['GET'])
+@frontend.route('/games', methods=['GET', 'POST'])
 def games():
     print "games"
     games = dgdb.games()
     print "games return"
+          # should be changed to what the search query was for
+    if request.method == 'POST':
+        search=request.form['search_field']
+        return render_template("games.html", games=games, search=search)
+    else: 
     # games_list = []
     # for game in games:
     #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
-    try:
-        return render_template("games.html", games=games)
-    except:
-        print "Exception in user code:"
-        print '-'*60
-        traceback.print_exc(file=sys.stdout)
-        print '-'*60
+        search = "GET"
+        return render_template("games.html", games=games, search=search)
+    
+
     #return render_template("games.html", games=games)
 
 @frontend.route('/game/<int:id>', methods=['GET'])
@@ -30,6 +32,7 @@ def game(id):
 def add_game():
     game = dgdb.add_game(title="Ett nytt spel", platform_id=2)
     platforms=["SNES","NES","PC"]
+   
     print "Gameid: ", game.id
     if request.method == 'POST':
         title = request.form['title']
