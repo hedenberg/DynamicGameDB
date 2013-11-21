@@ -12,7 +12,14 @@ def send_foo(filename):
 
 @frontend.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except:
+        print "Exception in user code:"
+        print '-'*60
+        traceback.print_exc(file=sys.stdout)
+        print '-'*60
+    
 
     
     
