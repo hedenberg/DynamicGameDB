@@ -53,9 +53,9 @@
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" id="top_bar_nav" > 
       <!--  800 in order to make it collapse in a nice way -->        
       <ul class="nav navbar-nav">
-        <form class="navbar-form navbar-left" role="search" id="top_bar_search_group" >
+        <form class="navbar-form navbar-left" role="search" id="top_bar_search_group"   action="{{ url_for('frontend.games') }}" method=post >
           <div class="input-group" id="top_bar_search_bar">
-            <input id="btn-input" type="text" class="form-control input-sm" placeholder="Search" >
+            <input id="btn-input" type="text" name="search_field" class="form-control input-sm" placeholder="Search"  >
             <span class="input-group-btn">
               <button class="btn btn-success btn-sm" id="btn-chat">Search</button>
             </span>
@@ -93,7 +93,7 @@
 
   {% endblock %}  
 
-  <div class="container" style="max-width:940px;">
+  <div id="body_container" >
   {% block body %} {% endblock %}
   </div> 
 
