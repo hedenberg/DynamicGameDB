@@ -25,8 +25,9 @@ def games():
 @frontend.route('/game/<int:id>', methods=['GET'])
 def game(id):
     game = dgdb.game(id)
+    games = dgdb.games()
     #game_str = "%d %s %s %s" % (game.id, game.title, game.platform, game.developer)
-    return render_template("game.html", game=game)
+    return render_template("game.html", game=game, games=games)
 
 @frontend.route('/game/add', methods=['GET','POST'])
 def add_game():
@@ -44,8 +45,8 @@ def add_game():
         #TODO: form page for Adding games
         return render_template('add_game.html', platforms=platforms)
 
-@frontend.route('/game/<int:id>/edit', methods=['POST'])
-def edit_game():
+@frontend.route('/game/<int:id>/edit', methods=['GET','POST'])
+def edit_game(id):
     print "edit game"
     #TODO: extended form page for editing games and givinhg additional data
     return "edit game"
