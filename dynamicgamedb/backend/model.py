@@ -9,7 +9,7 @@ class Game(Base):
     title = Column(String(250))
     platform_id = Column(Integer, ForeignKey('platforms.id'))
     platform = relationship("Platform", backref=backref('games'))
-    picture = Column(BLOB)
+    picture = Column(String(250))
     info = Column(String(500), default="")
     release_date = Column(DateTime)
     developer = Column(String(250), default="")
