@@ -45,11 +45,28 @@ def add_game():
         #TODO: form page for Adding games
         return render_template('add_game.html', platforms=platforms)
 
+
 @frontend.route('/game/<int:id>/edit', methods=['GET','POST'])
 def edit_game(id):
+    game = dgdb.game(id)
     print "edit game"
+    if request.method == 'POST':
+        title = request.form['title']
+        print title
+        print "POST"
+        return render_template('edit_game.html',game=game)
+    else:
+        try:
+            return render_template('edit_game.html',game=game)
+        except:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
+        
+    
     #TODO: extended form page for editing games and givinhg additional data
-    return "edit game"
+    
 
 @frontend.route('/game/<int:id>/connection', methods=['POST'])
 def connect_game():
