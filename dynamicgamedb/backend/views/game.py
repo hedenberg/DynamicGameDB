@@ -7,8 +7,8 @@ from flask import request, jsonify, redirect, url_for
 @backend.route('/api/games', methods=['GET'])
 def games():
     print "api games"
-    games = db_session.query(Game).order_by(Game.id)
-    return jsonify({"games":[{"game_id":game.id,
+    games = db_session.query(Game).order_by(Game.g_id)
+    return jsonify({"games":[{"game_id":game.g_id,
                               "game_title":game.title,
                               "platform":game.platform.name,
                               "developer":game.developer} for game in games]})
@@ -39,7 +39,7 @@ def add_game():
     else:
         print "Already existed"
         game = games[0]
-    return jsonify({"game_id":game.id,
+    return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
                     "developer":game.developer})
@@ -47,7 +47,7 @@ def add_game():
 @backend.route('/api/game/<int:id>', methods=['GET'])
 def game(id):
     game = db_session.query(Game).get(id)
-    return jsonify({"game_id":game.id,
+    return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
                     "developer":game.developer})
@@ -67,7 +67,7 @@ def edit_game(id):
 
     db_session.commit()
 
-    return jsonify({"game_id":game.id,
+    return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
                     "developer":game.developer})
