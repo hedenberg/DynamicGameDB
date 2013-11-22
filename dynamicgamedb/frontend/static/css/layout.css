@@ -93,13 +93,14 @@ body {
 
 
 #related_bar {
+    
     background-color: #222222;
     margin-top: 15px; 
     margin-right:0px;
     color: #999999;
 }
 
-#relate_game_link {
+#relate_game_link {         
     color: #999999;
 }
 
