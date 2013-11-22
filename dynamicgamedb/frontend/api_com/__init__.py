@@ -37,7 +37,7 @@ class DynamicGameDB(object):
         if body:
             body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
         headers.update({"Content-Type":"application/x-www-form-urlencoded"})
-        response, content = http.request("http://http://fierce-wave-8853.herokuapp.com/api"+endpoint,
+        response, content = http.request("http://fierce-wave-8853.herokuapp.com/api"+endpoint,
                                          method=method,
                                          headers=headers,
                                          body=body)
