@@ -57,12 +57,18 @@ body {
 }
 
 #game_container {
+    width:313px;
     height:400px;
     position: relative;
 }
 
-
-
+#game_description {
+    text-align: left;
+    min-height: 400px;
+    width:610px;
+    background-color: #222222;
+    color: white; 
+}
 
 .picture_container, 
 .info_container {
@@ -72,9 +78,6 @@ body {
     top: 0;
     left: 0;
 }
-
-
-
 
 .info_container {
     opacity: 0.8;
@@ -89,4 +92,32 @@ body {
 }
 
 
+#related_bar {
+    background-color: #222222;
+    margin-top: 15px; 
+    margin-right:0px;
+    color: #999999;
+}
 
+#relate_game_link {
+    color: #999999;
+}
+
+#relate_game_link:hover {
+    color: #fff;
+}
+
+#edit_game_link {
+    color: #999999;
+}
+
+#edit_game_link:hover {
+    color: #fff;
+}
+
+
+
+#search_button {
+    background-color: #FF3399;
+    border-color: #FF3399;
+}
