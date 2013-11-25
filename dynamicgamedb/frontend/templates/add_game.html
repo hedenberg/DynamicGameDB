@@ -20,7 +20,7 @@
                 <div class="col-xs-6">
                   <select class="form-control" name="platform">
                   {% for  platform in platforms %}
-                    <option>{{platform}}</option>
+                    <option value="{{platform.id}}">{{platform.name}}</option>
                   {% endfor %}
                   </select>
                 </div>

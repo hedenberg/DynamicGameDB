@@ -1,6 +1,6 @@
 from dynamicgamedb.frontend import frontend, dgdb
 from flask import request, jsonify, redirect, url_for, render_template
-from dynamicgamedb.frontend.api_com import DynamicGameDB, Game
+from dynamicgamedb.frontend.api_com import DynamicGameDB, Game, Platform
 import sys, traceback
 
 @frontend.route('/games', methods=['GET', 'POST'])
@@ -17,7 +17,7 @@ def games():
     # for game in games:
     #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
         search = "GET"
-        return render_template("games.html", games=games, search=search)
+        return render_template("games.html", games=games, search=search, error="HEjhopp")
     
 
     #return render_template("games.html", games=games)
@@ -31,16 +31,16 @@ def game(id):
 
 @frontend.route('/game/add', methods=['GET','POST'])
 def add_game():
-    game = dgdb.add_game(title="Ett nytt spel", platform_id=2)
-    platforms=["SNES","NES","PC"]
-   
-    print "Gameid: ", game.id
+    platforms = dgdb.platforms()
     if request.method == 'POST':
-        title = request.form['title']
-        platform = request.form['platform']
-        print "title:", title
-        print "platform:", platform
-        return render_template('add_game.html', platforms=platforms)
+        game = dgdb.add_game(title=request.form['title'], platform_id=request.form['platform']) 
+        try:
+            return redirect(url_for('frontend.game', id=game.id))
+        except:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
     else:
         #TODO: form page for Adding games
         return render_template('add_game.html', platforms=platforms)

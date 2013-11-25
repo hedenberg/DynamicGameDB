@@ -2,10 +2,10 @@ import urllib
 import httplib2
 import json
 
-from dynamicgamedb.frontend.api_com.models import Game
+from dynamicgamedb.frontend.api_com.models import Game, Platform
 
-API_URL = "http://dynamicgamedb.herokuapp.com"
-#API_URL = "http://localhost:8000"
+#API_URL = "http://dynamicgamedb.herokuapp.com"
+API_URL = "http://localhost:8000"
 
 class DynamicGameDB(object):
 
@@ -33,6 +33,28 @@ class DynamicGameDB(object):
             print "/game/add/ error"
             pass
         return Game.from_dict(json.loads(content))
+
+    def platforms(self):
+        response, content = self.request("/platforms")
+        if not response.status == 200:
+            pass
+            #Should probably handle error
+        return [Platform.from_dict(platform) for platform in json.loads(content).get("platforms")]
+
+    def platform(self, id):
+        response, content = self.request("/platform/%d"%id)
+        if not response.status == 200:
+            print "/game/id/ error"
+            pass
+        return Platform.from_dict(json.loads(content))
+
+    def add_platform(self, name):
+        platform_dict = dict(name=title)
+        response, content = self.request("/platform/add", method="POST", body=platform_dict)
+        if not response.status == 200:
+            print "/game/add/ error"
+            pass
+        return Platform.from_dict(json.loads(content))
 
 
     def request(self, endpoint, method="GET", headers=dict(), body=None):
