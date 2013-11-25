@@ -80,6 +80,9 @@ body {
 }
 
 .info_container {
+    padding-top:100px; 
+    padding-left:15px; 
+    font-size:large;
     opacity: 0.8;
     background-color:black; 
     color:white;
