@@ -12,6 +12,7 @@ def send_foo(filename):
 
 @frontend.route('/')
 def index():
+    print "INDEX"
     try:
         return render_template('index.html')
     except:

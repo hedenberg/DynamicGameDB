@@ -4,6 +4,9 @@ import json
 
 from dynamicgamedb.frontend.api_com.models import Game
 
+API_URL = "http://fierce-wave-8853.herokuapp.com"
+#API_URL = "http://localhost:8000"
+
 class DynamicGameDB(object):
 
     #def __init__(self):
@@ -37,7 +40,8 @@ class DynamicGameDB(object):
         if body:
             body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
         headers.update({"Content-Type":"application/x-www-form-urlencoded"})
-        response, content = http.request("http://fierce-wave-8853.herokuapp.com/api"+endpoint,
+        #response, content = http.request("http://fierce-wave-8853.herokuapp.com/api"+endpoint,
+        response, content = http.request(API_URL+"/api"+endpoint,
                                          method=method,
                                          headers=headers,
                                          body=body)
