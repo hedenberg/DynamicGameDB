@@ -41,46 +41,52 @@
                 </form>
               </div>
                *********************OLD*************************  -->
-
-              <div class="row">
-                <form name="editSubmit" method=post action="{{ url_for('frontend.edit_game',id=game.id) }}">
+              <form name="editSubmit" method=post action="{{ url_for('frontend.edit_game',id=game.id) }}">
+                <div class="row">
+                
                   <div class="col-xs-4" id="game_title" >
-                    <input name="title" class="form-control" type="text" value="{{game.title}}" style="background-color: #222222; color: #999999; border-width:0px;" /> 
+                    <input name="title" class="form-control" type="text" value="{{game.title}}" style="font-size:x-large; background-color: #222222; color: #999999; border-width:0px; border:none;" /> 
                   </div>
                   <a href="javascript:document.editSubmit.submit()" id="edit_game_link" >
                     <div class="col-xs-4" id="edit_game_container"  > 
                       Save Changes  
                     </div> <br>
                   </a>
-                </form>
-              </div>
-
-              <div class="row" id="platform_row" >
-                <div class="col-xs-3" id="left_game_info" >
-                  Platform:  {{game.platform}}  
+                
                 </div>
-                <div class="col-xs-3" id="right_game_info"  >
-                  Release date: {{game.date}}  
+              
+                <div class="row" id="platform_row" >
+                  <div class="col-xs-3" id="left_game_info" >
+                    Platform:  
+                    <select class="form-control" name="platform" value="{{game.platform_id}}" style="background-color:#222222; color:#999999; border:none;">
+                      {% for platform in platforms %}
+
+                        <option value="{{platform.id}}">{{platform.name}}</option>
+                      {% endfor %}
+                    </select >  
+                  </div>
+                  <div class="col-xs-3" id="right_game_info"  >
+                    Release date: <input name="release_date" class="form-control" type="text" value="{{game.date}}" style="font-size:large; background-color: #222222; color: #999999; border-width:0px; border:none;" />  
+                  </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-xs-3" id="left_game_info" >
-                  Developer: {{game.developer}}  
+                <div class="row">
+                  <div class="col-xs-3" id="left_game_info" >
+                    Developer: <input name="developer" class="form-control" type="text" value="{{game.developer}}" style="font-size:large; background-color: #222222; color: #999999; border-width:0px; border:none;" />  
+                  </div>
+                  <div class="col-xs-3" id="right_game_info" >
+                    Publisher: <input name="publisher" class="form-control" type="text" value="{{game.publisher}}" style="font-size:large; background-color: #222222; color: #999999; border-width:0px; border:none;" />   
+                  </div>
                 </div>
-                <div class="col-xs-3" id="right_game_info" >
-                  Publisher: {{game.publisher}}  
+              
+                <div class="row" id="description_row" >
+
+                  <p style="font-size:large; padding-left:15px">Description: </p>
+                  <textarea name="description" class="form-control" type="text"  style="  min-height:100px; background-color: #222222; color: #999999; border-width:0px; border:none;" />
+****FILLER TEXT**** Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield can you demolish the buildings shielding your enemy. Only in Battlefield will you lead an assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory. In addition to its hallmark multiplayer, Battlefield 4 features an intense, dramatic character-driven campaign that starts with the evacuation of American VIPs from Shanghai and follows your squad's struggle to find its way home. Immerse yourself in the glorious chaos of all-out war. *******
+                  </textarea>   
                 </div>
-              </div>
-              <div class="row" id="description_row" >
-
-
-              Description: ****FILLER TEXT****
-              Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield can you demolish the buildings shielding your enemy. Only in Battlefield will you lead an assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory. In addition to its hallmark multiplayer, Battlefield 4 features an intense, dramatic character-driven campaign that starts with the evacuation of American VIPs from Shanghai and follows your squad's struggle to find its way home. Immerse yourself in the glorious chaos of all-out war. *******
-
-               Description: ****FILLER TEXT****
-              Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield can you demolish the buildings shielding your enemy. Only in Battlefield will you lead an assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory. In addition to its hallmark multiplayer, Battlefield 4 features an intense, dramatic character-driven campaign that starts with the evacuation of American VIPs from Shanghai and follows your squad's struggle to find its way home. Immerse yourself in the glorious chaos of all-out war. *******
-              </div>
+              </form>
             </div>
           </div>
         </div>
