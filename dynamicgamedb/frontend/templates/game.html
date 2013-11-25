@@ -16,41 +16,57 @@
                   <img src="/dynamicgamedb/frontend/static/img/bf4.jpg" height="400"  width="298" />
                 </div>
                 <a href="/game/{{game.id}}">
-                  <div  class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})' >
-                    Title: {{game.title}} <br>
-                    Platform: {{game.platform}}
-                  </div> 
+                  <div class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})'  >
+                    <b> {{game.title}} </b> <br>
+                    Platform: {{game.platform   | truncate(16,True)}} <br>
+                    Release date: {{game.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Developer: {{game.developer | truncate(16,True)}} <br>
+                    Publisher: {{game.publisher | truncate(16,True)}} <br>
+                    <br>
+                    Click for more info
+                  </div>
                 </a>
               </div>
-            <div class="col-xs-8" id="game_description"  >
+            <div class="col-xs-8" id="game_description">
               
 
               <div class="row">
-                <div class="col-xs-4" style="padding-left:30px; padding-top:15px; font-size: x-large;">
+                <div class="col-xs-4" id="game_title">
                   {{game.title}}  
                 </div>
                 <a href="/game/{{game.id}}/edit" id="edit_game_link"  >
-                  <div class="col-xs-4" style="float:right; text-align:right; font-size: x-large; padding-top:15px; " > 
+                  <div class="col-xs-4" id="edit_game_container" > 
                     Edit  
                   </div> <br>
                 </a>
               </div>
 
-              <div>
-                
+              <div class="row" id="platform_row" >
+                <div class="col-xs-3" id="left_game_info" >
+                  Platform:  {{game.platform}}  
+                </div>
+                <div class="col-xs-3" id="right_game_info"  >
+                  Release date: {{game.date}}  
+                </div>
               </div>
 
+              <div class="row">
+                <div class="col-xs-3" id="left_game_info" >
+                  Developer: {{game.developer}}  
+                </div>
+                <div class="col-xs-3" id="right_game_info" >
+                  Publisher: {{game.publisher}}  
+                </div>
+              </div>
+              <div class="row" id="description_row" >
 
-
-              Platform: {{game.platform}} <br> 
-              Developer: {{game.developer}} <br>
 
               Description: ****FILLER TEXT****
               Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield can you demolish the buildings shielding your enemy. Only in Battlefield will you lead an assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory. In addition to its hallmark multiplayer, Battlefield 4 features an intense, dramatic character-driven campaign that starts with the evacuation of American VIPs from Shanghai and follows your squad's struggle to find its way home. Immerse yourself in the glorious chaos of all-out war. *******
 
                Description: ****FILLER TEXT****
               Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield can you demolish the buildings shielding your enemy. Only in Battlefield will you lead an assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory. In addition to its hallmark multiplayer, Battlefield 4 features an intense, dramatic character-driven campaign that starts with the evacuation of American VIPs from Shanghai and follows your squad's struggle to find its way home. Immerse yourself in the glorious chaos of all-out war. *******
-
+              </div>
             </div>
           </div>
         
@@ -78,10 +94,15 @@
                   <img src="/dynamicgamedb/frontend/static/img/bf4.jpg" height="400" width="298" />
                 </div>
                 <a href="/game/{{game.id}}" >
-                  <div  class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})' >
-                    Title: {{game.title}} <br>
-                    Platform: {{game.platform}}
-                  </div> 
+                  <div class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})'  >
+                    <b> {{game.title}} </b> <br>
+                    Platform: {{game.platform   | truncate(16,True)}} <br>
+                    Release date: {{game.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Developer: {{game.developer | truncate(16,True)}} <br>
+                    Publisher: {{game.publisher | truncate(16,True)}} <br>
+                    <br>
+                    Click for more info
+                  </div>
                 </a>
               </div>
               {% set column = column+1 %}
