@@ -26,9 +26,14 @@
                   <img src="/dynamicgamedb/frontend/static/img/bf4.jpg" height="400" width="298" />
                 </div>
                 <a href="/game/{{game.id}}">
-                  <div  class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})' >
-                    Title: {{game.title}} <br>
-                    Platform: {{game.platform}}
+                  <div class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})'  >
+                    <b> {{game.title}} </b> <br>
+                    Platform: {{game.platform   | truncate(16,True)}} <br>
+                    Release date: {{game.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Developer: {{game.developer | truncate(16,True)}} <br>
+                    Publisher: {{game.publisher | truncate(16,True)}} <br>
+                    <br>
+                    Click for more info
                   </div> 
                 </a>
               </div>

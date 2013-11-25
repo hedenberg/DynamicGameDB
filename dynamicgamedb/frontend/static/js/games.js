@@ -1,5 +1,6 @@
 
-
+var old_info_id = 0
+var has_old_info = false
 
 
 function mouseOverData(id,title, platform){
@@ -20,15 +21,21 @@ function mouseOutData(id, title){
 
 function moveInfoFront(id){
     var test = "#"+id
-
+    if (has_old_info){
+        moveInfoBack(old_info_id);    
+    }
+    
     $("#result").text(test);
     element = document.getElementById("info_"+id);
     element.style.zIndex="11";
+    old_info_id = id
+    has_old_info = true
 
 }
 
 function moveInfoBack(id){
     var test = "#"+id
+    
 
     $("#result").text(test);
     element = document.getElementById("info_"+id);
