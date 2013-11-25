@@ -117,7 +117,7 @@ body {
     text-align:right;  
     font-size: x-large; 
     padding-top:15px;
-    padding-right:15px; 
+    padding-right:30px; 
 }
 
 #edit_game_link {
@@ -167,4 +167,6 @@ body {
     padding-right:15px;
     padding-bottom: 15px;
     text-align: justify;
+    font-size: small;
+    
 }

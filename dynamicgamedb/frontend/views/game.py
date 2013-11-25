@@ -33,7 +33,8 @@ def game(id):
 def add_game():
     platforms = dgdb.platforms()
     if request.method == 'POST':
-        game = dgdb.add_game(title=request.form['title'], platform_id=request.form['platform']) 
+        game = dgdb.add_game(title=request.form['title'],
+                             platform_id=request.form['platform']) 
         try:
             return redirect(url_for('frontend.edit_game', id=game.id))
         except:
@@ -49,13 +50,18 @@ def add_game():
 @frontend.route('/game/<int:id>/edit', methods=['GET','POST'])
 def edit_game(id):
     game = dgdb.game(id)
+    platforms = dgdb.platforms()
     print "edit game"
     if request.method == 'POST':
+        date = request.form['release_date']
+        print "Date: ",date
+        desc = request.form['description']
+        print "Desc: ", desc
         game = dgdb.edit_game(id, title=request.form['title'])
         return redirect(url_for('frontend.game', id=game.id))
     else:
         try:
-            return render_template('edit_game.html',game=game)
+            return render_template('edit_game.html',game=game, platforms=platforms)
         except:
             print "Exception in user code:"
             print '-'*60
