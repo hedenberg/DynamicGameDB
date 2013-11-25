@@ -1,10 +1,11 @@
 
 
 class Game(object):
-    def __init__(self, id, title, platform=None, developer=None):
+    def __init__(self, id, title, platform=None, platform_id=None, developer=None):
         self.id = id
         self.title = title
         self.platform = platform
+        self.platform_id = platform_id
         self.developer = developer
 
     @classmethod
@@ -12,6 +13,7 @@ class Game(object):
         return Game(id = int(data.get("game_id")),
                     title = str(data.get("game_title")),
                     platform = str(data.get("platform")),
+                    platform_id = int(data.get("platform_id")),
                     developer = str(data.get("developer"))) 
 
 class Platform(object):

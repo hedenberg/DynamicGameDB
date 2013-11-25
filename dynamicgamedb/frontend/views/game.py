@@ -25,9 +25,17 @@ def games():
 @frontend.route('/game/<int:id>', methods=['GET'])
 def game(id):
     game = dgdb.game(id)
-    games = dgdb.games()
+    print "platform_id: ", game.platform_id
     #game_str = "%d %s %s %s" % (game.id, game.title, game.platform, game.developer)
-    return render_template("game.html", game=game, games=games)
+    #return render_template("game.html", game=game, games=games)
+    try:
+        games = dgdb.games()
+        return render_template("game.html", game=game, games=games)
+    except:
+        print "Exception in user code:"
+        print '-'*60
+        traceback.print_exc(file=sys.stdout)
+        print '-'*60
 
 @frontend.route('/game/add', methods=['GET','POST'])
 def add_game():
