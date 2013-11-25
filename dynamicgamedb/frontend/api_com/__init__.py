@@ -4,13 +4,12 @@ import json
 
 from dynamicgamedb.frontend.api_com.models import Game, Platform
 
-API_URL = "http://dynamicgamedb.herokuapp.com"
-#API_URL = "http://localhost:8000"
+#API_URL = "http://dynamicgamedb.herokuapp.com"
+API_URL = "http://localhost:8000"
 
 class DynamicGameDB(object):
 
-    #def __init__(self):
-        #
+    # -- Game --
 
     def games(self):
         response, content = self.request("/games")
@@ -28,11 +27,25 @@ class DynamicGameDB(object):
 
     def add_game(self, title, platform_id):
         game_dict = dict(title=title, platform_id=str(platform_id))
-        response, content = self.request("/game/add", method="POST", body=game_dict)
+        response, content = self.request("/game/add", 
+                                         method="POST", 
+                                         body=game_dict)
         if not response.status == 200:
             print "/game/add/ error"
             pass
         return Game.from_dict(json.loads(content))
+
+    def edit_game(self, id, title):
+        game_dict = dict(title=title)
+        response, content = self.request("/game/%d/edit"%id, 
+                                         method="POST",
+                                         body=game_dict)
+        if not response.status == 200:
+            pass
+        return Game.from_dict(json.loads(content))
+
+
+    # -- Platform --
 
     def platforms(self):
         response, content = self.request("/platforms")

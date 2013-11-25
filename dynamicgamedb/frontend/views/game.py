@@ -35,7 +35,7 @@ def add_game():
     if request.method == 'POST':
         game = dgdb.add_game(title=request.form['title'], platform_id=request.form['platform']) 
         try:
-            return redirect(url_for('frontend.game', id=game.id))
+            return redirect(url_for('frontend.edit_game', id=game.id))
         except:
             print "Exception in user code:"
             print '-'*60
@@ -51,10 +51,8 @@ def edit_game(id):
     game = dgdb.game(id)
     print "edit game"
     if request.method == 'POST':
-        title = request.form['title']
-        print title
-        print "POST"
-        return render_template('edit_game.html',game=game)
+        game = dgdb.edit_game(id, title=request.form['title'])
+        return redirect(url_for('frontend.game', id=game.id))
     else:
         try:
             return render_template('edit_game.html',game=game)

@@ -4,7 +4,7 @@ from flask import request, jsonify, redirect, url_for, render_template, send_fro
 
 @frontend.route('/dynamicgamedb/frontend/static/<path:filename>')
 def send_foo(filename):
-    print "filename", filename
+    #print "filename", filename
     return send_from_directory('dynamicgamedb/frontend/static', filename)
 
 
