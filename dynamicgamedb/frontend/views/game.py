@@ -17,7 +17,7 @@ def games():
     # for game in games:
     #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
         search = "GET"
-        return render_template("games.html", games=games, search=search, error="HEjhopp")
+        return render_template("games.html", games=games, search=search)
     
 
     #return render_template("games.html", games=games)
