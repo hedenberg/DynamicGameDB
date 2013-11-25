@@ -9,13 +9,13 @@ from flask import request, jsonify, redirect, url_for
 def platforms():
     platforms = db_session.query(Platform).order_by(Platform.p_id)
     return jsonify({"platforms":[{"platform_id":platform.p_id,
-                                  "platform_title":platform.name} for platform in platforms]})
+                                  "platform_name":platform.name} for platform in platforms]})
 
 @backend.route('/api/platform/<int:id>', methods=['GET'])
 def platform(id):
     platform = db_session.query(Platform).get(id)
     return jsonify({"platform_id":platform.p_id,
-                    "platform_title":platform.name})
+                    "platform_name":platform.name})
 
 @backend.route('/api/platform/add', methods=['POST'])
 def add_platform():
@@ -26,4 +26,4 @@ def add_platform():
     except Exception, e:
         return "Failed"
     return jsonify({"platform_id":platform.p_id,
-                    "platform_title":platform.name})
+                    "platform_name":platform.name})
