@@ -111,9 +111,20 @@ body {
     color: #fff;
 }
 
+#edit_game_container {
+    width:200px;
+    float:right; 
+    text-align:right;  
+    font-size: x-large; 
+    padding-top:15px;
+    padding-right:15px; 
+}
+
 #edit_game_link {
     color: #999999;
 }
+
+
 
 #edit_game_link:hover {
     color: #fff;
@@ -124,4 +135,36 @@ body {
 #search_button {
     background-color: #FF3399;
     border-color: #FF3399;
+}
+
+#game_title {
+    
+    font-size: x-large;
+    padding-left:30px; 
+    padding-top:15px;
+    width:400px; 
+}
+
+#left_game_info {
+    padding-left:30px;
+    padding-top:15px; 
+    font-size: large; 
+    width:300px
+}
+
+#right_game_info{
+    padding-top:15px; 
+    font-size: large; 
+    width:300px 
+}
+#platform_row {
+    padding-top:15px;
+}
+
+#description_row {
+    padding-top:30px;
+    padding-left:15px;
+    padding-right:15px;
+    padding-bottom: 15px;
+    text-align: justify;
 }
