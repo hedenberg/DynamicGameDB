@@ -60,8 +60,11 @@
                     Platform:  
                     <select class="form-control" name="platform" value="{{game.platform_id}}" style="background-color:#222222; color:#999999; border:none;">
                       {% for platform in platforms %}
-
-                        <option value="{{platform.id}}">{{platform.name}}</option>
+                        {% if platform.id == game.platform_id %}
+                          <option selected="selected" value="{{platform.id}}">{{platform.name}}</option>
+                        {% else %}
+                          <option value="{{platform.id}}">{{platform.name}}</option>
+                        {% endif %}
                       {% endfor %}
                     </select >  
                   </div>
