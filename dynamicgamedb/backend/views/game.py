@@ -11,6 +11,7 @@ def games():
     return jsonify({"games":[{"game_id":game.g_id,
                               "game_title":game.title,
                               "platform":game.platform.name,
+                              "platform_id":game.platform.p_id,
                               "developer":game.developer} for game in games]})
 
 @backend.route('/api/game/add', methods=['POST'])
@@ -42,6 +43,7 @@ def add_game():
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
+                    "platform_id":game.platform.p_id,
                     "developer":game.developer})
 
 @backend.route('/api/game/<int:id>', methods=['GET'])
@@ -50,6 +52,7 @@ def game(id):
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
+                    "platform_id":game.platform.p_id,
                     "developer":game.developer})
 
 @backend.route('/api/game/<int:id>/edit', methods=['POST'])
