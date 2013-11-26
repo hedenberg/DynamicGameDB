@@ -195,11 +195,9 @@
 
               <tr class="odd views-row-last" style="border-top: 1px solid #DADADA;">
                 <td class="views-field views-field-title">
-                  <a href="/docs/api/1.1/get/statuses/user_timeline">POST /api/game/:id/connection </a>          </td>
+                  <a href="/docs/api/1.1/get/statuses/user_timeline">POST /api/game/:id/relate </a>          </td>
                 <td class="views-field views-field-desc">
-                  Creates a connection between the game  
-                  specified by the id and the game choosen 
-                  to make connection towards on the webpage  
+                  Search for a game that we can relate the url param with   
                 </td>
                 <td class="views-field views-field-params" style= "width: 350px">
 
@@ -233,7 +231,64 @@
                 <td class="views-field views-field-response" style="width: 250px">
                     <div>
                       <span class="param"><b> 200, OK </b></span>
-                      <p> The games was successfully edited  </p>
+                      <p> Search fine   </p>
+                    </div>
+                  <div >
+                    <span class="param"> <b>Error</b> </span>
+                    <p> Source id doesn't exist  </p>
+                  </div>
+                </td>
+                <td class="views-field views-field-auth">
+                  <div >
+                    <span class="param"><b> User </b> <span class="required">required</span> </span>
+                    <p> Needs to be logged in as a user <br> in order to make connections  </p>
+                  </div>
+                </td>
+              </tr >
+
+                <!-- *********************************************************************************************************** -->
+
+              <tr class="odd views-row-last" style="border-top: 1px solid #DADADA;">
+                <td class="views-field views-field-title">
+                  <a href="/docs/api/1.1/get/statuses/user_timeline">POST /api/game/:id/relate/:id </a>          </td>
+                <td class="views-field views-field-desc">
+                  Creates a connection between the game  
+                  specified by the id and the game choosen 
+                  to make connection towards on the webpage  
+                </td>
+                <td class="views-field views-field-params" style= "width: 350px">
+
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td style= "width: 100px">    
+                            <div class="parameter" id="api-param-search_query">
+                              <span class="param"> <b>id</b><br> URL param <br> <span class="required">required</span></span>
+                            </div>  
+                        </td>
+                        <td style= "width: 250px">
+                          <p> Id for the game that is the source of the connection  </p>
+                          <p><strong>Example Values</strong>: <tt>123</tt></p>
+                        </td>
+                      </tr>
+                      <tr style="border-top: 1px solid #DADADA;">
+                        <td style= "width: 100px">     
+                          <div class="parameter" id="api-param-search_query">
+                            <span class="param"><b>id</b> <br>URL param  <br><span class="required">required</span></span>
+                          </div>
+                        </td>
+                        <td style= "width: 250px">
+                          <p> The game that parameter 1 is making a connection to  </p> 
+                          <p><strong>Example Values</strong>: <tt>123</tt></p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td class="views-field views-field-response" style="width: 250px">
+                    <div>
+                      <span class="param"><b> 200, OK </b></span>
+                      <p> The games was successfully related </p>
                     </div>
                   <div >
                     <span class="param"> <b>Error</b> </span>
@@ -251,6 +306,10 @@
                   </div>
                 </td>
               </tr >
+
+
+
+
             </tbody>
           </table>
   
