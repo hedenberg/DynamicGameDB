@@ -32,10 +32,14 @@ body {
     margin-left: auto;
 }
 
-
+#related_search_group {
+    padding:0px;
+}
 
 
 #top_bar_search_group{
+    padding-left: 0px;
+    padding-right: 0px;
     padding-top: 2px;
     max-width: 350px; 
 }
@@ -98,6 +102,7 @@ body {
 #related_bar {
     
     background-color: #222222;
+    height:46px;
     margin-top: 15px; 
     margin-right:0px;
     color: #999999;
@@ -161,6 +166,35 @@ body {
     padding-top:15px;
 }
 
+#platform_select{
+    background-color:#222222; 
+    color:#999999; 
+    border:none;
+}
+
+#edit_title{
+    font-size:x-large; 
+    background-color: #222222; 
+    color: #999999; 
+    border-width:0px; 
+    border:none;
+}
+
+#edit_inputs{
+    font-size:large; 
+    background-color: #222222; 
+    color: #999999; 
+    border-width:0px; 
+    border:none;
+}
+#edit_textarea{
+    min-height:100px; 
+    background-color: #222222; 
+    color: #999999; 
+    border-width:0px; 
+    border:none;
+}
+
 #description_row {
     padding-top:30px;
     padding-left:15px;
@@ -168,5 +202,25 @@ body {
     padding-bottom: 15px;
     text-align: justify;
     font-size: small;
-    
+
+}
+
+#top_related_container {
+    height:46px; 
+    font-size:large; 
+    padding-top:10px
+}
+
+#relation_info{
+    height:46px; 
+    font-size:large; 
+    text-align:center; 
+    padding-top:10px;
+}
+
+#relate_game_div {
+    height:46px; 
+    font-size:large; 
+    text-align:right; 
+    padding-top:10px
 }

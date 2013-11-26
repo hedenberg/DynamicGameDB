@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+{% set active_page = "index" %}
+{% block body %} 
+
+  
+    
+      
+
+
+    <div class="row">
+      <div class="col-xs-12"   >
+        
+          <div  class="row" >
+            <div class="col-xs-4" id="game_container">
+              <div class="picture_container" id="picture_{{game.id}}" onmouseover='moveInfoFront({{game.id}})'>
+                  <img src="/dynamicgamedb/frontend/static/img/bf4.jpg" height="400"  width="298" />
+                </div>
+                <a href="/game/{{game.id}}">
+                  <div class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})'  >
+                    <b> {{game.title}} </b> <br>
+                    Platform: {{game.platform   | truncate(16,True)}} <br>
+                    Release date: {{game.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Developer: {{game.developer | truncate(16,True)}} <br>
+                    Publisher: {{game.publisher | truncate(16,True)}} <br>
+                    <br>
+                    Click for more info
+                  </div>
+                </a>
+              </div>
+            <div class="col-xs-8" id="game_description" >
+              
+
+              <div class="row">
+                <div class="col-xs-4" id="game_title">
+                  {{game.title}}  
+                </div>
+                
+              </div>
+
+              <div class="row" id="platform_row" >
+                <div class="col-xs-3" id="left_game_info" >
+                  Platform:  {{game.platform}}  
+                </div>
+                <div class="col-xs-3" id="right_game_info"  >
+                  Release date: {{game.date}}  
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-3" id="left_game_info" >
+                  Developer: {{game.developer}}  
+                </div>
+                <div class="col-xs-3" id="right_game_info" >
+                  Publisher: {{game.publisher}}  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        
+        
+          <div class="row" id="related_bar"  >
+            <div class="col-xs-4" id="top_related_container"  >
+                 Relate Search Results 
+            </div>
+            <div class="col-xs-4" id="relation_info"   >
+             Choose a game to relate
+            </div>
+
+          </div>
+
+          <div class="row" id="games_row"  >
+            {% set column = 1 %}
+            {% for loopGame in games %}
+
+              <div class="col-xs-4" id="game_container">
+                <div class="picture_container" id="picture_{{loopGame.id}}" onmouseover='moveInfoFront({{loopGame.id}})'>
+                  <img src="/dynamicgamedb/frontend/static/img/bf4.jpg" height="400" width="298" />
+                </div>
+                <a href="/game/{{game.id}}/relate/{{loopGame.id}}" >
+                  <div class="info_container" id="info_{{loopGame.id}}" onmouseout='moveInfoBack({{loopGame.id}})'  >
+                    <b> {{loopGame.title}} </b> <br>
+                    Platform: {{loopGame.platform   | truncate(16,True)}} <br>
+                    Release date: {{loopGame.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Developer: {{loopGame.developer | truncate(16,True)}} <br>
+                    Publisher: {{loopGame.publisher | truncate(16,True)}} <br>
+                    <br>
+                    Click for more info
+                  </div>
+                </a>
+              </div>
+              {% set column = column+1 %}
+              {% if column==4 %}
+                {% set column=1 %}
+                </div>
+                <div class="row" id="games_row"   >
+              {% endif %} 
+            {% endfor%}
+            <div class="col-xs-4" id="game_container">
+              <a href="/game/add" >
+                <div class="info_container" id="add_new_game" >
+                  <b> Didn't find what you want? </b> <br> <br>
+                  <b> Add game    </b>
+                </div>
+              </a>
+            </div>
+
+
+          </div>
+
+
+
+        </div>   
+      </div>
+
+      <div id="result">
+        result
+      </div>
+
+  
+  
+
+
+
+
+
+
+
+
+{% endblock %}
