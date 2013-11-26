@@ -11,7 +11,7 @@ class Game(object):
     @classmethod
     def from_dict(cls, data):
         return Game(id = int(data.get("game_id")),
-                    title = str(data.get("game_title")),
+                    title = data.get("game_title"),
                     platform = str(data.get("platform")),
                     platform_id = int(data.get("platform_id")),
                     developer = str(data.get("developer"))) 

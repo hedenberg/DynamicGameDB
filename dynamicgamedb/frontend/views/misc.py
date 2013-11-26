@@ -1,3 +1,6 @@
+ #!/usr/bin/python
+# -- coding: utf-8 --
+
 from dynamicgamedb.frontend import frontend
 import sys, traceback
 from flask import request, jsonify, redirect, url_for, render_template, send_from_directory
