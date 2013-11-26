@@ -43,7 +43,7 @@ function moveInfoBack(id){
 
 }
 
-function getInputWindow(div_id,content){
+/*function getInputWindow(div_id,content){
     var test = "#"+div_id
     //var input = '<input name="title" id="form_'+div_id+ '" class="form-control" type="text" focus= />'
     var input = '<input name="title" class="form-control" type="text" autofocus="autofocus" value="'+ content+'" style="background-color: #222222; color: #999999; border-width:0px; " />'
@@ -54,3 +54,13 @@ function getInputWindow(div_id,content){
     //document.getElementById("#test_name").focus();
 
 } 
+*/
+
+function showSearchBar(){
+    element = document.getElementById("top_related_container");
+    
+    $(element).text("");
+    var search =  '<form class="navbar-form navbar-left" role="search" id="top_bar_search_group"    }}" method=post > <div class="input-group" id="top_bar_search_bar"> <input id="btn-input" type="text" name="search_field" class="form-control input-sm" placeholder="Relate search"  ><span class="input-group-btn"> <button class="btn btn-success btn-sm" id="search_button">Search</button> </span></div></form>'
+    $("#result").text(search);
+    $(element).append(search);
+}
