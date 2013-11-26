@@ -80,8 +80,8 @@ def edit_game(id):
     #TODO: extended form page for editing games and givinhg additional data
     
 
-@frontend.route('/game/<int:id>/connection', methods=['POST'])
-def connect_game():
+@frontend.route('/game/<int:id>/relate', methods=['POST','GET'])
+def relate_game():
     print "Connecting Games :D"
     #TODO: connection mechanics
-    return "connect game"
+    return "relate game"
