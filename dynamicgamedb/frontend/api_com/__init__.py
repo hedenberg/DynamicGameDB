@@ -4,8 +4,8 @@ import json
 
 from dynamicgamedb.frontend.api_com.models import Game, Platform, Relation
 
-API_URL = "http://dynamicgamedb.herokuapp.com"
-#API_URL = "http://localhost:8000"
+#API_URL = "http://dynamicgamedb.herokuapp.com"
+API_URL = "http://localhost:8000"
 
 class DynamicGameDB(object):
 
