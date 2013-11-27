@@ -6,6 +6,7 @@ dgdb = DynamicGameDB()
 
 frontend = Blueprint('frontend', __name__,
                     template_folder='templates',
-                    static_folder='/dynamicgamedb/frontend/static')
+                    static_folder='static',
+                    static_url_path='/dynamicgamedb/frontend/static')
 
 import dynamicgamedb.frontend.views
