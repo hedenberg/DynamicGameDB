@@ -16,9 +16,6 @@ class Game(object):
                     platform_id = int(data.get("platform_id")),
                     developer = str(data.get("developer"))) 
 
-class RelatedGame(object):
-    def __init__()
-
 class Platform(object):
     def __init__(self, id, name):
         self.id = id
