@@ -1,10 +1,26 @@
+
 from dynamicgamedb.frontend import frontend, dgdb
-from flask import request, jsonify, redirect, url_for, render_template,g, session,flash
+from flask import Flask,request, jsonify, redirect, url_for, render_template,g, session, flash, current_app
 from dynamicgamedb.frontend.api_com import DynamicGameDB, Game
+#import dynamicgamedb 
+import sys, traceback, os
+
+
+
+#from dynamicgamedb import oid
 from flask.ext.openid import OpenID
 
-oid = OpenID(frontend, 'sqlite:///dynamicgame.db')       
-# oid = OpenID(frontend, 'postgres://jmcqxvdgcsvsyl:BlvratbaAe05GQYS6HQIjX_ZIX@ec2-184-73-254-144.compute-1.amazonaws.com:5432/d10k9sruavbqno')
+
+oid = OpenID( '../openid')
+
+      
+
+def create_app():
+    ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../static')
+    app = Flask(__name__, static_folder=ASSETS_DIR)
+    oid.init_app(app)
+    return app
+
 
 @frontend.before_request
 def lookup_current_user():
@@ -20,14 +36,13 @@ def lookup_current_user():
 def login():
     if g.user is not None:
         return redirect(oid.get_next_url())
-    if request.method == 'POST':
-        openid = request.form.get('openid')
-        if openid:
-            return oid.try_login(openid, ask_for=['email','fullname','nickname'])
-    return render_template('index.html', next=oid.get_next_url(), error=oid.fetch_error())
+    else:
+        return oid.try_login( 'https://www.google.com/accounts/o8/id', ask_for=['email'])
+    
 
 @oid.after_login
 def create_or_login(resp):
+    print "creat or login"
     session['openid'] = resp.identity_url
     user = User.query.filter_by(openid=resp.identity_url).first()
     if user is not None:
@@ -36,7 +51,7 @@ def create_or_login(resp):
         return redirect(oid.get_next_url())
     return redirect(url_for('create_profile', next=oid.get_next_url(), name=resp.fullname or resp.nickname, email=resp.email))
 
-@app.route('/create-profile', methods=['GET', 'POST'])
+@frontend.route('/create-profile', methods=['GET', 'POST'])
 def create_profile():
     if g.user is not None or 'openid' not in session:
         return redirect(url_for('index'))
@@ -55,7 +70,7 @@ def create_profile():
     return render_template('create_profile.html', next_url=oid.get_next_url())
 
 
-@app.route('/logout')
+@frontend.route('/logout')
 def logout():
     session.pop('openid', None)
     flash(u'You were signed out')
