@@ -5,4 +5,4 @@ from dynamicgamedb.backend import backend
 def shutdown_session(exception=None):
     db_session.remove()
 
-from dynamicgamedb.backend.views import misc, platform, game
+from dynamicgamedb.backend.views import misc, platform, game, relation

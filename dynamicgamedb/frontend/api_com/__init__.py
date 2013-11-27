@@ -2,7 +2,7 @@ import urllib
 import httplib2
 import json
 
-from dynamicgamedb.frontend.api_com.models import Game, Platform
+from dynamicgamedb.frontend.api_com.models import Game, Platform, Relation
 
 #API_URL = "http://dynamicgamedb.herokuapp.com"
 API_URL = "http://localhost:8000"
@@ -69,6 +69,11 @@ class DynamicGameDB(object):
             pass
         return Platform.from_dict(json.loads(content))
 
+    # -- Relation --
+
+    
+
+    # -- General --
 
     def request(self, endpoint, method="GET", headers=dict(), body=None):
         http = httplib2.Http()
