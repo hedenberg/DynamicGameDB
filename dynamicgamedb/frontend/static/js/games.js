@@ -59,6 +59,8 @@ function moveInfoBack(id){
 function showSearchBar(id){
     element = document.getElementById("top_related_container");
     element.style.paddingTop="0px";
+    middle_element = document.getElementById("relation_info");
+    $(middle_element).text("Search for games to relate");
     $(element).text("");
     var search =  '<form class="navbar-form navbar-left" role="search" id="related_search_group" action="/game/'+id+'/relate" method=post > <div class="input-group" id="top_bar_search_bar"> <input id="btn-input" type="text" name="relate_search_field" class="form-control input-sm" placeholder="Relate search"  ><span class="input-group-btn"> <button class="btn btn-success btn-sm" id="search_button">Search</button> </span></div></form>'
     $("#result").text(id);
