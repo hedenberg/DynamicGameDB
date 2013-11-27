@@ -15,7 +15,6 @@ class Game(Base):
     developer = Column(String(250), default="")
     publisher = Column(String(250), default="")
 
-    # TODO: change so that it takes a dicitonary instead.
     def __init__(self, title=None, platform=None):
         self.title = title
         self.platform_id = platform.p_id
@@ -34,3 +33,20 @@ class Platform(Base):
 
     def __repr__(self):
         return '<Platform %r>' % (self.name)
+
+class Relation(Base):
+    __tablename__ = "relations"
+    game1_id = Column(Integer, ForeignKey('games.g_id'), primary_key=True)
+    game1 = relationship("Game", foreign_keys=[game1_id])
+    game2_id = Column(Integer, ForeignKey('games.g_id'), primary_key=True)
+    game2 = relationship("Game", foreign_keys=[game2_id])
+    count = Column(Integer, default=1)
+
+    def __init__(self, game1, game2):
+        self.game1_id = game1.g_id
+        self.game2_id = game2.g_id
+        self.game1 = game1
+        self.game2 = game2
+
+    def __repr__(self):
+        return '<Relation g1:%r g2:%r %r>' % (self.game1.title, self.game2.title, self.count)
