@@ -190,6 +190,19 @@ body {
     border:none;
 }
 
+#edit_picture{
+    font-size:large; 
+    background-color: #222222; 
+    color: white; 
+    border-width:0px; 
+    border:none;
+    width:268px;
+}
+
+#edit_picture_container{
+    z-index:11;
+}
+
 #edit_inputs{
     font-size:large; 
     background-color: #222222; 
