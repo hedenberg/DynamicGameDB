@@ -35,8 +35,13 @@ class DynamicGameDB(object):
             pass
         return Game.from_dict(json.loads(content))
 
-    def edit_game(self, id, title):
-        game_dict = dict(title=title)
+    def edit_game(self, id, title, platform_id, info, release_date, developer):
+        # platform title developer publisher description release_date
+        game_dict = dict(title=title, 
+                         platform_id=platform_id, 
+                         info=info, 
+                         release_date=release_date, 
+                         developer=developer)
         response, content = self.request("/game/%d/edit"%id, 
                                          method="POST",
                                          body=game_dict)
