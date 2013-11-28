@@ -19,7 +19,7 @@
                   <div class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})'  >
                     <b> {{game.title}} </b> <br>
                     Platform: {{game.platform   | truncate(16,True)}} <br>
-                    Release date: {{game.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Release date: {{game.release_date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
                     Developer: {{game.developer | truncate(16,True)}} <br>
                     Publisher: {{game.publisher | truncate(16,True)}} <br>
                     <br>
@@ -46,7 +46,7 @@
                   Platform:  {{game.platform}}  
                 </div>
                 <div class="col-xs-3" id="right_game_info"  >
-                  Release date: {{game.date}}  
+                  Release date: {{game.release_date}}  
                 </div>
               </div>
 
@@ -61,11 +61,8 @@
               <div class="row" id="description_row"  >
 
 
-              <p style="font-size:large; padding-left:15px">Description: </p> ****FILLER TEXT****
-              Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield can you demolish the buildings shielding your enemy. Only in Battlefield will you lead an assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory. In addition to its hallmark multiplayer, Battlefield 4 features an intense, dramatic character-driven campaign that starts with the evacuation of American VIPs from Shanghai and follows your squad's struggle to find its way home. Immerse yourself in the glorious chaos of all-out war. *******
-
-               Description: ****FILLER TEXT****
-              Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield can you demolish the buildings shielding your enemy. Only in Battlefield will you lead an assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory. In addition to its hallmark multiplayer, Battlefield 4 features an intense, dramatic character-driven campaign that starts with the evacuation of American VIPs from Shanghai and follows your squad's struggle to find its way home. Immerse yourself in the glorious chaos of all-out war. *******
+              <p style="font-size:large; padding-left:15px">Description: </p>
+              {{game.info}}
               </div>
             </div>
           </div>
