@@ -2,6 +2,7 @@ from dynamicgamedb.frontend import frontend, dgdb
 from flask import request, jsonify, redirect, url_for, render_template
 from dynamicgamedb.frontend.api_com import DynamicGameDB, Game, Platform
 import sys, traceback
+from datetime import datetime
 
 @frontend.route('/games', methods=['GET', 'POST'])
 def games():
@@ -22,7 +23,7 @@ def games():
 
     #return render_template("games.html", games=games)
 
-@frontend.route('/game/<int:id>', methods=['GET'])
+@frontend.route('/game/<int:id>/', methods=['GET'])
 def game(id):
     game = dgdb.game(id)
     print "platform_id: ", game.platform_id
@@ -61,14 +62,18 @@ def edit_game(id):
     platforms = dgdb.platforms()
     print "edit game"
     if request.method == 'POST':
+        print "edit game POST"
         date = request.form['release_date']
         print "Date: ",date
         desc = request.form['description']
         print "Desc: ", desc
         game = dgdb.edit_game(id, title=request.form['title'])
+        print "after backend call"
         return redirect(url_for('frontend.game', id=game.id))
     else:
         try:
+            date = datetime.utcnow()
+            print date
             return render_template('edit_game.html',game=game, platforms=platforms)
         except:
             print "Exception in user code:"
