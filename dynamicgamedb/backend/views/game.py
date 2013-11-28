@@ -60,13 +60,14 @@ def edit_game(id):
     game = db_session.query(Game).get(id)
     print "Backend edit game title: ", request.form['title']
     game.title = request.form['title']
-    #platform = db_session.query(Platform).get(request.form['platform_id'])
-    #game.platform = platform
-    #game.platform_id = platform_id
+    # platform title developer publisher description release_date
+    platform = db_session.query(Platform).get(request.form['platform_id'])
+    game.platform = platform
+    game.platform_id = platform.p_id
     #game.picture = # Must handle image
-    #game.info = request.form['info']
+    game.info = request.form['info']
     #game.release_date = # Must correctly handle date
-    #game.developer = request.form['developer']
+    game.developer = request.form['developer']
     #game.publisher = request.form['publisher']
     db_session.commit()
     return jsonify({"game_id":game.g_id,
