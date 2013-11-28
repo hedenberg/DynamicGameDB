@@ -67,7 +67,14 @@ def edit_game(id):
         print "Date: ",date
         desc = request.form['description']
         print "Desc: ", desc
-        game = dgdb.edit_game(id, title=request.form['title'])
+        #edit_game(self, id, title, platform_id, info, release_date, developer)
+        game = dgdb.edit_game(id, 
+                              title=request.form['title'],
+                              platform_id=request.form['platform'],
+                              info=request.form['description'],
+                              release_date=request.form['release_date'],
+                              developer=request.form['developer'],
+                              publisher=request.form['publisher'])
         print "after backend call"
         return redirect(url_for('frontend.game', id=game.id))
     else:
