@@ -1,12 +1,15 @@
 
 
 class Game(object):
-    def __init__(self, id, title, platform=None, platform_id=None, developer=None):
+    def __init__(self, id, title, platform=None, platform_id=None, info=None, release_date=None, developer=None, publisher=None):
         self.id = id
         self.title = title
         self.platform = platform
         self.platform_id = platform_id
+        self.info = info
+        self.release_date = release_date
         self.developer = developer
+        self.publisher = publisher
 
     @classmethod
     def from_dict(cls, data):
@@ -14,7 +17,10 @@ class Game(object):
                     title = data.get("game_title"),
                     platform = str(data.get("platform")),
                     platform_id = int(data.get("platform_id")),
-                    developer = str(data.get("developer"))) 
+                    info = str(data.get("info")),
+                    release_date = str(data.get("release_date")),
+                    developer = str(data.get("developer")),
+                    publisher = str(data.get("publisher"))) 
 
 class Platform(object):
     def __init__(self, id, name):
