@@ -74,7 +74,7 @@ def edit_game(id):
                     "platform":game.platform.name,
                     "developer":game.developer})
 @backend.route('/api/game/<int:id>/relation', methods=['GET', 'POST'])
-def game_relation(id):
+def game_relations(id):
     if request.method == 'GET':
         # All relations including this game
         relations = Relation.query.filter((Relation.game1_id==id)|(Relation.game2_id==id)).all()
@@ -84,21 +84,12 @@ def game_relation(id):
         games = db_session.query(Game).filter(Game.g_id.in_(map(lambda (r, c):r, rs)))
         rgs = zip((map(lambda (r,c):c, rs)),games)
         rgs = sorted(rgs,key=lambda rg: rg[0], reverse=True)
-        """
-        return jsonify({"games":[{"game_id":game.g_id,
-                        "game_title":game.title,
-                        "platform":game.platform.name,
-                        "platform_id":game.platform.p_id,
-                        "developer":game.developer} for (_,game) in rgs],
-                        "relations":[{"game_id":game.g_id,
-                        "count":count} for (count,game) in rgs]})
-        """
         return jsonify({"relatedgames":[{"game_id":game.g_id,
                         "game_title":game.title,
                         "platform":game.platform.name,
                         "platform_id":game.platform.p_id,
                         "developer":game.developer,
-                        "count":c} for (c,game) in rgs]})
+                        "relation_count":c} for (c,game) in rgs]})
     else:
         if id == request.form['g_id']:
             return jsonify({"error":"Can not relate to self"})
@@ -107,9 +98,17 @@ def game_relation(id):
         g1 = db_session.query(Game).get(g1id)
         g2 = db_session.query(Game).get(g2id)
         if g1 == None:
-            return jsonify({"error":"Source id doesn't exist"})
+            if g1id == id:
+                return jsonify({"error":"Source id doesn't exist"})
+            else:
+                return jsonify({"error":"Target id doesn't exist"})
         if g2 == None:
-            return jsonify({"error":"Target id doesn't exist"})
+            if g2id == id:
+                return jsonify({"error":"Source id doesn't exist"})
+            else:
+                return jsonify({"error":"Target id doesn't exist"})
+        #Target-game from users point of view
+        game = db_session.query(Game).get(request.form['g_id'])
         #Always least id first
         relation = db_session.query(Relation).get((g1.g_id,g2.g_id))
         if relation == None:
@@ -122,6 +121,44 @@ def game_relation(id):
             db_session.commit()
         except Exception, e:
             return "Failed"
-        return jsonify({"g1_id":relation.game1_id,
-                        "g2_id":relation.game2_id,
-                        "count":relation.count})
+        return jsonify({"game_id":game.g_id,
+                        "game_title":game.title,
+                        "platform":game.platform.name,
+                        "platform_id":game.platform.p_id,
+                        "developer":game.developer,
+                        "relation_count":relation.count})
+
+@backend.route('/api/game/<int:source_id>/relation/<int:target_id>', methods=['GET'])
+def game_relation(source_id, target_id):
+    if source_id == target_id:
+        return jsonify({"error":"Can not relate to self"})
+    g1id = source_id if source_id < target_id else target_id
+    g2id = target_id if source_id < target_id else source_id
+    g1 = db_session.query(Game).get(g1id)
+    g2 = db_session.query(Game).get(g2id)
+    if g1 == None:
+        if g1id == source_id:
+            return jsonify({"error":"Source id doesn't exist"})
+        else:
+            return jsonify({"error":"Target id doesn't exist"})
+    if g2 == None:
+        if g2id == source_id:
+            return jsonify({"error":"Source id doesn't exist"})
+        else:
+            return jsonify({"error":"Target id doesn't exist"})
+    #Target-game from users point of view
+    game = db_session.query(Game).get(target_id)
+    relation = db_session.query(Relation).get((g1.g_id,g2.g_id))
+    if relation == None:
+        return jsonify({"game_id":game.g_id,
+                    "game_title":game.title,
+                    "platform":game.platform.name,
+                    "platform_id":game.platform.p_id,
+                    "developer":game.developer,
+                    "relation_count":0})
+    return jsonify({"game_id":game.g_id,
+                    "game_title":game.title,
+                    "platform":game.platform.name,
+                    "platform_id":game.platform.p_id,
+                    "developer":game.developer,
+                    "relation_count":relation.count})
