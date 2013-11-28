@@ -3,6 +3,8 @@ from dynamicgamedb.backend import backend
 from dynamicgamedb.backend.model import Game, Platform, Relation
 from dynamicgamedb.backend.database import db_session
 from flask import request, jsonify, redirect, url_for
+import dateutil.parser
+import datetime
 
 @backend.route('/api/games', methods=['GET'])
 def games():
@@ -12,7 +14,10 @@ def games():
                               "game_title":game.title,
                               "platform":game.platform.name,
                               "platform_id":game.platform.p_id,
-                              "developer":game.developer} for game in games]})
+                              "info":game.info,
+                              "release_date":game.release_date.strftime("%Y-%m-%d"),
+                              "developer":game.developer,
+                              "publisher":game.publisher} for game in games]})
 
 @backend.route('/api/game/add', methods=['POST'])
 def add_game():
@@ -44,7 +49,10 @@ def add_game():
                     "game_title":game.title,
                     "platform":game.platform.name,
                     "platform_id":game.platform.p_id,
-                    "developer":game.developer})
+                    "info":game.info,
+                    "release_date":game.release_date.strftime("%Y-%m-%d"),
+                    "developer":game.developer,
+                    "publisher":game.publisher})
 
 @backend.route('/api/game/<int:id>', methods=['GET'])
 def game(id):
@@ -53,7 +61,10 @@ def game(id):
                     "game_title":game.title,
                     "platform":game.platform.name,
                     "platform_id":game.platform.p_id,
-                    "developer":game.developer})
+                    "info":game.info,
+                    "release_date":game.release_date.strftime("%Y-%m-%d"),
+                    "developer":game.developer,
+                    "publisher":game.publisher})
 
 @backend.route('/api/game/<int:id>/edit', methods=['POST'])
 def edit_game(id):
@@ -66,14 +77,20 @@ def edit_game(id):
     game.platform_id = platform.p_id
     #game.picture = # Must handle image
     game.info = request.form['info']
+    print request.form['release_date']
+    game.release_date = dateutil.parser.parse(request.form['release_date'])
     #game.release_date = # Must correctly handle date
     game.developer = request.form['developer']
-    #game.publisher = request.form['publisher']
+    game.publisher = request.form['publisher']
     db_session.commit()
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
-                    "developer":game.developer})
+                    "platform_id":game.platform.p_id,
+                    "info":game.info,
+                    "release_date":game.release_date.strftime("%Y-%m-%d"),
+                    "developer":game.developer,
+                    "publisher":game.publisher})
 @backend.route('/api/game/<int:id>/relation', methods=['GET', 'POST'])
 def game_relations(id):
     if request.method == 'GET':
