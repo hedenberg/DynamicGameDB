@@ -11,7 +11,7 @@ class Game(Base):
     platform = relationship("Platform", backref=backref('games'))
     picture = Column(String(250))
     info = Column(String(500), default="")
-    release_date = Column(DateTime)
+    release_date = Column(DateTime, default=datetime.now)
     developer = Column(String(250), default="")
     publisher = Column(String(250), default="")
 
