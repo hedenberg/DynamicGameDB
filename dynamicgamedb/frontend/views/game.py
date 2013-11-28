@@ -26,7 +26,7 @@ def games():
 @frontend.route('/game/<int:id>/', methods=['GET'])
 def game(id):
     game = dgdb.game(id)
-    print "platform_id: ", game.platform_id
+    print "date: ", game.release_date
     #game_str = "%d %s %s %s" % (game.id, game.title, game.platform, game.developer)
     #return render_template("game.html", game=game, games=games)
     try:
@@ -63,8 +63,8 @@ def edit_game(id):
     print "edit game"
     if request.method == 'POST':
         print "edit game POST"
-        date = request.form['release_date']
-        print "Date: ",date
+        picture = request.form['picture']
+        print "Picture: ",picture
         desc = request.form['description']
         print "Desc: ", desc
         #edit_game(self, id, title, platform_id, info, release_date, developer)
