@@ -12,9 +12,6 @@ from flask.ext.openid import OpenID
 
 
 oid = OpenID( '../openid')
-
-      
-
 def create_app():
     ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../static')
     app = Flask(__name__, static_folder=ASSETS_DIR)
