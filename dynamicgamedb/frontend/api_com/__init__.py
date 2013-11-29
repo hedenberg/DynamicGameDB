@@ -2,7 +2,7 @@ import urllib
 import httplib2
 import json
 
-from dynamicgamedb.frontend.api_com.models import Game, Platform, Relation
+from dynamicgamedb.frontend.api_com.models import Game, Platform, Relation, GameRelation
 
 #API_URL = "http://dynamicgamedb.herokuapp.com"
 API_URL = "http://localhost:8000"
@@ -78,6 +78,26 @@ class DynamicGameDB(object):
     # -- Relation --
 
     
+    def game_relations(self,id):
+        response, content = self.request("/game/%d/relation"%id)
+        if not response.status == 200:
+            print "/game/id/relation GET error"
+            pass
+        return [GameRelation.from_dict(game_relation) for game_relation in json.loads(content).get("relatedgames")]
+
+    def game_relation(self,sId,tId):     #sId = sourceId tId = targetId
+        response,content = self.request("/game/%d/relation/%d"%(sId,tId))
+        if not response.status == 200:
+            print "/game/sId/relation/tId GET error"
+            pass
+        return GameRelation.from_dict(json.loads(content))
+
+
+
+
+    def add_game_relation(self,id):
+
+
 
     # -- General --
 
