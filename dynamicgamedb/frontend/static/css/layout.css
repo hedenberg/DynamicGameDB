@@ -247,3 +247,9 @@ body {
     text-align:right; 
     padding-top:10px
 }
+
+#add_new_game{
+    background-image: url(http://i.imgur.com/4Dzdiky.png);
+    opacity: 1.0;
+
+}
