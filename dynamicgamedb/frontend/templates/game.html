@@ -75,7 +75,8 @@
             <div class="col-xs-4" id="relation_info" >
              37 game by 598 relations
             </div>
-            <a href="javascript:showSearchBar({{game.id}})" id="relate_game_link"  >
+            <!-- <a href="javascript:showSearchBar({{game.id}})" id="relate_game_link"  > -->
+              <a href="/game/{{game.id}}/relate" id="relate_game_link"  >
               <div class="col-xs-4" id="relate_game_div"  >
                 Relate game 
               </div>
@@ -94,7 +95,7 @@
                   <div class="info_container" id="info_{{loopGame.id}}" onmouseout='moveInfoBack({{loopGame.id}})'  >
                     <b> {{loopGame.title}} </b> <br>
                     Platform: {{loopGame.platform       | truncate(16,True)}} <br>
-                    Release date: {{loopGame.date       | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Release date: {{loopGame.release_date       | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
                     Developer: {{loopGame.developer     | truncate(16,True)}} <br>
                     Publisher: {{loopGame.publisher     | truncate(16,True)}} <br>
                     Relations: {{loopGame.relation_count}} <br>
