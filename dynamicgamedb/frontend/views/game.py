@@ -96,12 +96,12 @@ def search_relate_game(id):
         print rel_search
         game = dgdb.game(id)
         games = dgdb.games()
-        return render_template('relate_game.html',games=games, game=game)
+        return render_template('relate_game.html',games=games, game=game, search=rel_search)
     else:
-        game = dgdb.game(id)
-        games = dgdb.game_relations(id)
+        game   = dgdb.game(id)
+        games  = dgdb.game_relations(id)
         #TODO: connection mechanics
-        return render_template('relate_game.html',games=games, game=game)
+        return render_template('relate_game.html',games=games, game=game, search="GET")
 
 @frontend.route('/game/<int:id>/relate/<relate_id>', methods=['POST','GET'])
 def make_relation(id,relate_id):
