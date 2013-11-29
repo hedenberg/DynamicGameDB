@@ -1,12 +1,13 @@
 
 
 class Game(object):
-    def __init__(self, id, title, platform=None, platform_id=None, info=None, release_date=None, developer=None, publisher=None):
+    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None):
         self.id = id
         self.title = title
         self.platform = platform
         self.platform_id = platform_id
         self.info = info
+        self.picture = picture
         self.release_date = release_date
         self.developer = developer
         self.publisher = publisher
@@ -18,6 +19,7 @@ class Game(object):
                     platform = data.get("platform"),
                     platform_id = int(data.get("platform_id")),
                     info = data.get("info"),
+                    picture = data.get("picture"),
                     release_date = str(data.get("release_date")),
                     developer = data.get("developer"),
                     publisher = data.get("publisher")) 
@@ -45,12 +47,13 @@ class Relation(object):
 
 
 class GameRelation(object):
-    def __init__(self, id, title, platform=None, platform_id=None, info=None, release_date=None, developer=None, publisher=None, relation_count=None):
+    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None, relation_count=None):
         self.id = id
         self.title = title
         self.platform = platform
         self.platform_id = platform_id
         self.info = info
+        self.picture = picture
         self.release_date = release_date
         self.developer = developer
         self.publisher = publisher
@@ -63,6 +66,7 @@ class GameRelation(object):
                             platform = data.get("platform"),
                             platform_id = int(data.get("platform_id")),
                             info = data.get("info"),
+                            picture = data.get("picture"),
                             release_date = str(data.get("release_date")),
                             developer = data.get("developer"),
                             publisher = data.get("publisher"),

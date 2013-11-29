@@ -62,16 +62,11 @@ def edit_game(id):
     platforms = dgdb.platforms()
     print "edit game"
     if request.method == 'POST':
-        print "edit game POST"
-        picture = request.form['picture']
-        print "Picture: ",picture
-        desc = request.form['description']
-        print "Desc: ", desc
-        #edit_game(self, id, title, platform_id, info, release_date, developer)
         game = dgdb.edit_game(id, 
                               title=request.form['title'],
                               platform_id=request.form['platform'],
                               info=request.form['description'],
+                              picture=request.form['picture'],
                               release_date=request.form['release_date'],
                               developer=request.form['developer'],
                               publisher=request.form['publisher'])
