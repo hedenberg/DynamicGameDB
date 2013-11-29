@@ -15,6 +15,7 @@ def games():
                               "platform":game.platform.name,
                               "platform_id":game.platform.p_id,
                               "info":game.info,
+                              "picture":game.picture,
                               "release_date":game.release_date.strftime("%Y-%m-%d"),
                               "developer":game.developer,
                               "publisher":game.publisher} for game in games]})
@@ -23,15 +24,9 @@ def games():
 def add_game():
     title = request.form['title']
     platform_id = str(request.form['platform_id'])
-    print "add"
     games = Game.query.filter(Game.title.like(title)).all()
-    print "games: ", games
     exists = False
     for game in games:
-        print "game.title: ", game.title
-        print "title: ", title
-        print "game.pid: ", game.platform_id
-        print "pid: ", platform_id
         if game.title == title and str(game.platform_id) == platform_id:
             exists = True
     if not exists:
@@ -50,6 +45,7 @@ def add_game():
                     "platform":game.platform.name,
                     "platform_id":game.platform.p_id,
                     "info":game.info,
+                    "picture":game.picture,
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher})
@@ -62,6 +58,7 @@ def game(id):
                     "platform":game.platform.name,
                     "platform_id":game.platform.p_id,
                     "info":game.info,
+                    "picture":game.picture,
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher})
@@ -69,17 +66,13 @@ def game(id):
 @backend.route('/api/game/<int:id>/edit', methods=['POST'])
 def edit_game(id):
     game = db_session.query(Game).get(id)
-    print "Backend edit game title: ", request.form['title']
     game.title = request.form['title']
-    # platform title developer publisher description release_date
     platform = db_session.query(Platform).get(request.form['platform_id'])
     game.platform = platform
     game.platform_id = platform.p_id
-    #game.picture = # Must handle image
+    game.picture = request.form['picture']
     game.info = request.form['info']
-    print request.form['release_date']
     game.release_date = dateutil.parser.parse(request.form['release_date'])
-    #game.release_date = # Must correctly handle date
     game.developer = request.form['developer']
     game.publisher = request.form['publisher']
     db_session.commit()
@@ -88,6 +81,7 @@ def edit_game(id):
                     "platform":game.platform.name,
                     "platform_id":game.platform.p_id,
                     "info":game.info,
+                    "picture":game.picture,
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher})
@@ -107,6 +101,7 @@ def game_relations(id):
                             "platform":game.platform.name,
                             "platform_id":game.platform.p_id,
                             "info":game.info,
+                            "picture":game.picture,
                             "release_date":game.release_date.strftime("%Y-%m-%d"),
                             "developer":game.developer,
                             "publisher":game.publisher,
@@ -147,6 +142,7 @@ def game_relations(id):
                         "platform":game.platform.name,
                         "platform_id":game.platform.p_id,
                         "info":game.info,
+                        "picture":game.picture,
                         "release_date":game.release_date.strftime("%Y-%m-%d"),
                         "developer":game.developer,
                         "publisher":game.publisher,
@@ -179,6 +175,7 @@ def game_relation(source_id, target_id):
                         "platform":game.platform.name,
                         "platform_id":game.platform.p_id,
                         "info":game.info,
+                        "picture":game.picture,
                         "release_date":game.release_date.strftime("%Y-%m-%d"),
                         "developer":game.developer,
                         "publisher":game.publisher,
@@ -188,6 +185,7 @@ def game_relation(source_id, target_id):
                     "platform":game.platform.name,
                     "platform_id":game.platform.p_id,
                     "info":game.info,
+                    "picture":game.picture,
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher,
