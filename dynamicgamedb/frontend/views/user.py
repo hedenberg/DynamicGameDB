@@ -39,14 +39,14 @@ def login():
 
 @oid.after_login
 def create_or_login(resp):
-    print "creat or login"
+    print "create or login"
     session['openid'] = resp.identity_url
     user = User.query.filter_by(openid=resp.identity_url).first()
     if user is not None:
         flash(u'Successfully signed in')
         g.user = user
         return redirect(oid.get_next_url())
-    return redirect(url_for('create_profile', next=oid.get_next_url(), name=resp.fullname or resp.nickname, email=resp.email))
+    return redirect(url_for('create_profile', next=oid.get_next_url(), email=resp.email))
 
 @frontend.route('/create-profile', methods=['GET', 'POST'])
 def create_profile():
