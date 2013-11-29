@@ -58,12 +58,12 @@ class GameRelation(object):
 
     @classmethod
     def from_dict(cls, data):
-        return Game(id = int(data.get("game_id")),
-                    title = data.get("game_title"),
-                    platform = data.get("platform"),
-                    platform_id = int(data.get("platform_id")),
-                    info = data.get("info"),
-                    release_date = str(data.get("release_date")),
-                    developer = data.get("developer"),
-                    publisher = data.get("publisher"),
-                    relation_count = int(data.get("relation_count"))) 
+        return GameRelation(id = int(data.get("game_id")),
+                            title = data.get("game_title"),
+                            platform = data.get("platform"),
+                            platform_id = int(data.get("platform_id")),
+                            info = data.get("info"),
+                            release_date = str(data.get("release_date")),
+                            developer = data.get("developer"),
+                            publisher = data.get("publisher"),
+                            relation_count = int(data.get("relation_count"))) 
