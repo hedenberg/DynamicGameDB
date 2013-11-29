@@ -71,12 +71,19 @@
                 </form>
             </div>
             <div class="col-xs-4" id="relation_info"   >
-             Choose a game to relate
+              {% if search == "GET" %}
+                Most popular relations
+              {% else %}
+                Search results: "{{search | truncate(12, True)}}"
+              {% endif %}  
             </div>
+            <div class="col-xs-4" id="relate_game_div"  >
+                Choose a game to relate 
+              </div>
 
           </div>
-
           <div class="row" id="games_row"  >
+
             {% set column = 1 %}
             {% for loopGame in games %}
 
@@ -104,14 +111,16 @@
                 <div class="row" id="games_row"   >
               {% endif %} 
             {% endfor%}
-            <div class="col-xs-4" id="game_container">
-              <a href="/game/add" >
-                <div class="info_container" id="add_new_game" >
-                  <b> Didn't find what you want? </b> <br> <br>
-                  <b> Add game    </b>
-                </div>
-              </a>
-            </div>
+            {% if search != "GET" %}
+              <div class="col-xs-4" id="game_container">
+                <a href="/game/add" >
+                  <div class="info_container" id="add_new_game" >
+                    <b> Didn't find what you want? </b> <br> <br>
+                    <b> Add game    </b>
+                  </div>
+                </a>
+              </div>
+            {% endif %}
 
 
           </div>
