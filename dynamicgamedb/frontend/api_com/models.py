@@ -15,12 +15,12 @@ class Game(object):
     def from_dict(cls, data):
         return Game(id = int(data.get("game_id")),
                     title = data.get("game_title"),
-                    platform = str(data.get("platform")),
+                    platform = data.get("platform"),
                     platform_id = int(data.get("platform_id")),
-                    info = str(data.get("info")),
+                    info = data.get("info"),
                     release_date = str(data.get("release_date")),
-                    developer = str(data.get("developer")),
-                    publisher = str(data.get("publisher"))) 
+                    developer = data.get("developer"),
+                    publisher = data.get("publisher")) 
 
 class Platform(object):
     def __init__(self, id, name):
@@ -60,10 +60,10 @@ class GameRelation(object):
     def from_dict(cls, data):
         return Game(id = int(data.get("game_id")),
                     title = data.get("game_title"),
-                    platform = str(data.get("platform")),
+                    platform = data.get("platform"),
                     platform_id = int(data.get("platform_id")),
-                    info = str(data.get("info")),
+                    info = data.get("info"),
                     release_date = str(data.get("release_date")),
-                    developer = str(data.get("developer")),
-                    publisher = str(data.get("publisher")),
+                    developer = data.get("developer"),
+                    publisher = data.get("publisher"),
                     relation_count = int(data.get("relation_count"))) 
