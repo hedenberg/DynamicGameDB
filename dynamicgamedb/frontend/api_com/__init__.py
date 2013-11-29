@@ -93,9 +93,12 @@ class DynamicGameDB(object):
         return GameRelation.from_dict(json.loads(content))
 
 
-
-
     def add_game_relation(self,id):
+        response, content = self.request("/game/%d/relation"%id)
+        if not respsonse.status == 200:
+            print "/game/id/relation POST error"
+            pass
+        return GameRelation.from_dict(json.loads(content))
 
 
 
