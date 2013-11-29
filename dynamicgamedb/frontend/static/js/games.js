@@ -60,7 +60,7 @@ function showSearchBar(id){
     middle_element = document.getElementById("relation_info");
     $(middle_element).text("Search for games to relate");
     href_element = document.getElementById("game_link");
-    href_element.href=""
+    /*href_element.href="" */
     element = document.getElementById("top_related_container");
     element.style.paddingTop="0px";
 

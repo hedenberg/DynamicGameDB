@@ -13,12 +13,7 @@
                 </div>
                 
                   <div class="info_container" id="edit_picture_container"   >
-                    <b> {{game.title}} </b> <br>
-                    Platform: {{game.platform   | truncate(16,True)}} <br>
-                    Release date: {{game.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
-                    Developer: {{game.developer | truncate(16,True)}} <br>
-                    Publisher: {{game.publisher | truncate(16,True)}} <br>
-                    <br>
+
                     Add/Update Picture URL:
                     <input name="picture" class="form-control" type="text" value="{{game.picture}}" id="edit_picture" />
                   </div>
