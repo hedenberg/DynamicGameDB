@@ -1,7 +1,7 @@
  #!/usr/bin/python
 # -- coding: utf-8 --
 
-from dynamicgamedb.frontend import frontend
+from dynamicgamedb.frontend import frontend, dgdb
 import sys, traceback
 from flask import request, jsonify, redirect, url_for, render_template, send_from_directory
 
@@ -15,6 +15,12 @@ from flask import request, jsonify, redirect, url_for, render_template, send_fro
 
 @frontend.route('/')
 def index():
+    print "games"
+    games = dgdb.games()
+    search = "GET"
+    return render_template("games.html", games=games, search="GET")
+"""
+def index():
     print "INDEX"
     try:
         return render_template('index.html')
@@ -23,7 +29,7 @@ def index():
         print '-'*60
         traceback.print_exc(file=sys.stdout)
         print '-'*60
-    
+    """
 
     
     
