@@ -1,6 +1,6 @@
 from dynamicgamedb.frontend import frontend, dgdb
 from flask import request, jsonify, redirect, url_for, render_template
-from dynamicgamedb.frontend.api_com import DynamicGameDB, Game, Platform
+from dynamicgamedb.frontend.api_com import DynamicGameDB, Game, Platform, GameRelation
 import sys, traceback
 from datetime import datetime
 
@@ -30,7 +30,7 @@ def game(id):
     #game_str = "%d %s %s %s" % (game.id, game.title, game.platform, game.developer)
     #return render_template("game.html", game=game, games=games)
     try:
-        games = dgdb.games()
+        games = dgdb.game_relations(id)
         return render_template("game.html", game=game, games=games)
     except:
         print "Exception in user code:"
@@ -107,7 +107,8 @@ def search_relate_game(id):
         #TODO: connection mechanics
         return "relate game"
 
-@frontend.route('/game/<int:id>/relate/<int:relate_id>', methods=['POST','GET'])
+@frontend.route('/game/<int:id>/relate/<relate_id>', methods=['POST','GET'])
 def make_relation(id,relate_id):
     print "make relation", id , relate_id
+    test = dgdb.add_game_relation(id,relate_id)
     return redirect(url_for('frontend.game', id=id ))

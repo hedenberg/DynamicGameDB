@@ -79,22 +79,25 @@ class DynamicGameDB(object):
 
     
     def game_relations(self,id):
+        print "game relation api_com"
         response, content = self.request("/game/%d/relation"%id)
         if not response.status == 200:
             print "/game/id/relation GET error"
             pass
+        print content
         return [GameRelation.from_dict(game_relation) for game_relation in json.loads(content).get("relatedgames")]
 
-    def game_relation(self,sId,tId):     #sId = sourceId tId = targetId
-        response,content = self.request("/game/%d/relation/%d"%(sId,tId))
+    def game_relation(self,s_id,t_id):     #s_id = sourceId t_id = targetId
+        response,content = self.request("/game/%d/relation/%d"%(s_id,t_id))
         if not response.status == 200:
             print "/game/sId/relation/tId GET error"
             pass
         return GameRelation.from_dict(json.loads(content))
 
-    def add_game_relation(self,id):
-        response, content = self.request("/game/%d/relation"%id)
-        if not respsonse.status == 200:
+    def add_game_relation(self,s_id,t_id):
+        relation_dict = dict(g_id=t_id)
+        response, content = self.request("/game/%d/relation"%s_id, method="POST", body=relation_dict)
+        if not response.status == 200:
             print "/game/id/relation POST error"
             pass
         return GameRelation.from_dict(json.loads(content))

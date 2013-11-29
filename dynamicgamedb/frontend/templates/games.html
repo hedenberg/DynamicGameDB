@@ -44,6 +44,7 @@
                 <div class="row" id="games_row"   >
               {% endif %} 
             {% endfor%}
+            {% if search != "GET" %}
             <div class="col-xs-4" id="game_container">
               <a href="/game/add" >
                 <div class="info_container" id="add_new_game" >
@@ -52,6 +53,7 @@
                 </div>
               </a>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>
