@@ -234,6 +234,12 @@ body {
     padding-top:10px
 }
 
+#top_related_search_form {
+    height:46px; 
+    font-size:large; 
+    padding-top:0px
+}
+
 #relation_info{
     height:46px; 
     font-size:large; 

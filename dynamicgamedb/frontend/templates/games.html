@@ -29,7 +29,7 @@
                   <div class="info_container" id="info_{{game.id}}" onmouseout='moveInfoBack({{game.id}})'  >
                     <b> {{game.title}} </b> <br>
                     Platform: {{game.platform   | truncate(16,True)}} <br>
-                    Release date: {{game.date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                    Release date: {{game.release_date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
                     Developer: {{game.developer | truncate(16,True)}} <br>
                     Publisher: {{game.publisher | truncate(16,True)}} <br>
                     <br>
