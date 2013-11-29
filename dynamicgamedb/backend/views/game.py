@@ -103,11 +103,14 @@ def game_relations(id):
         rgs = zip((map(lambda (r,c):c, rs)),games)
         rgs = sorted(rgs,key=lambda rg: rg[0], reverse=True)
         return jsonify({"relatedgames":[{"game_id":game.g_id,
-                        "game_title":game.title,
-                        "platform":game.platform.name,
-                        "platform_id":game.platform.p_id,
-                        "developer":game.developer,
-                        "relation_count":c} for (c,game) in rgs]})
+                            "game_title":game.title,
+                            "platform":game.platform.name,
+                            "platform_id":game.platform.p_id,
+                            "info":game.info,
+                            "release_date":game.release_date.strftime("%Y-%m-%d"),
+                            "developer":game.developer,
+                            "publisher":game.publisher,
+                            "relation_count":c} for (c,game) in rgs]})
     else:
         if id == request.form['g_id']:
             return jsonify({"error":"Can not relate to self"})
@@ -143,7 +146,10 @@ def game_relations(id):
                         "game_title":game.title,
                         "platform":game.platform.name,
                         "platform_id":game.platform.p_id,
+                        "info":game.info,
+                        "release_date":game.release_date.strftime("%Y-%m-%d"),
                         "developer":game.developer,
+                        "publisher":game.publisher,
                         "relation_count":relation.count})
 
 @backend.route('/api/game/<int:source_id>/relation/<int:target_id>', methods=['GET'])
@@ -169,14 +175,20 @@ def game_relation(source_id, target_id):
     relation = db_session.query(Relation).get((g1.g_id,g2.g_id))
     if relation == None:
         return jsonify({"game_id":game.g_id,
-                    "game_title":game.title,
-                    "platform":game.platform.name,
-                    "platform_id":game.platform.p_id,
-                    "developer":game.developer,
-                    "relation_count":0})
+                        "game_title":game.title,
+                        "platform":game.platform.name,
+                        "platform_id":game.platform.p_id,
+                        "info":game.info,
+                        "release_date":game.release_date.strftime("%Y-%m-%d"),
+                        "developer":game.developer,
+                        "publisher":game.publisher,
+                        "relation_count":0})
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
                     "platform_id":game.platform.p_id,
+                    "info":game.info,
+                    "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
+                    "publisher":game.publisher,
                     "relation_count":relation.count})
