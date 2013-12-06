@@ -73,7 +73,19 @@
                  Top Related Games 
             </div>
             <div class="col-xs-4" id="relation_info" >
-             37 game by 598 relations
+              {% set relations = 0 %}
+              {% set numberOfGames = 0 %}
+              {% for loopGame in games %}
+                {% if loop.last %}
+                  {% set relations = relations + loopGame.relation_count  %}
+                  {{loop.length}} game by {{relations}} relations
+                {% else %}
+                  {% set relations = relations + loopGame.relation_count  %}
+                {% endif %}
+              {% endfor %}
+             
+             
+            
             </div>
             <!-- <a href="javascript:showSearchBar({{game.id}})" id="relate_game_link"  > -->
               <a href="/game/{{game.id}}/relate" id="relate_game_link"  >
