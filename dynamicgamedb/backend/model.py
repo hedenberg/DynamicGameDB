@@ -3,6 +3,18 @@ from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 from database import Base
 
+class User(Base):
+    __tablename__ = 'users'
+    openid = Column(String(500), primary_key=True)
+    email = Column(String(250))
+
+    def __init__(self, openid, email):
+        self.openid = openid
+        self.email = email
+
+    def __repr__(self):
+        return '<User %r>' % (self.email)
+
 class Game(Base):
     __tablename__ = 'games'
     g_id = Column(Integer, primary_key=True)
@@ -14,6 +26,7 @@ class Game(Base):
     release_date = Column(DateTime, default=datetime.now)
     developer = Column(String(250), default="")
     publisher = Column(String(250), default="")
+    relations = Column(Integer, default=0)
 
     def __init__(self, title=None, platform=None):
         self.title = title
