@@ -48,6 +48,8 @@ def create_or_login(resp):
         return redirect(oid.get_next_url())
     return redirect(url_for('create_profile', next=oid.get_next_url(), email=resp.email))
 
+
+
 @frontend.route('/create-profile', methods=['GET', 'POST'])
 def create_profile():
     if g.user is not None or 'openid' not in session:
