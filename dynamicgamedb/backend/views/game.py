@@ -25,7 +25,17 @@ def games():
                                   "developer":game.developer,
                                   "publisher":game.publisher} for game in games]})
     else:
+        relations = db_session.query(Relation).order_by(Relation.count)
+        print "most popular", relations
+        rel_list = []
+        for relation in relations:
+            rel_list.append(relation.count)
+
+        print rel_list
         games = db_session.query(Game).order_by(Game.g_id)
+       
+
+        print "TESTING", games
         return jsonify({"games":[{"game_id":game.g_id,
                                   "game_title":game.title,
                                   "platform":game.platform.name,
