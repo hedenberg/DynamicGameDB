@@ -7,16 +7,19 @@ from datetime import datetime
 @frontend.route('/games', methods=['GET', 'POST'])
 def games():
     print "games"
-    games = dgdb.games()
+
+    
     print "games return"
           # should be changed to what the search query was for
     if request.method == 'POST':
+        games = dgdb.games(search_term=request.form['search_field'])
         search=request.form['search_field']
         return render_template("games.html", games=games, search=search)
     else: 
     # games_list = []
     # for game in games:
     #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
+        games =  dgdb.get_games()
         search = "GET"
         return render_template("games.html", games=games, search=search)
     
@@ -95,7 +98,7 @@ def search_relate_game(id):
         rel_search = request.form['relate_search_field']
         print rel_search
         game = dgdb.game(id)
-        games = dgdb.games()
+        games = dgdb.games(search_term=rel_search)
         return render_template('relate_game.html',games=games, game=game, search=rel_search)
     else:
         game   = dgdb.game(id)
