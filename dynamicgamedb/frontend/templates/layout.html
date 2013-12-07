@@ -36,8 +36,8 @@
     {% endblock %}
   </head>
   {% set navigation_bar = [
-      ('/game/add', 'add game', 'Add game'),
-      ('/login/','sign in with google', 'Sign in with Google')
+      ('/game/add', 'add game', 'Add game')
+      
   ] -%}
   {% set active_page = active_page|default('index') -%}
 
@@ -71,6 +71,10 @@
             <a href="{{ href|e }}">{{ caption|e }}</a>
           </li>
         {% endfor %}
+        <li>
+          <a href="/login/"> Sign in with Google </a>   <!-- TODO if else to check if logged in or not and print someting like Sign out from: <email> -->
+        </li>
+      
       </ul>  
     </nav>
   </div>
