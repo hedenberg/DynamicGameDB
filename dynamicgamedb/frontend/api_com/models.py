@@ -1,7 +1,16 @@
 
+class User(object):
+    def __init__(self, token, email):
+        self.token = token
+        self.email = email
+
+    @classmethod
+    def from_dict(cls, data):
+        return User(token = data.get("user_token"),
+                    email = data.get("user_email"))
 
 class Game(object):
-    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None):
+    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None, relations=None):
         self.id = id
         self.title = title
         self.platform = platform
@@ -11,6 +20,7 @@ class Game(object):
         self.release_date = release_date
         self.developer = developer
         self.publisher = publisher
+        self.relations = relations
 
     @classmethod
     def from_dict(cls, data):
@@ -22,7 +32,8 @@ class Game(object):
                     picture = data.get("picture"),
                     release_date = str(data.get("release_date")),
                     developer = data.get("developer"),
-                    publisher = data.get("publisher")) 
+                    publisher = data.get("publisher"),
+                    relations = data.get("relations")) 
 
 class Platform(object):
     def __init__(self, id, name):
