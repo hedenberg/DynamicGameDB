@@ -133,6 +133,8 @@ def game_relations(id):
             db_session.add(relation)
         else:
             relation.count = relation.count + 1
+        g1.relations = g1.relations + 1
+        g2.relations = g2.relations + 1
         try:
             db_session.commit()
         except Exception, e:
