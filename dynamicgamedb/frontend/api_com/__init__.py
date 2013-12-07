@@ -4,8 +4,11 @@ import json
 
 from dynamicgamedb.frontend.api_com.models import Game, Platform, Relation, GameRelation
 
-API_URL = "http://dynamicgamedb.herokuapp.com"
-#API_URL = "http://localhost:8000"
+#API_URL = "http://dynamicgamedb.herokuapp.com"
+API_URL = "http://localhost:8000"
+
+CLIENT_ID = 1337
+CLIENT_SECRET = "you no take candle"
 
 class DynamicGameDB(object):
 
@@ -103,6 +106,27 @@ class DynamicGameDB(object):
             pass
         return GameRelation.from_dict(json.loads(content))
 
+    # -- Authentication --
+
+    def api_login_url(self):
+        return API_URL + "/api/login/" + "?client_id=%s" % CLIENT_ID
+
+    def auth_token(self, one_time_token):
+        auth_dict = dict(client_id=str(CLIENT_ID), client_secret=CLIENT_SECRET, one_time_token=str(one_time_token))
+        response, content = self.request("/token/", method="POST", body=auth_dict)
+        if not response.status == 200:
+            print "/token/ POST error"
+            pass
+        return content
+
+    def user(self, token):
+        auth_dict = dict(client_id=str(CLIENT_ID), client_secret=CLIENT_SECRET, one_time_token=str(token))
+        response, content = self.request("/user/", method="POST", body=auth_dict)
+        if not response.status == 200:
+            print "/token/ POST error"
+            pass
+        return User.from_dict(json.loads(content))
+
     # -- General --
 
     def request(self, endpoint, method="GET", headers=dict(), body=None):
@@ -110,7 +134,6 @@ class DynamicGameDB(object):
         if body:
             body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
         headers.update({"Content-Type":"application/x-www-form-urlencoded"})
-        #response, content = http.request("http://fierce-wave-8853.herokuapp.com/api"+endpoint,
         response, content = http.request(API_URL+"/api"+endpoint,
                                          method=method,
                                          headers=headers,
