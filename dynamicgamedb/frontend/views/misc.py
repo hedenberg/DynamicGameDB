@@ -16,7 +16,7 @@ from flask import request, jsonify, redirect, url_for, render_template, send_fro
 @frontend.route('/')
 def index():
     print "games"
-    games = dgdb.games()
+    games = dgdb.get_games()
     #search = "GET"
     return render_template("games.html", games=games, search="GET")
 """

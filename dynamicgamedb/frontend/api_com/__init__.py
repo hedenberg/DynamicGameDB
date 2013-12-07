@@ -11,12 +11,25 @@ class DynamicGameDB(object):
 
     # -- Game --
 
-    def games(self):
+    def games(self,search_term):
+        games_dict = dict(search_term=search_term)
+        response, content = self.request("/games",  
+                                         method="POST",
+                                         body=games_dict)
+        if not response.status == 200:
+            pass
+            #Should probably handle error
+        print content
+        return [Game.from_dict(game) for game in json.loads(content).get("games")]
+
+    def get_games(self):
         response, content = self.request("/games")
+
         if not response.status == 200:
             pass
             #Should probably handle error
         return [Game.from_dict(game) for game in json.loads(content).get("games")]
+
 
     def game(self, id):
         response, content = self.request("/game/%d"%id)

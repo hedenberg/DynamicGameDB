@@ -6,19 +6,45 @@ from flask import request, jsonify, redirect, url_for
 import dateutil.parser
 import datetime
 
-@backend.route('/api/games', methods=['GET'])
+@backend.route('/api/games', methods=['POST', 'GET'])
 def games():
     print "api games"
-    games = db_session.query(Game).order_by(Game.g_id)
-    return jsonify({"games":[{"game_id":game.g_id,
-                              "game_title":game.title,
-                              "platform":game.platform.name,
-                              "platform_id":game.platform.p_id,
-                              "info":game.info,
-                              "picture":game.picture,
-                              "release_date":game.release_date.strftime("%Y-%m-%d"),
-                              "developer":game.developer,
-                              "publisher":game.publisher} for game in games]})
+    if request.method == 'POST':
+        search_term = str(request.form['search_term'])
+        print "search_term_backend",search_term
+        #games = Game.query.filter(Game.title.like(search_term)).all()
+        games = Game.query.filter(Game.title.contains(search_term)).all()
+        #Game.query.filter(Game.title.like(title)).all()
+        return jsonify({"games":[{"game_id":game.g_id,
+                                  "game_title":game.title,
+                                  "platform":game.platform.name,
+                                  "platform_id":game.platform.p_id,
+                                  "info":game.info,
+                                  "picture":game.picture,
+                                  "release_date":game.release_date.strftime("%Y-%m-%d"),
+                                  "developer":game.developer,
+                                  "publisher":game.publisher} for game in games]})
+    else:
+        relations = db_session.query(Relation).order_by(Relation.count)
+        print "most popular", relations
+        rel_list = []
+        for relation in relations:
+            rel_list.append(relation.count)
+
+        print rel_list
+        games = db_session.query(Game).order_by(Game.g_id)
+       
+
+        print "TESTING", games
+        return jsonify({"games":[{"game_id":game.g_id,
+                                  "game_title":game.title,
+                                  "platform":game.platform.name,
+                                  "platform_id":game.platform.p_id,
+                                  "info":game.info,
+                                  "picture":game.picture,
+                                  "release_date":game.release_date.strftime("%Y-%m-%d"),
+                                  "developer":game.developer,
+                                  "publisher":game.publisher} for game in games]})        
 
 @backend.route('/api/game/add', methods=['POST'])
 def add_game():
