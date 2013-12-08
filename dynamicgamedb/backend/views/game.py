@@ -13,9 +13,7 @@ def games():
     if request.method == 'POST':
         search_term = str(request.form['search_term'])
         print "search_term_backend",search_term
-        #games = Game.query.filter(Game.title.like(search_term)).all()
         games = (Game.query.filter(Game.title.contains(search_term)).all())
-        #Game.query.filter(Game.title.like(title)).all()
         return jsonify({"games":[{"game_id":game.g_id,
                                   "game_title":game.title,
                                   "platform":game.platform.name,
@@ -27,7 +25,6 @@ def games():
                                   "publisher":game.publisher,
                                   "relations":game.relations} for game in games]})
     else:
-        #relations = db_session.query(Relation).order_by(Relation.count)
         games = db_session.query(Game).order_by(Game.relations.desc())
         games = games[:9]
         return jsonify({"games":[{"game_id":game.g_id,
@@ -55,7 +52,9 @@ def add_game():
         platform = db_session.query(Platform).get(request.form['platform_id'])
         if platform == None:
             print "Platform doesn't exist"
-            return jsonify({"error":"Platform doesn't exist"})
+            return backend.get_error_response(
+                message="Platform doesn't exist",
+                status_code=404)
         game = Game(request.form['title'], platform)
         db_session.add(game)
         db_session.commit()
@@ -146,20 +145,29 @@ def add_game_relations(id):
     g2 = db_session.query(Game).get(g2id)
     if g1 == None:
         if g1id == id:
-            return jsonify({"error":"Source id doesn't exist"})
+            return backend.get_error_response(
+                message="Source id doesn't exist",
+                status_code=404)
         else:
-            return jsonify({"error":"Target id doesn't exist"})
+            return backend.get_error_response(
+                message="Target id doesn't exist",
+                status_code=404)
     if g2 == None:
         if g2id == id:
-            return jsonify({"error":"Source id doesn't exist"})
+            return backend.get_error_response(
+                message="Source id doesn't exist",
+                status_code=404)
         else:
-            return jsonify({"error":"Target id doesn't exist"})
+            return backend.get_error_response(
+                message="Target id doesn't exist",
+                status_code=404)
 
     uniqueRelation = db_session.query(UniqueRelation).get((g.backend_user.openid, g1.g_id, g2.g_id))
     print "unik relation", uniqueRelation
 
     if uniqueRelation != None:
-        return jsonify({"error":"You have allready done this relation earlier"})
+        print "Not unique relation"
+        return backend.get_error_response(message="You have already done this relation earlier", status_code=404)
     else:
         #Target-game from users point of view
         game = db_session.query(Game).get(request.form['g_id'])
@@ -182,7 +190,9 @@ def add_game_relations(id):
     try:
         db_session.commit()
     except Exception, e:
-        return "Failed"
+        return backend.get_error_response(
+                message="Commit has failed.",
+                status_code=404)
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
