@@ -1,4 +1,9 @@
 
+class DGDB_Error(Exception):
+    def __init__(self, type, message):
+        Exception.__init__(self, message)
+        self.type = type
+
 class User(object):
     def __init__(self, email):
         self.email = email
