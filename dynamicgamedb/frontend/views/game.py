@@ -1,4 +1,4 @@
-from dynamicgamedb.frontend import frontend, dgdb
+from dynamicgamedb.frontend import frontend, dgdb, login_required
 from flask import request, jsonify, redirect, url_for, render_template
 from dynamicgamedb.frontend.api_com import DynamicGameDB, Game, Platform, GameRelation
 import sys, traceback
@@ -42,6 +42,7 @@ def game(id):
         print '-'*60
 
 @frontend.route('/game/add', methods=['GET','POST'])
+@login_required
 def add_game():
     platforms = dgdb.platforms()
     if request.method == 'POST':
