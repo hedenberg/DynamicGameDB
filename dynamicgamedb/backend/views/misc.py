@@ -2,7 +2,7 @@
 from dynamicgamedb.backend import backend, oid
 from dynamicgamedb.backend.model import Game, Platform, User
 from dynamicgamedb.backend.database import db_session
-from flask import Response, request, jsonify, redirect, url_for, session
+from flask import Response, request, jsonify, redirect, url_for, session, g
 
 FRONTEND_URL = 'http://localhost:8000'
 
@@ -18,23 +18,11 @@ def api_login():
     client_id = request.args.get("client_id", None)
     print "clientid: ", client_id
     if not client_id:
-        """
-        response = Response(    ## This should totaly be defined as a helper function somewhere...
-            json.dumps({"error": { 
-                "type": "DGDBApiException", 
-                "message": "Why did you forget client_id!?" 
-            }}),
-            mimetype="application/json",
-            status=400 # Bad request, bad!
-        )
-        return response
-        """
-        print "Something went wrong but I'll allow it for now"
-        ##return "This is wrong"
-    session['client_id'] = client_id
+        print "No client id provided"
     ## Get client from some magical database of accepted clients
     # client = magic
     # if client:
+    session['client_id'] = client_id
     if not "openid" in session:
         print "not openid"
         # Redirect to google 
@@ -47,7 +35,12 @@ def api_login():
         # to generate a new token.
         # Store one time token in database
         # Redirect to frontend with a code so that frontend can request a new token
-        return redirect(FRONTEND_URL+'/auth/?one_time_token=1337')
+        user = db_session.query(User).filter_by(openid=session['openid']).first()
+        if user is None:
+            print "openid stored but user not found, contact god and tell him this is bad."
+        user.generate_new_ott()
+        db_session.commit()
+        return redirect(FRONTEND_URL + '/auth/?one_time_token=%s' % user.one_time_token)
 
 @oid.after_login
 def create_or_login(resp):
@@ -58,11 +51,16 @@ def create_or_login(resp):
         #flash(u'Successfully signed in')
         print "user found - openid: ", session['openid']
         g.user = user
-        return redirect(FRONTEND_URL+'/auth/?one_time_token=1337')
+        user.generate_new_ott()
+        db_session.commit()
+        return redirect(FRONTEND_URL + '/auth/?one_time_token=%s' % user.one_time_token)
     print "no user - openid: ", session['openid']
-    db_session.add(User(openid=session['openid'], email=resp.email))
+    user = User(openid=session['openid'], email=resp.email)
+    db_session.add(user)
     db_session.commit()
-    return redirect(FRONTEND_URL+'/auth/?one_time_token=1337')
+    user.generate_new_ott()
+    db_session.commit()
+    return redirect(FRONTEND_URL + '/auth/?one_time_token=%s' % user.one_time_token)
 
 @backend.route('/api/token', methods=['GET','POST'])
 @backend.route('/api/token/', methods=['GET','POST'])
@@ -74,18 +72,35 @@ def api_token():
         return "there is no one time token biatch"
     # Get one time token from database 
     # check if it existed as described in database
-    token = 7331 #Generate magical token and store in database
-    print "returning token 7331"
-    return str(token)
+    user = db_session.query(User).filter_by(one_time_token=ott).first()
+    if user is None:
 
-@backend.route('/api/user/')
+        print "Invalid one time token"
+        return "Invalid one time token"
+    user.generate_new_token()
+    db_session.commit()
+    return user.token
+
+@backend.route('/api/user', methods=['GET','POST'])
+@backend.route('/api/user/', methods=['GET','POST'])
 def user():
-    token = request.args.get("user_token", None)
+    print "backend user"
+    #token = request.args.get("user_token", None)
+    token = request.form.get('token', None)
     if not token:
+        print "no token"
         return "lol failure"
     
     #Get openid from token
-    user = db_session.query(User).get(token)
+    print "token: ", token
+    user = db_session.query(User).filter(User.token.like(token)).first()
+    if user is None:
+        users = db_session.query(User).order_by(User.token)
+        for user in users:
+            print "email: ", user.email
+            print "user token: ", user.token
+        print "what the actual fuck. "
+    print "json user email: ", user.email
     return jsonify({"user_email":user.email})
 
 @backend.route('/initp', methods=['GET'])
