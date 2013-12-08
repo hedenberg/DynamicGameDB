@@ -30,12 +30,12 @@ class User(Base):
 
 class Client(Base):
     __tablename__ = 'clients'
-    client_id = Column(Integer, primary_key=True)
-    client_secret = Column(String(250))
+    c_id = Column(Integer, primary_key=True)
+    c_secret = Column(String(250))
 
     def __init__(self, client_id, client_secret):
-        self.client_id = client_id
-        self.client_secret = client_secret
+        self.c_id = client_id
+        self.c_secret = client_secret
 
     def __repr__(self):
         return '<Client %d>' % (self.client_id)
