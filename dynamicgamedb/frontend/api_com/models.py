@@ -1,6 +1,7 @@
 
 class DGDB_Error(Exception):
     def __init__(self, type, message):
+        print "DBDB_error init"
         Exception.__init__(self, message)
         self.type = type
 
