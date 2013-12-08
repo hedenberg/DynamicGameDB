@@ -1,12 +1,10 @@
 {% extends "layout.html" %}
-{% set active_page = "index" %}
+{% set active_page = "add_game" %}
 {% block body %} 
     
   
 
       <div class="starter-template">
-        <h1>Add game</h1>
-        <p class="lead">Add a new game
           <div class="container" style="align:center;">
           <form action="{{ url_for('frontend.add_game') }}" class="form-horizontal" id="registration" method='post' >   
             <div class="form-group">
