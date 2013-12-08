@@ -36,7 +36,7 @@
     {% endblock %}
   </head>
   {% set navigation_bar = [
-      ('/game/add', 'add game', 'Add game')
+      ('/game/add', 'add_game', 'Add game')
       
   ] -%}
   {% set active_page = active_page|default('index') -%}
@@ -67,14 +67,23 @@
           </div>
         </form>
        {% for href, id, caption in navigation_bar %}
-          <li {% if id == active_page %} class="active" {% endif%} >
-            <a href="{{ href|e }}">{{ caption|e }}</a>
+          <li  >
+            <a href="{{ href|e }}" {% if id == active_page %} style="color:white;" {% endif%}   >{{ caption|e }}  </a>
           </li>
         {% endfor %}
+        {% if session['user_token'] %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{session['user_token']|truncate(16,True)}}<b class="caret"></b></a>
+            <ul class="dropdown-menu" id="drowdown_ul"  >
+              <li ><a href="/logout" id="logout_a" >Sign out</a></li>
+
+            </ul>
+        </li>  
+        {% else %}
         <li>
           <a href="/login/"> Sign in with Google </a>   <!-- TODO if else to check if logged in or not and print someting like Sign out from: <email> -->
         </li>
-      
+        {% endif %}
       </ul>  
     </nav>
   </div>

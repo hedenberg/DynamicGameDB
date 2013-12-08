@@ -257,5 +257,24 @@ body {
 #add_new_game{
     background-image: url(http://i.imgur.com/4Dzdiky.png);
     opacity: 1.0;
+}
 
+.activated{
+    color:white;
+}
+
+#active_page{
+    color:white;
+}
+
+#drowdown_ul{
+    background-color:black;
+}
+
+#logout_a{
+    color:#999;
+}
+
+#logout_a:hover{
+    color:white;
 }

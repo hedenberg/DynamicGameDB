@@ -87,32 +87,33 @@
 
             {% set column = 1 %}
             {% for loopGame in games %}
-
-              <div class="col-xs-4" id="game_container">
-                <div class="picture_container" id="picture_{{loopGame.id}}" onmouseover='moveInfoFront({{loopGame.id}})'>
-                  <img src="{{loopGame.picture}}" height="400" width="298" />
-                </div>
-                <a href="/game/{{game.id}}/relate/{{loopGame.id}}" >
-                  <div class="info_container" id="info_{{loopGame.id}}" onmouseout='moveInfoBack({{loopGame.id}})'  >
-                    <b> {{loopGame.title}} </b> <br>
-                    Platform: {{loopGame.platform   | truncate(16,True)}} <br>
-                    Release date: {{loopGame.release_date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
-                    Developer: {{loopGame.developer | truncate(16,True)}} <br>
-                    Publisher: {{loopGame.publisher | truncate(16,True)}} <br>
-                    {% if loopGame.relation_count %}
-                      Relations: {{loopGame.relation_count}} <br>
-                    {% endif %}
-                    <br>
-                    Click to relate with {{game.title}}
+              {% if not loopGame.id == game.id %}
+                <div class="col-xs-4" id="game_container">
+                  <div class="picture_container" id="picture_{{loopGame.id}}" onmouseover='moveInfoFront({{loopGame.id}})'>
+                    <img src="{{loopGame.picture}}" height="400" width="298" />
                   </div>
-                </a>
-              </div>
-              {% set column = column+1 %}
-              {% if column==4 %}
-                {% set column=1 %}
+                  <a href="/game/{{game.id}}/relate/{{loopGame.id}}" >
+                    <div class="info_container" id="info_{{loopGame.id}}" onmouseout='moveInfoBack({{loopGame.id}})'  >
+                      <b> {{loopGame.title}} </b> <br>
+                      Platform: {{loopGame.platform   | truncate(16,True)}} <br>
+                      Release date: {{loopGame.release_date   | truncate(14,True)}} <br>    <!-- slightly longer name but date shouldn't go over 14 anyway. -->
+                      Developer: {{loopGame.developer | truncate(16,True)}} <br>
+                      Publisher: {{loopGame.publisher | truncate(16,True)}} <br>
+                      {% if loopGame.relation_count %}
+                        Relations: {{loopGame.relation_count}} <br>
+                      {% endif %}
+                      <br>
+                      Click to relate with {{game.title}}
+                    </div>
+                  </a>
                 </div>
-                <div class="row" id="games_row"   >
-              {% endif %} 
+                {% set column = column+1 %}
+                {% if column==4 %}
+                  {% set column=1 %}
+                  </div>
+                  <div class="row" id="games_row"   >
+                {% endif %} 
+              {% endif %}
             {% endfor%}
             {% if search != "GET" %}
               <div class="col-xs-4" id="game_container">
