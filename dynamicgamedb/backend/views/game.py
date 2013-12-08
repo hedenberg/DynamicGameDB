@@ -5,6 +5,7 @@ from dynamicgamedb.backend.database import db_session
 from flask import request, jsonify, redirect, url_for
 import dateutil.parser
 import datetime
+from sqlalchemy import desc
 
 @backend.route('/api/games', methods=['POST', 'GET'])
 def games():
@@ -13,7 +14,7 @@ def games():
         search_term = str(request.form['search_term'])
         print "search_term_backend",search_term
         #games = Game.query.filter(Game.title.like(search_term)).all()
-        games = Game.query.filter(Game.title.contains(search_term)).all()
+        games = (Game.query.filter(Game.title.contains(search_term)).all())
         #Game.query.filter(Game.title.like(title)).all()
         return jsonify({"games":[{"game_id":game.g_id,
                                   "game_title":game.title,
@@ -23,19 +24,12 @@ def games():
                                   "picture":game.picture,
                                   "release_date":game.release_date.strftime("%Y-%m-%d"),
                                   "developer":game.developer,
-                                  "publisher":game.publisher} for game in games]})
+                                  "publisher":game.publisher,
+                                  "relations":game.relations} for game in games]})
     else:
-        relations = db_session.query(Relation).order_by(Relation.count)
-        print "most popular", relations
-        rel_list = []
-        for relation in relations:
-            rel_list.append(relation.count)
-
-        print rel_list
-        games = db_session.query(Game).order_by(Game.g_id)
-       
-
-        print "TESTING", games
+        #relations = db_session.query(Relation).order_by(Relation.count)
+        games = db_session.query(Game).order_by(Game.relations.desc())
+        games = games[:9]
         return jsonify({"games":[{"game_id":game.g_id,
                                   "game_title":game.title,
                                   "platform":game.platform.name,
@@ -44,7 +38,8 @@ def games():
                                   "picture":game.picture,
                                   "release_date":game.release_date.strftime("%Y-%m-%d"),
                                   "developer":game.developer,
-                                  "publisher":game.publisher} for game in games]})        
+                                  "publisher":game.publisher,
+                                  "relations":game.relations} for game in games]})        
 
 @backend.route('/api/game/add', methods=['POST'])
 def add_game():
@@ -74,7 +69,8 @@ def add_game():
                     "picture":game.picture,
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
-                    "publisher":game.publisher})
+                    "publisher":game.publisher,
+                    "relations":game.relations})
 
 @backend.route('/api/game/<int:id>', methods=['GET'])
 def game(id):
@@ -87,7 +83,8 @@ def game(id):
                     "picture":game.picture,
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
-                    "publisher":game.publisher})
+                    "publisher":game.publisher,
+                    "relations":game.relations})
 
 @backend.route('/api/game/<int:id>/edit', methods=['POST'])
 def edit_game(id):
@@ -110,7 +107,8 @@ def edit_game(id):
                     "picture":game.picture,
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
-                    "publisher":game.publisher})
+                    "publisher":game.publisher,
+                    "relations":game.relations})
 @backend.route('/api/game/<int:id>/relation', methods=['GET', 'POST'])
 def game_relations(id):
     if request.method == 'GET':
@@ -131,6 +129,7 @@ def game_relations(id):
                             "release_date":game.release_date.strftime("%Y-%m-%d"),
                             "developer":game.developer,
                             "publisher":game.publisher,
+                            "relations":game.relations,
                             "relation_count":c} for (c,game) in rgs]})
     else:
         if id == request.form['g_id']:
@@ -174,6 +173,7 @@ def game_relations(id):
                         "release_date":game.release_date.strftime("%Y-%m-%d"),
                         "developer":game.developer,
                         "publisher":game.publisher,
+                        "relations":game.relations,
                         "relation_count":relation.count})
 
 @backend.route('/api/game/<int:source_id>/relation/<int:target_id>', methods=['GET'])
@@ -207,6 +207,7 @@ def game_relation(source_id, target_id):
                         "release_date":game.release_date.strftime("%Y-%m-%d"),
                         "developer":game.developer,
                         "publisher":game.publisher,
+                        "relations":game.relations,
                         "relation_count":0})
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
@@ -217,4 +218,5 @@ def game_relation(source_id, target_id):
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher,
+                    "relations":game.relations,
                     "relation_count":relation.count})
