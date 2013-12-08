@@ -97,27 +97,28 @@
 
  
   {% endblock %}
-
+  <div id="body_container" >
   {% block default_body %}
            
     {% if error %}
-      <div class="container">  
+      <div class="row">
         <div id="alert_div" class="alert alert-danger">  
           <a class="close" data-dismiss="alert">×</a>  
           <strong>Warning!</strong> {{error}}                                             
         </div>  
-      </div> 
+      </div>
     {% endif %}
 
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages %}
-            <div class="container">  
-              <div id="alert_div" class="alert alert-danger">  
-                <a class="close" data-dismiss="alert">×</a>  
-                <strong>Warning!</strong> {{message}}                                             
-              </div>  
-            </div>
+              <div class="row">
+                <div id="alert_div" class="alert alert-danger">  
+                  <a class="close" data-dismiss="alert">×</a>  
+                  <strong>Warning!</strong> {{message}}                                             
+                </div>
+              </div>
+
           {% endfor %}
         {% endif %}
       {% endwith %} 
@@ -127,7 +128,7 @@
 
   {% endblock %}  
 
-  <div id="body_container" >
+  
   {% block body %} {% endblock %}
   </div> 
 
