@@ -116,7 +116,7 @@ class DynamicGameDB(object):
 
     def add_game_relation(self,s_id,t_id):
         relation_dict = dict(g_id=t_id)
-        response, content = self.request(endpoint="/game/%d/relation"%s_id, method="POST", body=relation_dict)
+        response, content = self.login_required_request(endpoint="/game/%d/relation"%s_id, method="POST", body=relation_dict)
         if not response.status == 200:
             print "/game/id/relation POST error"
             pass
