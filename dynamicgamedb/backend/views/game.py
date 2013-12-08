@@ -42,6 +42,7 @@ def games():
                                   "relations":game.relations} for game in games]})        
 
 @backend.route('/api/game/add', methods=['POST'])
+@backend.user_required
 def add_game():
     title = request.form['title']
     platform_id = str(request.form['platform_id'])
