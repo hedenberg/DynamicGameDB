@@ -2,18 +2,43 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 from database import Base
+import hashlib
 
 class User(Base):
     __tablename__ = 'users'
     openid = Column(String(500), primary_key=True)
     email = Column(String(250))
+    token = Column(String(500))
+    one_time_token = Column(String(500))
 
     def __init__(self, openid, email):
         self.openid = openid
         self.email = email
 
+    def generate_new_ott(self):
+        h = hashlib.new("sha1")
+        h.update("%s:%s" % (self.openid, datetime.utcnow().isoformat()))
+        self.one_time_token = h.hexdigest()
+
+    def generate_new_token(self):
+        h = hashlib.new("sha1")
+        h.update("%s:%s" % (self.openid, datetime.utcnow().isoformat()))
+        self.token = h.hexdigest()
+
     def __repr__(self):
         return '<User %r>' % (self.email)
+
+class Client(Base):
+    __tablename__ = 'clients'
+    client_id = Column(Integer, primary_key=True)
+    client_secret = Column(String(250))
+
+    def __init__(self, client_id, client_secret):
+        self.client_id = client_id
+        self.client_secret = client_secret
+
+    def __repr__(self):
+        return '<Client %d>' % (self.client_id)
 
 class Game(Base):
     __tablename__ = 'games'
