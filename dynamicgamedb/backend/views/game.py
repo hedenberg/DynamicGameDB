@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from dynamicgamedb.backend import backend
-from dynamicgamedb.backend.model import Game, Platform, Relation
+from dynamicgamedb.backend.model import Game, Platform, Relation, UniqueRelation
 from dynamicgamedb.backend.database import db_session
-from flask import request, jsonify, redirect, url_for
+from flask import request, jsonify, redirect, url_for,g
 import dateutil.parser
 import datetime
 from sqlalchemy import desc
@@ -133,6 +133,9 @@ def game_relations(id):
                             "relations":game.relations,
                             "relation_count":c} for (c,game) in rgs]})
     else:
+        
+
+
         if id == request.form['g_id']:
             return jsonify({"error":"Can not relate to self"})
         g1id = id if id < request.form['g_id'] else request.form['g_id']
@@ -149,18 +152,28 @@ def game_relations(id):
                 return jsonify({"error":"Source id doesn't exist"})
             else:
                 return jsonify({"error":"Target id doesn't exist"})
-        #Target-game from users point of view
-        game = db_session.query(Game).get(request.form['g_id'])
-        #Always least id first
-        relation = db_session.query(Relation).get((g1.g_id,g2.g_id))
-        if relation == None:
-            print "Relation was None"
-            relation = Relation(g1,g2)
-            db_session.add(relation)
+
+        uniqueRelation = db_session.query(UniqueRelation).get((g.backend_user.openid, g1.g_id, g2.g_id))
+        if uniqueRelation != None:
+            pass  # Send error = user allready made this relation
         else:
-            relation.count = relation.count + 1
-        g1.relations = g1.relations + 1
-        g2.relations = g2.relations + 1
+            #Target-game from users point of view
+            game = db_session.query(Game).get(request.form['g_id'])
+            #Always least id first
+            relation = db_session.query(Relation).get((g1.g_id,g2.g_id))
+            if relation == None:
+                print "Relation was None"
+                relation = Relation(g1,g2)
+                db_session.add(relation)
+                uniqueRelation = UniqueRelation(g.backend_user.openid, g1.g_id, g2.g_id)
+                db_session.add(uniqueRelation)
+            else:
+                relation.count = relation.count + 1
+                UniqueRelation(g.backend_user.openid, relation.game1_id, relation.game2_id)
+
+
+            g1.relations = g1.relations + 1
+            g2.relations = g2.relations + 1
         try:
             db_session.commit()
         except Exception, e:
