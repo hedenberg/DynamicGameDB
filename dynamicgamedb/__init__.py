@@ -6,8 +6,6 @@ import os
 #from dynamicgamedb.frontend.views.user import create_app
 
 
-
-
 #ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../static')
 
 #app = Flask(__name__, static_folder=ASSETS_DIR)
