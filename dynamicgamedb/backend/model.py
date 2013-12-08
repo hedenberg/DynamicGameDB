@@ -88,3 +88,15 @@ class Relation(Base):
 
     def __repr__(self):
         return '<Relation g1:%r g2:%r %r>' % (self.game1.title, self.game2.title, self.count)
+
+
+class UniqueRelation(Base):
+    __tablename__ = "unique_relations"
+    openid = Column(String(500))
+    rel1_id = Column(Integer, primary_key=True)
+    rel2_id = Column(Integer, primary_key=True)
+
+    def __init__(self, openid ,rel1, rel2):
+        self.openid  = openid
+        self.rel1_id = rel1 
+        self.rel2_id = rel2 

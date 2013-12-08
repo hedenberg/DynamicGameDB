@@ -267,14 +267,24 @@ body {
     color:white;
 }
 
-#drowdown_ul{
+#dropdown_nav{
+    width:152px;  
+}
+
+#dropdown_ul{
     background-color:black;
+    min-width:152px;
 }
 
 #logout_a{
+
     color:#999;
 }
 
 #logout_a:hover{
     color:white;
+}
+
+#alert_div{
+    width:925px;
 }

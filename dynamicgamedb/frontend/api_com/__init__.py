@@ -143,7 +143,7 @@ class DynamicGameDB(object):
             print "/user/ POST error"
             self.error_handler(content)
         user = User.from_dict(json.loads(content))
-        session["user_email"] = user.email
+        session["user"] = user.email.split("@")[0]
 
     def user(self):
         print "Frontend user get thingy"
