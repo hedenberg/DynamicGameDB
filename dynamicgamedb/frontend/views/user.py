@@ -26,3 +26,4 @@ def auth_onetime():
         print "token: ", token
     print "redirect to /"
     return redirect("/")
+
