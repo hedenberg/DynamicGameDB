@@ -1,13 +1,11 @@
 
 class User(object):
-    def __init__(self, token, email):
-        self.token = token
+    def __init__(self, email):
         self.email = email
 
     @classmethod
     def from_dict(cls, data):
-        return User(token = data.get("user_token"),
-                    email = data.get("user_email"))
+        return User(email = data.get("user_email"))
 
 class Game(object):
     def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None, relations=None):
