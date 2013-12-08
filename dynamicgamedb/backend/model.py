@@ -92,7 +92,7 @@ class Relation(Base):
 
 class UniqueRelation(Base):
     __tablename__ = "unique_relations"
-    openid = Column(String(500))
+    openid = Column(String(500), primary_key=True)
     rel1_id = Column(Integer, primary_key=True)
     rel2_id = Column(Integer, primary_key=True)
 
@@ -100,3 +100,6 @@ class UniqueRelation(Base):
         self.openid  = openid
         self.rel1_id = rel1 
         self.rel2_id = rel2 
+
+    def __repr__(self):
+        return '<UniqueRelation openid:%r g1_id:%d g2_id:%d >' % (self.openid, self.rel1_id, self.rel2_id)

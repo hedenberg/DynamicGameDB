@@ -112,6 +112,7 @@ def edit_game(id):
                     "publisher":game.publisher,
                     "relations":game.relations})
 
+
 @backend.route('/api/game/<int:id>/relation', methods=['GET'])
 def game_relations(id):
     # All relations including this game
@@ -155,6 +156,8 @@ def add_game_relations(id):
             return jsonify({"error":"Target id doesn't exist"})
 
     uniqueRelation = db_session.query(UniqueRelation).get((g.backend_user.openid, g1.g_id, g2.g_id))
+    print "unik relation", uniqueRelation
+
     if uniqueRelation != None:
         pass  # Send error = user allready made this relation
     else:
@@ -169,9 +172,10 @@ def add_game_relations(id):
             uniqueRelation = UniqueRelation(g.backend_user.openid, g1.g_id, g2.g_id)
             db_session.add(uniqueRelation)
         else:
+            print "Relation allready existed"
             relation.count = relation.count + 1
-            UniqueRelation(g.backend_user.openid, relation.game1_id, relation.game2_id)
-
+            uniqueRelation =UniqueRelation(g.backend_user.openid, relation.game1_id, relation.game2_id)
+            db_session.add(uniqueRelation)
 
         g1.relations = g1.relations + 1
         g2.relations = g2.relations + 1
