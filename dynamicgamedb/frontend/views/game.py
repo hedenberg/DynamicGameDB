@@ -1,6 +1,7 @@
 from dynamicgamedb.frontend import frontend, dgdb
-from flask import request, jsonify, redirect, url_for, render_template
+from flask import request, jsonify, redirect, url_for, render_template, flash
 from dynamicgamedb.frontend.api_com import DynamicGameDB, Game, Platform, GameRelation
+from dynamicgamedb.frontend.api_com.models import DGDB_Error
 import sys, traceback
 from datetime import datetime
 
@@ -71,15 +72,9 @@ def edit_game(id):
         print "after backend call"
         return redirect(url_for('frontend.game', id=game.id))
     else:
-        try:
-            date = datetime.utcnow()
-            print date
-            return render_template('edit_game.html',game=game, platforms=platforms)
-        except:
-            print "Exception in user code:"
-            print '-'*60
-            traceback.print_exc(file=sys.stdout)
-            print '-'*60
+        date = datetime.utcnow()
+        print date
+        return render_template('edit_game.html',game=game, platforms=platforms)
         
     
     #TODO: extended form page for editing games and givinhg additional data
@@ -104,5 +99,10 @@ def search_relate_game(id):
 @frontend.route('/game/<int:id>/relate/<relate_id>', methods=['POST','GET'])
 def make_relation(id,relate_id):
     print "make relation", id , relate_id
-    test = dgdb.add_game_relation(id,relate_id)
+    try:
+        dgdb.add_game_relation(id,relate_id)
+    except Exception, e:
+        print "DBDB_ERROR"
+        flash(e.message, "warning")
+    print "relation made"
     return redirect(url_for('frontend.game', id=id ))
