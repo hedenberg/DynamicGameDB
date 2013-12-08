@@ -286,5 +286,6 @@ body {
 }
 
 #alert_div{
+    padding-right: -15px;
     width:925px;
 }
