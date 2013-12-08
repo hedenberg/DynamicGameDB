@@ -18,6 +18,5 @@ def auth_onetime():
         token = dgdb.auth_token(request.args.get("one_time_token"))
         session["user_token"] = token
         print "token: ", token
-        user = dgdb.user()
     print "redirect to /"
     return redirect("/")
