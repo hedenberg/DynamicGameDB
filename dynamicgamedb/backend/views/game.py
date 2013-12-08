@@ -159,7 +159,7 @@ def add_game_relations(id):
     print "unik relation", uniqueRelation
 
     if uniqueRelation != None:
-        pass  # Send error = user allready made this relation
+        return jsonify({"error":"You have allready done this relation earlier"})
     else:
         #Target-game from users point of view
         game = db_session.query(Game).get(request.form['g_id'])
