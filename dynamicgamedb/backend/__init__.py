@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, g, request, Response
+from flask import Blueprint, render_template, abort, g, request, Response, jsonify
 from jinja2 import TemplateNotFound
 from flask.ext.openid import OpenID
 from functools import wraps
@@ -32,7 +32,7 @@ class BackendBlueprint(Blueprint):
             return f(*args, **kwargs)
         return decorated_function
 
-    def get_error_response(message, type="DGDB_API_Exception", status_code=404):
+    def get_error_response(self, message, type="DGDB_API_Exception", status_code=404):
         response = Response(
             json.dumps({"error": { "type": type, "message": message }}),
             mimetype="application/json",
