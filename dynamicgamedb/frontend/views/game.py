@@ -1,4 +1,4 @@
-from dynamicgamedb.frontend import frontend, dgdb, login_required
+from dynamicgamedb.frontend import frontend, dgdb
 from flask import request, jsonify, redirect, url_for, render_template
 from dynamicgamedb.frontend.api_com import DynamicGameDB, Game, Platform, GameRelation
 import sys, traceback
@@ -42,23 +42,17 @@ def game(id):
         print '-'*60
 
 @frontend.route('/game/add', methods=['GET','POST'])
-@login_required
+@frontend.login_required
 def add_game():
+    print "add game frontend"
     platforms = dgdb.platforms()
     if request.method == 'POST':
         game = dgdb.add_game(title=request.form['title'],
                              platform_id=request.form['platform']) 
-        try:
-            return redirect(url_for('frontend.edit_game', id=game.id))
-        except:
-            print "Exception in user code:"
-            print '-'*60
-            traceback.print_exc(file=sys.stdout)
-            print '-'*60
+        return redirect(url_for('frontend.edit_game', id=game.id))
     else:
         #TODO: form page for Adding games
         return render_template('add_game.html', platforms=platforms)
-
 
 @frontend.route('/game/<int:id>/edit', methods=['GET','POST'])
 def edit_game(id):
