@@ -56,6 +56,7 @@ def add_game():
         return render_template('add_game.html', platforms=platforms)
 
 @frontend.route('/game/<int:id>/edit', methods=['GET','POST'])
+@frontend.login_required
 def edit_game(id):
     game = dgdb.game(id)
     platforms = dgdb.platforms()
@@ -81,6 +82,7 @@ def edit_game(id):
     
 
 @frontend.route('/game/<int:id>/relate', methods=['POST','GET'])
+@frontend.login_required
 def search_relate_game(id):
     print "Connecting Games :D"
     if request.method == 'POST':
@@ -97,6 +99,7 @@ def search_relate_game(id):
         return render_template('relate_game.html',games=games, game=game, search="GET")
 
 @frontend.route('/game/<int:id>/relate/<relate_id>', methods=['POST','GET'])
+@frontend.login_required
 def make_relation(id,relate_id):
     print "make relation", id , relate_id
     try:
