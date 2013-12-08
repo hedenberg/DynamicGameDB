@@ -7,8 +7,14 @@ import sys, traceback, os
 
 
 @frontend.route('/login/')
-def new_login():
+def login():
     return redirect(dgdb.api_login_url())
+
+@frontend.route('/logout/')
+def logout():
+    session.pop('user',None)
+    session.pop('user_token',None)
+    return redirect("/")
 
 @frontend.route('/auth/')
 def auth_onetime():
