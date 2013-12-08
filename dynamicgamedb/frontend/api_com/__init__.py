@@ -102,7 +102,6 @@ class DynamicGameDB(object):
         if not response.status == 200:
             print "/game/id/relation GET error"
             self.error_handler(content)
-        print content
         return [GameRelation.from_dict(game_relation) for game_relation in json.loads(content).get("relatedgames")]
 
     def game_relation(self,s_id,t_id):     #s_id = sourceId t_id = targetId
@@ -118,7 +117,7 @@ class DynamicGameDB(object):
         if not response.status == 200:
             print "/game/id/relation POST error"
             self.error_handler(content)
-        return GameRelation.from_dict(json.loads(content))
+        #return GameRelation.from_dict(json.loads(content))
 
     # -- Authentication --
 
@@ -182,6 +181,7 @@ class DynamicGameDB(object):
         return response, content
 
     def error_handler(self, content):
+        print "error handler"
         error_dict = json.loads(content).get("error")
         raise DGDB_Error(
             type=error_dict.get("type"),
