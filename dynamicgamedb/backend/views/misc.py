@@ -17,29 +17,16 @@ def logout():
 @backend.route('/api/login/')
 @oid.loginhandler
 def api_login():
-    client_id = request.args.get("client_id", None)
-    print "clientid: ", client_id
-    if not client_id:
-        print "No client id provided"
-    ## Get client from some magical database of accepted clients
-    # client = magic
-    # if client:
-    session['client_id'] = client_id
     if not "openid" in session:
-        print "not openid"
-        # Redirect to google 
-        # But for now redirect to a fake endpoint
-        print "redirect to google"
+        print "no openid in session redirecting to google"
         return oid.try_login( 'https://www.google.com/accounts/o8/id', ask_for=['email'])
     else:
         print "openid in session: ", session['openid']
-        # Already logged in but didn't know it so we provide a new code for them
-        # to generate a new token.
-        # Store one time token in database
-        # Redirect to frontend with a code so that frontend can request a new token
         user = db_session.query(User).filter_by(openid=session['openid']).first()
         if user is None:
-            print "openid stored but user not found, contact god and tell him this is bad."
+            return backend.get_error_response(
+                message="No user with that openid exists.",
+                status_code=404)
         user.generate_new_ott()
         db_session.commit()
         return redirect(FRONTEND_URL + '/auth/?one_time_token=%s' % user.one_time_token)
@@ -66,19 +53,24 @@ def create_or_login(resp):
 
 @backend.route('/api/token', methods=['GET','POST'])
 @backend.route('/api/token/', methods=['GET','POST'])
+@backend.client_required
 def api_token():
     print "api token"
     ott = request.form.get('one_time_token', None)
     #ott = request.args.get("one_time_token", None)
     if not ott:
-        return "there is no one time token biatch"
+        print "/api/token/ there was no one time token"
+        return backend.get_error_response(
+            message="No OneTimeToken was provided.",
+            status_code=404)
     # Get one time token from database 
     # check if it existed as described in database
     user = db_session.query(User).filter_by(one_time_token=ott).first()
     if user is None:
-
         print "Invalid one time token"
-        return "Invalid one time token"
+        return backend.get_error_response(
+            message="The one time token was invalid, try logging in again.",
+            status_code=404)
     user.generate_new_token()
     db_session.commit()
     return user.token
@@ -91,17 +83,17 @@ def user():
     token = request.form.get('token', None)
     if not token:
         print "no token"
-        return "lol failure"
+        return backend.get_error_response(
+            message="No token was provided.",
+            status_code=404)
     
     #Get openid from token
     print "token: ", token
     user = db_session.query(User).filter(User.token.like(token)).first()
     if user is None:
-        print "backend misc user is None"
-        users = db_session.query(User).order_by(User.token)
-        for user in users:
-            print "email: ", user.email
-            print "user token: ", user.token
+        return backend.get_error_response(
+            message="Token was invalid.",
+            status_code=404)
     print "json user email: ", user.email
     return jsonify({"user_email":user.email})
 
