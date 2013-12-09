@@ -129,7 +129,7 @@ class DynamicGameDB(object):
         if not response.status == 200:
             print "/token/ POST error"
             self.error_handler(content)
-        self.token = content
+        g.frontend_token = content
         self.session_user()
         return content
 
