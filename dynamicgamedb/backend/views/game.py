@@ -19,6 +19,19 @@ def games():
             return backend.get_error_response(
                     message="Invalid search parameter.",
                     status_code=400)
+        try:
+            games2 = (Game.query.filter(Game.title.contains(search_term.title())).all())
+        except Exception, e:
+            return backend.get_error_response(
+                    message="Invalid search parameter.",
+                    status_code=400)
+        for game in games2:
+            exists = False
+            for ga in games:
+                if ga.g_id == game.g_id:
+                    exists = True
+            if not exists:
+                games = games + [game]
         games = games[:11]
         print "games: ----- "
         for game in games:
@@ -122,7 +135,7 @@ def edit_game(id):
     for ga in games:
         print "game platform:", game.platform_id, " ", game.g_id
         print "ga platform:", ga.platform_id, " ", game.g_id
-        if ga.g_id != game.ga_id and game.title == ga.title and str(game.platform_id) == str(ga.platform_id):
+        if ga.g_id != game.g_id and game.title == ga.title and str(game.platform_id) == str(ga.platform_id):
             exists = True
     if exists:
         return backend.get_error_response(
