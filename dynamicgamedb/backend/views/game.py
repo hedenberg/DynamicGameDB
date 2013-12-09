@@ -20,6 +20,9 @@ def games():
                     message="Invalid search parameter.",
                     status_code=400)
         games = games[:11]
+        print "games: ----- "
+        for game in games:
+            print "game :", game.title
         return jsonify({"games":[{"game_id":game.g_id,
                                   "game_title":game.title,
                                   "platform":game.platform.name,
