@@ -228,6 +228,8 @@ body {
 }
 
 #last_edited_container{
+    width:610px;
+    padding-right: 15px;
     padding-bottom:15px; 
     position:absolute; 
     bottom:0;
