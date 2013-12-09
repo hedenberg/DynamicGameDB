@@ -2,7 +2,7 @@ import urllib
 import httplib2
 import json
 
-from flask import session
+from flask import session, g
 from dynamicgamedb.frontend.api_com.models import DGDB_Error, User, Game, Platform, Relation, GameRelation
 
 API_URL = "http://dynamicgamedb.herokuapp.com"
