@@ -47,7 +47,7 @@ class Game(Base):
     platform_id = Column(Integer, ForeignKey('platforms.p_id'))
     platform = relationship("Platform", backref=backref('games'))
     picture = Column(String(250), default="http://i.imgur.com/g4zDXeF.png")
-    info = Column(String(500), default="")
+    info = Column(String(1500), default="")
     release_date = Column(DateTime, default=datetime.now)
     developer = Column(String(250), default="")
     publisher = Column(String(250), default="")
