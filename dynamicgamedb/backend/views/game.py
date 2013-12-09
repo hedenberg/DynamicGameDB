@@ -151,7 +151,7 @@ def edit_game(id):
         db_session.commit()
     except Exception, e:
         return backend.get_error_response(
-            message="Platform ID invalid.",
+            message="Info text too long.",
             status_code=400)
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
