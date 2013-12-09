@@ -2,7 +2,7 @@
 from dynamicgamedb.backend import backend
 from dynamicgamedb.backend.model import Game, Platform, Relation, UniqueRelation
 from dynamicgamedb.backend.database import db_session
-from flask import request, jsonify, redirect, url_for,g
+from flask import request, jsonify, redirect, url_for, g
 import dateutil.parser
 import datetime
 from sqlalchemy import desc
@@ -111,10 +111,10 @@ def edit_game(id):
     game.platform_id = platform.p_id
     games = Game.query.filter(Game.title.like(game.title)).all()
     exists = False
-    for g in games:
+    for ga in games:
         print "game platform:", game.platform_id, " ", game.g_id
-        print "g platform:", g.platform_id, " ", game.g_id
-        if g.g_id != game.g_id and game.title == g.title and str(game.platform_id) == str(g.platform_id):
+        print "ga platform:", ga.platform_id, " ", game.g_id
+        if ga.g_id != game.ga_id and game.title == ga.title and str(game.platform_id) == str(ga.platform_id):
             exists = True
     if exists:
         return backend.get_error_response(
