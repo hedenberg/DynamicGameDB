@@ -51,7 +51,6 @@ def create_or_login(resp):
     db_session.commit()
     return redirect(FRONTEND_URL + '/auth/?one_time_token=%s' % user.one_time_token)
 
-@backend.route('/api/token', methods=['GET','POST'])
 @backend.route('/api/token/', methods=['GET','POST'])
 @backend.client_required
 def api_token():
@@ -75,7 +74,6 @@ def api_token():
     db_session.commit()
     return user.token
 
-@backend.route('/api/user', methods=['GET','POST'])
 @backend.route('/api/user/', methods=['GET','POST'])
 def user():
     print "backend user"
@@ -97,7 +95,7 @@ def user():
     print "json user email: ", user.email
     return jsonify({"user_email":user.email})
 
-@backend.route("/init")
+@backend.route("/init/")
 def init_server():
     # -- Clients --
     c1 = Client(1337, "you no take candle")

@@ -7,7 +7,7 @@ import dateutil.parser
 import datetime
 from sqlalchemy import desc
 
-@backend.route('/api/games', methods=['POST', 'GET'])
+@backend.route('/api/games/', methods=['POST', 'GET'])
 def games():
     print "api games"
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def games():
                                   "publisher":game.publisher,
                                   "relations":game.relations} for game in games]})        
 
-@backend.route('/api/game/add', methods=['POST'])
+@backend.route('/api/game/add/', methods=['POST'])
 @backend.user_required
 def add_game():
     title = request.form['title']
@@ -72,7 +72,7 @@ def add_game():
                     "publisher":game.publisher,
                     "relations":game.relations})
 
-@backend.route('/api/game/<int:id>', methods=['GET'])
+@backend.route('/api/game/<int:id>/', methods=['GET'])
 def game(id):
     game = db_session.query(Game).get(id)
     return jsonify({"game_id":game.g_id,
@@ -86,7 +86,7 @@ def game(id):
                     "publisher":game.publisher,
                     "relations":game.relations})
 
-@backend.route('/api/game/<int:id>/edit', methods=['POST'])
+@backend.route('/api/game/<int:id>/edit/', methods=['POST'])
 @backend.user_required
 def edit_game(id):
     game = db_session.query(Game).get(id)
@@ -112,7 +112,7 @@ def edit_game(id):
                     "relations":game.relations})
 
 
-@backend.route('/api/game/<int:id>/relation', methods=['GET'])
+@backend.route('/api/game/<int:id>/relation/', methods=['GET'])
 def game_relations(id):
     # All relations including this game
     relations = Relation.query.filter((Relation.game1_id==id)|(Relation.game2_id==id)).all()
@@ -134,7 +134,7 @@ def game_relations(id):
                         "relations":game.relations,
                         "relation_count":c} for (c,game) in rgs]})
 
-@backend.route('/api/game/<int:id>/relation', methods=['POST'])
+@backend.route('/api/game/<int:id>/relation/', methods=['POST'])
 @backend.user_required
 def add_game_relations(id):
     if id == request.form['g_id']:
@@ -205,7 +205,7 @@ def add_game_relations(id):
                     "relations":game.relations,
                     "relation_count":relation.count})
 
-@backend.route('/api/game/<int:source_id>/relation/<int:target_id>', methods=['GET'])
+@backend.route('/api/game/<int:source_id>/relation/<int:target_id>/', methods=['GET'])
 def game_relation(source_id, target_id):
     if source_id == target_id:
         return jsonify({"error":"Can not relate to self"})

@@ -5,21 +5,21 @@ from dynamicgamedb.backend.database import db_session
 from flask import request, jsonify, redirect, url_for
 
 
-@backend.route('/api/relations', methods=['GET'])
+@backend.route('/api/relations/', methods=['GET'])
 def relations():
     relations = db_session.query(Relation).order_by(Relation.game1_id)
     return jsonify({"relations":[{"g1_id":relation.game1_id,
                                   "g2_id":relation.game2_id,
                                   "count":relation.count} for relation in relations]})
 
-@backend.route('/api/relation/<int:id>', methods=['GET'])
+@backend.route('/api/relation/<int:id>/', methods=['GET'])
 def relation(id):
     relations = Relation.query.filter((Relation.game1_id==id)|(Relation.game2_id==id)).all()
     return jsonify({"relations":[{"g1_id":relation.game1_id,
                                   "g2_id":relation.game2_id,
                                   "count":relation.count} for relation in relations]})
 
-@backend.route('/api/relation/add', methods=['POST'])
+@backend.route('/api/relation/add/', methods=['POST'])
 def add_relation():
     in1 = request.form['g1_id']
     in2 = request.form['g2_id']
