@@ -125,6 +125,7 @@ def edit_game(id):
     game.release_date = dateutil.parser.parse(request.form['release_date'])
     game.developer = request.form['developer']
     game.publisher = request.form['publisher']
+    print "----- ------ USER : ", g.backend_user.email
     try:
         db_session.commit()
     except Exception, e:
