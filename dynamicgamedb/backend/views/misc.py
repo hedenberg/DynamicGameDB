@@ -34,7 +34,7 @@ def init_server():
     game1.picture = "http://upload.wikimedia.org/wikipedia/en/6/69/Battlefield_3_Game_Cover.jpg"
     game1.publisher = "EA"
     game1.release_date =  dateutil.parser.parse("2011-10-25")
-    game1.relations = 3
+    #game1.relations = 3
     game1.edited_by = "dynamic@game.db"
     db_session.add(game1)
 
@@ -44,7 +44,7 @@ def init_server():
     game2.picture = "http://www.blogcdn.com/www.joystiq.com/media/2013/03/arma-3-cover.jpg"
     game2.publisher = "Bohemia Interactive"
     game2.release_date =  dateutil.parser.parse("2013-09-12")
-    game2.relations = 2
+    #game2.relations = 2
     game2.edited_by = "dynamic@game.db"
     db_session.add(game2)
 
@@ -54,7 +54,7 @@ def init_server():
     game3.picture = "http://upload.wikimedia.org/wikipedia/en/c/ce/Vice-city-cover.jpg"
     game3.publisher = "Rockstar"
     game3.release_date =  dateutil.parser.parse("2002-10-27")
-    game3.relations = 2
+    #game3.relations = 2
     game3.edited_by = "dynamic@game.db"
     db_session.add(game3)
 
@@ -64,7 +64,7 @@ def init_server():
     game4.picture = "http://upload.wikimedia.org/wikipedia/en/e/ed/Battlefield_4.jpg"
     game4.publisher = "EA"
     game4.release_date =  dateutil.parser.parse("2013-10-29")
-    game4.relations = 2
+    #game4.relations = 2
     game4.edited_by = "dynamic@game.db"
     db_session.add(game4)
 
@@ -74,7 +74,7 @@ def init_server():
     game5.picture = "http://pcgamerparadise.com/images/Minecraft_cover.jpg"
     game5.publisher = "Mojang"
     game5.release_date =  dateutil.parser.parse("2009-05-17")
-    game5.relations = 2
+    #game5.relations = 2
     game5.edited_by = "dynamic@game.db"
     db_session.add(game5)
 
@@ -84,7 +84,7 @@ def init_server():
     game6.picture = "http://www.pageofreviews.com/wp-content/uploads/terraria1.png"
     game6.publisher = "Re-Logic"
     game6.release_date =  dateutil.parser.parse("2011-05-16")
-    game6.relations = 1
+    #game6.relations = 1
     game6.edited_by = "dynamic@game.db"
     db_session.add(game6)
 
@@ -94,7 +94,7 @@ def init_server():
     game7.picture = "http://media.ign.com/games/image/object/106/106949/Ace-Of-Spades_PCDL.jpg"
     game7.publisher = "Jagex Game Studio"
     game7.release_date =  dateutil.parser.parse("2012-12-12")
-    game7.relations = 2
+    #game7.relations = 2
     game7.edited_by = "dynamic@game.db"
     db_session.add(game7)
 
@@ -113,7 +113,7 @@ def init_server():
     game9.picture = "http://i.imgur.com/CMiXt.jpg"
     game9.publisher = "Bethesda Softworks"
     game9.release_date =  dateutil.parser.parse("2012-10-09")
-    game9.relations = 1
+    #game9.relations = 1
     game9.edited_by = "dynamic@game.db"
     db_session.add(game9)
 
@@ -123,7 +123,7 @@ def init_server():
     game10.picture = "http://fronttowardsgamer.com/wp-content/uploads/2013/05/srivbox.jpg"
     game10.publisher = "Deep Silver"
     game10.release_date =  dateutil.parser.parse("2013-08-20")
-    game10.relations = 1
+    #game10.relations = 1
     game10.edited_by = "dynamic@game.db"
     db_session.add(game10)
 
@@ -133,7 +133,7 @@ def init_server():
     game11.picture = "http://www.yellmagazine.com/wp-content/uploads/2012/05/prototype-2-cover.jpg"
     game11.publisher = "Activision"
     game11.release_date =  dateutil.parser.parse("2012-04-24")
-    game11.relations = 2
+    #game11.relations = 2
     game11.edited_by = "dynamic@game.db"
     db_session.add(game11)
 
