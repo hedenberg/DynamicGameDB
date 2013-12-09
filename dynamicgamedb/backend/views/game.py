@@ -13,7 +13,13 @@ def games():
     if request.method == 'POST':
         search_term = str(request.form['search_term'])
         print "search_term_backend",search_term
-        games = (Game.query.filter(Game.title.contains(search_term)).all())
+        try:
+            games = (Game.query.filter(Game.title.contains(search_term)).all())
+        except Exception, e:
+            return backend.get_error_response(
+                    message="Invalid search parameter.",
+                    status_code=400)
+        games = games[:11]
         return jsonify({"games":[{"game_id":game.g_id,
                                   "game_title":game.title,
                                   "platform":game.platform.name,
@@ -46,21 +52,22 @@ def add_game():
     games = Game.query.filter(Game.title.like(title)).all()
     exists = False
     for game in games:
+        print "games like ", title, game.title
         if game.title == title and str(game.platform_id) == platform_id:
             exists = True
-    if not exists:
-        platform = db_session.query(Platform).get(request.form['platform_id'])
-        if platform == None:
-            print "Platform doesn't exist"
-            return backend.get_error_response(
-                message="Platform doesn't exist",
-                status_code=404)
-        game = Game(request.form['title'], platform)
-        db_session.add(game)
-        db_session.commit()
-    else:
-        print "Already existed"
-        game = games[0]
+    if exists:
+        return backend.get_error_response(
+                message="A game with that title and platform already exists.",
+                status_code=400)
+    platform = db_session.query(Platform).get(request.form['platform_id'])
+    if platform == None:
+        print "Platform doesn't exist"
+        return backend.get_error_response(
+            message="Platform ID invalid.",
+            status_code=401)
+    game = Game(request.form['title'], platform)
+    db_session.add(game)
+    db_session.commit()
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
@@ -75,6 +82,10 @@ def add_game():
 @backend.route('/api/game/<int:id>/', methods=['GET'])
 def game(id):
     game = db_session.query(Game).get(id)
+    if not game:
+        return backend.get_error_response(
+            message="Game ID invalid.",
+            status_code=400)
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
@@ -92,14 +103,34 @@ def edit_game(id):
     game = db_session.query(Game).get(id)
     game.title = request.form['title']
     platform = db_session.query(Platform).get(request.form['platform_id'])
+    if not platform:
+        return backend.get_error_response(
+            message="Platform ID invalid.",
+            status_code=400)
     game.platform = platform
     game.platform_id = platform.p_id
+    games = Game.query.filter(Game.title.like(game.title)).all()
+    exists = False
+    for g in games:
+        print "game platform:", game.platform_id, " ", game.g_id
+        print "g platform:", g.platform_id, " ", game.g_id
+        if g.g_id != game.g_id and game.title == g.title and str(game.platform_id) == str(g.platform_id):
+            exists = True
+    if exists:
+        return backend.get_error_response(
+                message="A game with that title and platform already exists.",
+                status_code=400)
     game.picture = request.form['picture']
     game.info = request.form['info']
     game.release_date = dateutil.parser.parse(request.form['release_date'])
     game.developer = request.form['developer']
     game.publisher = request.form['publisher']
-    db_session.commit()
+    try:
+        db_session.commit()
+    except Exception, e:
+        return backend.get_error_response(
+            message="Platform ID invalid.",
+            status_code=400)
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
                     "platform":game.platform.name,
