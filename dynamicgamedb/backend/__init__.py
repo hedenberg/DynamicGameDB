@@ -4,7 +4,7 @@ from flask.ext.openid import OpenID
 from functools import wraps
 import json
 
-oid = OpenID( 'openid')
+oid = OpenID( 'openid') #
 
 class BackendBlueprint(Blueprint):
     def client_required(self, f):
