@@ -225,7 +225,15 @@ body {
     padding-bottom: 15px;
     text-align: justify;
     font-size: small;
+}
 
+#last_edited_container{
+    padding-bottom:15px; 
+    position:absolute; 
+    bottom:0;
+    font-size:small;
+    color: #999999;
+    text-align:right;
 }
 
 #top_related_container {
@@ -289,3 +297,4 @@ body {
     padding-right: -15px;
     width:925px;
 }
+
