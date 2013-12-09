@@ -7,7 +7,7 @@ from flask import Response, request, jsonify, redirect, url_for, session, g
 import dateutil.parser
 
 #FRONTEND_URL = 'http://localhost:8000'
-FRONTEND_URL = 'http://localhost:8000'
+FRONTEND_URL = 'http://dynamicgamedb.herokuapp.com'
 
 @backend.route('/api/logout/')
 def logout():
