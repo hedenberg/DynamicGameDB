@@ -137,7 +137,7 @@ def init_server():
     game11.edited_by = "dynamic@game.db"
     db_session.add(game11)
 
-
+    """
     #***********relation*********************
     rel = Relation(game1, game2)    #BF3 -> ARMA 3
     db_session.add(rel)
@@ -157,6 +157,6 @@ def init_server():
     db_session.add(rel)
     rel = Relation(game11, game9)    #prototype 2 -> Dishonored
     db_session.add(rel)
-
+    """
     db_session.commit()
     return redirect(url_for('backend.games'))
