@@ -35,6 +35,7 @@ def init_server():
     game1.publisher = "EA"
     game1.release_date =  dateutil.parser.parse("2011-10-25")
     game1.relations = 3
+    game1.edited_by = "dynamic@game.db"
     db_session.add(game1)
 
     game2 = Game("ARMA 3",p1)
@@ -44,6 +45,7 @@ def init_server():
     game2.publisher = "Bohemia Interactive"
     game2.release_date =  dateutil.parser.parse("2013-09-12")
     game2.relations = 2
+    game2.edited_by = "dynamic@game.db"
     db_session.add(game2)
 
     game3 = Game("Grand Theft Auto: Vice City",p1)
@@ -53,6 +55,7 @@ def init_server():
     game3.publisher = "Rockstar"
     game3.release_date =  dateutil.parser.parse("2002-10-27")
     game3.relations = 2
+    game3.edited_by = "dynamic@game.db"
     db_session.add(game3)
 
     game4 = Game("Battlefield 4",p1)
@@ -62,6 +65,7 @@ def init_server():
     game4.publisher = "EA"
     game4.release_date =  dateutil.parser.parse("2013-10-29")
     game4.relations = 2
+    game4.edited_by = "dynamic@game.db"
     db_session.add(game4)
 
     game5 = Game("Minecraft",p1)
@@ -71,6 +75,7 @@ def init_server():
     game5.publisher = "Mojang"
     game5.release_date =  dateutil.parser.parse("2009-05-17")
     game5.relations = 2
+    game5.edited_by = "dynamic@game.db"
     db_session.add(game5)
 
     game6 = Game("Terraria",p1)
@@ -80,6 +85,7 @@ def init_server():
     game6.publisher = "Re-Logic"
     game6.release_date =  dateutil.parser.parse("2011-05-16")
     game6.relations = 1
+    game6.edited_by = "dynamic@game.db"
     db_session.add(game6)
 
     game7 = Game("Ace of Spades",p1)
@@ -89,6 +95,7 @@ def init_server():
     game7.publisher = "Jagex Game Studio"
     game7.release_date =  dateutil.parser.parse("2012-12-12")
     game7.relations = 2
+    game7.edited_by = "dynamic@game.db"
     db_session.add(game7)
 
     game8 = Game("Fallout 2",p1)
@@ -97,6 +104,7 @@ def init_server():
     game8.picture = "http://pics.mobygames.com/images/covers/large/1124464345-00.jpg"
     game8.publisher = ""
     game8.release_date =  dateutil.parser.parse("2013-12-29")
+    game8.edited_by = "dynamic@game.db"
     db_session.add(game8)
 
     game9 = Game("Dishonored",p1)
@@ -106,6 +114,7 @@ def init_server():
     game9.publisher = "Bethesda Softworks"
     game9.release_date =  dateutil.parser.parse("2012-10-09")
     game9.relations = 1
+    game9.edited_by = "dynamic@game.db"
     db_session.add(game9)
 
     game10 = Game("Saints Row IV",p1)
@@ -115,6 +124,7 @@ def init_server():
     game10.publisher = "Deep Silver"
     game10.release_date =  dateutil.parser.parse("2013-08-20")
     game10.relations = 1
+    game10.edited_by = "dynamic@game.db"
     db_session.add(game10)
 
     game11 = Game("Prototype 2",p1)
@@ -124,6 +134,7 @@ def init_server():
     game11.publisher = "Activision"
     game11.release_date =  dateutil.parser.parse("2012-04-24")
     game11.relations = 2
+    game11.edited_by = "dynamic@game.db"
     db_session.add(game11)
 
 

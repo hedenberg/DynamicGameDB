@@ -52,6 +52,7 @@ class Game(Base):
     developer = Column(String(250), default="")
     publisher = Column(String(250), default="")
     relations = Column(Integer, default=0)
+    edited_by = Column(String(250), default="")
 
     def __init__(self, title=None, platform=None):
         self.title = title

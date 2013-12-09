@@ -66,6 +66,7 @@ def add_game():
             message="Platform ID invalid.",
             status_code=401)
     game = Game(request.form['title'], platform)
+    game.edited_by = g.backend_user.email
     db_session.add(game)
     db_session.commit()
     return jsonify({"game_id":game.g_id,
@@ -125,7 +126,7 @@ def edit_game(id):
     game.release_date = dateutil.parser.parse(request.form['release_date'])
     game.developer = request.form['developer']
     game.publisher = request.form['publisher']
-    print "----- ------ USER : ", g.backend_user.email
+    game.edited_by = g.backend_user.email
     try:
         db_session.commit()
     except Exception, e:
