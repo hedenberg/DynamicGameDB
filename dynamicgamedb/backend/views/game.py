@@ -32,6 +32,7 @@ def games():
                                   "release_date":game.release_date.strftime("%Y-%m-%d"),
                                   "developer":game.developer,
                                   "publisher":game.publisher,
+                                  "edited_by":game.edited_by,
                                   "relations":game.relations} for game in games]})
     else:
         games = db_session.query(Game).order_by(Game.relations.desc())
@@ -45,6 +46,7 @@ def games():
                                   "release_date":game.release_date.strftime("%Y-%m-%d"),
                                   "developer":game.developer,
                                   "publisher":game.publisher,
+                                  "edited_by":game.edited_by,
                                   "relations":game.relations} for game in games]})        
 
 @backend.route('/api/game/add/', methods=['POST'])
@@ -81,6 +83,7 @@ def add_game():
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher,
+                    "edited_by":game.edited_by,
                     "relations":game.relations})
 
 @backend.route('/api/game/<int:id>/', methods=['GET'])
@@ -99,6 +102,7 @@ def game(id):
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher,
+                    "edited_by":game.edited_by,
                     "relations":game.relations})
 
 @backend.route('/api/game/<int:id>/edit/', methods=['POST'])
@@ -145,6 +149,7 @@ def edit_game(id):
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher,
+                    "edited_by":game.edited_by,
                     "relations":game.relations})
 
 
@@ -167,6 +172,7 @@ def game_relations(id):
                         "release_date":game.release_date.strftime("%Y-%m-%d"),
                         "developer":game.developer,
                         "publisher":game.publisher,
+                        "edited_by":game.edited_by,
                         "relations":game.relations,
                         "relation_count":c} for (c,game) in rgs]})
 
@@ -238,6 +244,7 @@ def add_game_relations(id):
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher,
+                    "edited_by":game.edited_by,
                     "relations":game.relations,
                     "relation_count":relation.count})
 
@@ -272,6 +279,7 @@ def game_relation(source_id, target_id):
                         "release_date":game.release_date.strftime("%Y-%m-%d"),
                         "developer":game.developer,
                         "publisher":game.publisher,
+                        "edited_by":game.edited_by,
                         "relations":game.relations,
                         "relation_count":0})
     return jsonify({"game_id":game.g_id,
@@ -283,5 +291,6 @@ def game_relation(source_id, target_id):
                     "release_date":game.release_date.strftime("%Y-%m-%d"),
                     "developer":game.developer,
                     "publisher":game.publisher,
+                    "edited_by":game.edited_by,
                     "relations":game.relations,
                     "relation_count":relation.count})
