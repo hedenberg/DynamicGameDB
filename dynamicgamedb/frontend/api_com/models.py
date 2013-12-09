@@ -14,7 +14,7 @@ class User(object):
         return User(email = data.get("user_email"))
 
 class Game(object):
-    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None, relations=None):
+    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None, edited_by=None, relations=None):
         self.id = id
         self.title = title
         self.platform = platform
@@ -24,6 +24,7 @@ class Game(object):
         self.release_date = release_date
         self.developer = developer
         self.publisher = publisher
+        self.edited_by = edited_by
         self.relations = relations
 
     @classmethod
@@ -37,6 +38,7 @@ class Game(object):
                     release_date = str(data.get("release_date")),
                     developer = data.get("developer"),
                     publisher = data.get("publisher"),
+                    edited_by = data.get("edited_by"),
                     relations = data.get("relations")) 
 
 class Platform(object):
@@ -62,7 +64,7 @@ class Relation(object):
 
 
 class GameRelation(object):
-    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None, relation_count=None):
+    def __init__(self, id, title, platform=None, platform_id=None, info=None, picture=None, release_date=None, developer=None, publisher=None, edited_by=None, relation_count=None):
         self.id = id
         self.title = title
         self.platform = platform
@@ -72,6 +74,7 @@ class GameRelation(object):
         self.release_date = release_date
         self.developer = developer
         self.publisher = publisher
+        self.edited_by = edited_by
         self.relation_count = relation_count
 
     @classmethod
@@ -85,4 +88,5 @@ class GameRelation(object):
                             release_date = str(data.get("release_date")),
                             developer = data.get("developer"),
                             publisher = data.get("publisher"),
+                            edited_by = data.get("edited_by"),
                             relation_count = int(data.get("relation_count"))) 
