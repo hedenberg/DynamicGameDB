@@ -27,8 +27,14 @@ class BackendBlueprint(Blueprint):
         def decorated_function(*args, **kwargs):
             print "Check if backend user"
             if not g.backend_user:
-                print "No backend user!"
-                return """{"error":"Not logged in"}"""
+                response = Response(
+                    json.dumps({"error": { 
+                        "type": "DGDB_API_Exception", 
+                        "message": "You need to be logged in to perform that action." }}),
+                    mimetype="application/json",
+                    status=405
+                )
+                return response
             return f(*args, **kwargs)
         return decorated_function
 
