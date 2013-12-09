@@ -7,19 +7,20 @@ from datetime import datetime
 
 @frontend.route('/games', methods=['GET', 'POST'])
 def games():
-    print "games"
-
-    
-    print "games return"
-          # should be changed to what the search query was for
     if request.method == 'POST':
-        games = dgdb.games(search_term=request.form['search_field'])
+        try:
+            games = dgdb.games(search_term=request.form['search_field'])
+        except Exception, e:
+            flash(e.message)
+            return redirect(url_for('frontend.index'))
         search=request.form['search_field']
         return render_template("games.html", games=games, search=search)
     else: 
-    # games_list = []
-    # for game in games:
-    #     games_list = games_list + " - %d %s %s %s" % (game.id, game.title, game.platform, game.developer)
+        try:
+            games =  dgdb.get_games()
+        except Exception, e:
+            flash(e.message)
+            return redirect(url_for('frontend.index'))
         games =  dgdb.get_games()
         search = "GET"
         return render_template("games.html", games=games, search=search)
@@ -29,40 +30,38 @@ def games():
 
 @frontend.route('/game/<int:id>/', methods=['GET'])
 def game(id):
-    game = dgdb.game(id)
-    print "date: ", game.release_date
-    #game_str = "%d %s %s %s" % (game.id, game.title, game.platform, game.developer)
-    #return render_template("game.html", game=game, games=games)
     try:
-        games = dgdb.game_relations(id)
-        return render_template("game.html", game=game, games=games)
-    except:
-        print "Exception in user code:"
-        print '-'*60
-        traceback.print_exc(file=sys.stdout)
-        print '-'*60
+        game = dgdb.game(id)
+    except Exception, e:
+        flash(e.message)
+    games = dgdb.game_relations(id)
+    return render_template("game.html", game=game, games=games)
 
-@frontend.route('/game/add', methods=['GET','POST'])
+@frontend.route('/game/add/', methods=['GET','POST'])
 @frontend.login_required
 def add_game():
     print "add game frontend"
     platforms = dgdb.platforms()
     if request.method == 'POST':
-        game = dgdb.add_game(title=request.form['title'],
-                             platform_id=request.form['platform']) 
+        try:
+            game = dgdb.add_game(title=request.form['title'],
+                                 platform_id=request.form['platform']) 
+        except Exception, e:
+            flash(e.message)
+            return redirect(url_for('frontend.add_game'))
         return redirect(url_for('frontend.edit_game', id=game.id))
     else:
-        #TODO: form page for Adding games
         return render_template('add_game.html', platforms=platforms)
 
-@frontend.route('/game/<int:id>/edit', methods=['GET','POST'])
+@frontend.route('/game/<int:id>/edit/', methods=['GET','POST'])
 @frontend.login_required
 def edit_game(id):
     game = dgdb.game(id)
     platforms = dgdb.platforms()
     print "edit game"
     if request.method == 'POST':
-        game = dgdb.edit_game(id, 
+        try:
+            game = dgdb.edit_game(id, 
                               title=request.form['title'],
                               platform_id=request.form['platform'],
                               info=request.form['description'],
@@ -70,6 +69,9 @@ def edit_game(id):
                               release_date=request.form['release_date'],
                               developer=request.form['developer'],
                               publisher=request.form['publisher'])
+        except Exception, e:
+            flash(e.message)
+            return redirect(url_for('frontend.edit_game', id=id))
         print "after backend call"
         return redirect(url_for('frontend.game', id=game.id))
     else:
@@ -98,7 +100,7 @@ def search_relate_game(id):
         #TODO: connection mechanics
         return render_template('relate_game.html',games=games, game=game, search="GET")
 
-@frontend.route('/game/<int:id>/relate/<relate_id>', methods=['POST','GET'])
+@frontend.route('/game/<int:id>/relate/<relate_id>/', methods=['POST','GET'])
 @frontend.login_required
 def make_relation(id,relate_id):
     print "make relation", id , relate_id
