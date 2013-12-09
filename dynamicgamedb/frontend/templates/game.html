@@ -79,7 +79,14 @@
               {% for loopGame in games %}
                 {% if loop.last %}
                   {% set relations = relations + loopGame.relation_count  %}
-                  {{loop.length}} game by {{relations}} relations
+                  {% if loop.length > 1 and relations > 1%}
+                    {{loop.length}} games by {{relations}} relations
+                  {% elif loop.length <= 1 and relations > 1 %}
+                    {{loop.length}} game by {{relations}} relations
+                  {% else %}
+                    {{loop.length}} game by {{relations}} relation
+
+                  {% endif %}
                 {% else %}
                   {% set relations = relations + loopGame.relation_count  %}
                 {% endif %}
@@ -130,11 +137,11 @@
 
         </div>   
       </div>
-
+<!--
       <div id="result">
         result
       </div>
-
+-->
   
   
 
