@@ -29,9 +29,9 @@ frontend = FrontendBlueprint('frontend', __name__,
 def set_user():
     if request.endpoint != 'frontend.static':
         g.frontend_user = None
-        dgdb.token = None
+        g.frontend_token = None
         if "user_token" in session:
-            dgdb.token = session["user_token"]
+            g.frontend_token = session["user_token"]
             try:
                 g.frontend_user = dgdb.user()
             except :

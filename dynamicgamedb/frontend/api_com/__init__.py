@@ -135,7 +135,7 @@ class DynamicGameDB(object):
 
     def session_user(self):
         print "Frontend session user"
-        auth_dict = dict(token=str(self.token))
+        auth_dict = dict(token=str(g.frontend_token))
         response, content = self.request(endpoint="/user/", method="POST", body=auth_dict)
         if not response.status == 200:
             print "/user/ POST error"
@@ -145,7 +145,7 @@ class DynamicGameDB(object):
 
     def user(self):
         print "Frontend user get thingy"
-        auth_dict = dict(token=str(self.token))
+        auth_dict = dict(token=str(g.frontend_token))
         response, content = self.request(endpoint="/user/", method="POST", body=auth_dict)
         if not response.status == 200:
             print "/user/ POST error"
@@ -164,7 +164,7 @@ class DynamicGameDB(object):
 
     def login_required_request(self, endpoint, method="GET", headers=dict(), body=None):
         headers.update(
-            token=self.token)
+            token=g.frontend_token)
         return self.request(endpoint, method, headers, body)
 
     def request(self, endpoint, method="GET", headers=dict(), body=None):
