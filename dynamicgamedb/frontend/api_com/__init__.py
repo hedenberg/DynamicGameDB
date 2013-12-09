@@ -5,8 +5,8 @@ import json
 from flask import session
 from dynamicgamedb.frontend.api_com.models import DGDB_Error, User, Game, Platform, Relation, GameRelation
 
-API_URL = "http://dynamicgamedb.herokuapp.com"
-#API_URL = "http://localhost:8000"
+#API_URL = "http://dynamicgamedb.herokuapp.com"
+API_URL = "http://localhost:8000"
 
 class DynamicGameDB(object):
 
