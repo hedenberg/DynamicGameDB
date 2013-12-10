@@ -194,8 +194,10 @@ def game_relations(id):
 def add_game_relations(id):
     if id == request.form['g_id']:
         return jsonify({"error":"Can not relate to self"})
-    g1id = id if id < request.form['g_id'] else request.form['g_id']
-    g2id = request.form['g_id'] if id < request.form['g_id'] else id
+    g1id = id if id < int(request.form['g_id']) else request.form['g_id']
+    print "low id: ", g1id
+    g2id = request.form['g_id'] if id < int(request.form['g_id']) else id
+    print "high id: ", g2id
     g1 = db_session.query(Game).get(g1id)
     g2 = db_session.query(Game).get(g2id)
     if g1 == None:
@@ -235,11 +237,12 @@ def add_game_relations(id):
             uniqueRelation = UniqueRelation(g.backend_user.openid, g1.g_id, g2.g_id)
             db_session.add(uniqueRelation)
         else:
-            print "Relation allready existed"
+            print "Relation already existed"
             relation.count = relation.count + 1
             uniqueRelation =UniqueRelation(g.backend_user.openid, relation.game1_id, relation.game2_id)
             db_session.add(uniqueRelation)
-
+        print "relation: ", relation
+        print "relations: ", relation.count
         g1.relations = g1.relations + 1
         g2.relations = g2.relations + 1
     try:

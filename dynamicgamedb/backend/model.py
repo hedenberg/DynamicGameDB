@@ -86,6 +86,7 @@ class Relation(Base):
         self.game2_id = game2.g_id
         self.game1 = game1
         self.game2 = game2
+        self.count = 1
 
     def __repr__(self):
         return '<Relation g1:%r g2:%r %r>' % (self.game1.title, self.game2.title, self.count)
