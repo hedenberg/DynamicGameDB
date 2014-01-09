@@ -7,7 +7,7 @@
       <div class="col-xs-12"   >
 
         <div  class="row" >
-          <form method=post action="{{ url_for('frontend.edit_picture',id=game.id) }}">
+          <form method=post enctype='multipart/form-data'  action="{{ url_for('frontend.edit_picture',id=game.id) }}">
             <div class="col-xs-4" id="game_container">
               <div class="picture_container" id="picture_{{game.id}}" >
                 <img src="{{game.picture}}" height="400"  width="298" />
@@ -16,12 +16,12 @@
                   Add/Update Picture URL:
                    <!-- <input name="picture" class="form-control" type="text" value="{{game.picture}}" id="edit_picture" />
                     -->
-                    <input type="file" name="datafile" size="40" style="opacity:1.0;">
+                    <input type="file" name="picture" >
                   </div>
                   
             </div>
             <input type="submit" value="Submit" style="z-index:20;">
-                  </form>
+          </form>
         
         <form name="editSubmit" method=post action="{{ url_for('frontend.edit_game',id=game.id) }}">
           
