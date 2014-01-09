@@ -1,7 +1,8 @@
 import urllib
 import httplib2
+import mimetypes
 import json
-
+import sys
 from flask import session, g
 from dynamicgamedb.frontend.api_com.models import DGDB_Error, User, Game, Platform, Relation, GameRelation
 
@@ -67,6 +68,12 @@ class DynamicGameDB(object):
             self.error_handler(content)
         return Game.from_dict(json.loads(content))
 
+    def edit_game_image(self, id, image):
+        response, content = self.login_required_file(endpoint="/game/%d/edit_image/"%id, 
+                                                     file=image)
+        if not response.status == 200:
+            self.error_handler(content)
+        return Game.from_dict(json.loads(content))
 
     # -- Platform --
 
@@ -154,6 +161,53 @@ class DynamicGameDB(object):
         return user
 
     # -- General --
+    # The two methods below originate from the following post
+    # http://code.activestate.com/recipes/146306-http-client-to-post-using-multipartform-data/
+    
+    def encode_multipart_formdata(fields, files):
+        """
+        fields is a sequence of (name, value) elements for regular form fields.
+        files is a sequence of (name, filename, value) elements for data to be uploaded as files
+        Return (content_type, body) ready for httplib.HTTP instance
+        """
+        BOUNDARY = '----------ThIs_Is_tHe_bouNdaRY_$'
+        CRLF = '\r\n'
+        L = []
+        for (key, value) in fields:
+            L.append('--' + BOUNDARY)
+            L.append('Content-Disposition: form-data; name="%s"' % key)
+            L.append('')
+            L.append(value)
+        for (key, filename, value) in files:
+            L.append('--' + BOUNDARY)
+            L.append('Content-Disposition: form-data; name="%s"; filename="%s"' % (key, filename))
+            L.append('Content-Type: %s' % get_content_type(filename))
+            L.append('')
+            L.append(value)
+        L.append('--' + BOUNDARY + '--')
+        L.append('')
+        body = CRLF.join(L)
+        content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
+        return content_type, body
+
+    def get_content_type(filename):
+        return mimetypes.guess_type(filename)[0] or 'application/octet-stream'
+
+    def login_required_file(self, endpoint, file):
+        content_type, body = encode_multipart_formdata(fields, files)
+        headers = dict()
+        headers.update(
+            client_id=str(self.client_id),
+            client_secret=self.client_secret)
+        headers.update({"Content-Type":content_type})
+        headers.update({'Content-Length':str(len(body))})
+        if body:
+            body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
+        response, content = http.request(API_URL+"/api"+endpoint,
+                                         method='POST',
+                                         headers=headers,
+                                         body=body)
+        return response, content
 
     def client_required_request(self, endpoint, method="GET", headers=dict(), body=None):
         headers.update(
