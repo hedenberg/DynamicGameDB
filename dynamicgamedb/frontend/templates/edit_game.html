@@ -5,20 +5,29 @@
   
     <div class="row">
       <div class="col-xs-12"   >
-        <form name="editSubmit" method=post action="{{ url_for('frontend.edit_game',id=game.id) }}">
-          <div  class="row" >
+
+        <div  class="row" >
+          <form method=post action="{{ url_for('frontend.edit_picture',id=game.id) }}">
             <div class="col-xs-4" id="game_container">
               <div class="picture_container" id="picture_{{game.id}}" >
-                  <img src="{{game.picture}}" height="400"  width="298" />
-                </div>
-                
-                  <div class="info_container" id="edit_picture_container"   >
-
-                    Add/Update Picture URL:
-                    <input name="picture" class="form-control" type="text" value="{{game.picture}}" id="edit_picture" />
-                  </div>
-                
+                <img src="{{game.picture}}" height="400"  width="298" />
               </div>
+                <div class="info_container" id="edit_picture_container"   >
+                  Add/Update Picture URL:
+                   <!-- <input name="picture" class="form-control" type="text" value="{{game.picture}}" id="edit_picture" />
+                    -->
+                    <input type="file" name="datafile" size="40" style="opacity:1.0;">
+                  </div>
+                  
+            </div>
+            <input type="submit" value="Submit" style="z-index:20;">
+                  </form>
+        
+        <form name="editSubmit" method=post action="{{ url_for('frontend.edit_game',id=game.id) }}">
+          
+
+
+
             <div class="col-xs-8" id="edit_game_description">
               
               <!-- ***********************OLD **************************
