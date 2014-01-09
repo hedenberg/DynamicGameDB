@@ -65,7 +65,7 @@ def edit_game(id):
                               title=request.form['title'],
                               platform_id=request.form['platform'],
                               info=request.form['description'],
-                              picture=request.form['picture'],
+                              #picture=request.form['picture'],
                               release_date=request.form['release_date'],
                               developer=request.form['developer'],
                               publisher=request.form['publisher'])
@@ -79,7 +79,35 @@ def edit_game(id):
         print date
         return render_template('edit_game.html',game=game, platforms=platforms)
         
-    
+@frontend.route('/game/<int:id>/edit_picture/', methods=['POST'])
+@frontend.login_required
+def edit_picture(id):
+
+    game = dgdb.game(id)
+    #platforms = dgdb.platforms()
+    print "edit picture ****************************************"
+    if request.method == 'POST':
+        print "test"
+        #try:
+        print "try test"
+        picture = request.files['picture']
+        print "test moar"
+        print "THIS FILE UPLOAD", picture
+            # game = dgdb.edit_game(id, 
+            #                   title=request.form['title'],
+            #                   platform_id=request.form['platform'],
+            #                   info=request.form['description'],
+            #                   #picture=request.form['picture'],
+            #                   release_date=request.form['release_date'],
+            #                   developer=request.form['developer'],
+            #                   publisher=request.form['publisher'])
+        #except Exception, e:
+            #flash(e.message)
+        return redirect(url_for('frontend.game', id=game.id))
+    else:
+        date = datetime.utcnow()
+        print date
+        return render_template('edit_game.html',game=game, platforms=platforms)    
     #TODO: extended form page for editing games and givinhg additional data
     
 
