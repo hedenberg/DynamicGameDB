@@ -5,6 +5,7 @@ from dynamicgamedb.backend.database import db_session
 from flask import request, jsonify, redirect, url_for, g
 import dateutil.parser
 import datetime
+import sys
 from sqlalchemy import desc
 
 @backend.route('/api/games/', methods=['POST', 'GET'])
@@ -165,6 +166,43 @@ def edit_game(id):
                     "edited_by":game.edited_by,
                     "relations":game.relations})
 
+@backend.route('/api/game/<int:id>/edit_image/', methods=['POST'])
+#@backend.user_required
+def edit_image(id):
+    image = request.files['image']
+    #fn = secure_filename(f.filename)
+    #f_size = sys.getsizeof(f) 
+    # Makea da fix @ adding to database lol.
+
+    game = db_session.query(Game).get(id)
+    game.image = image.read()
+    game.image_name = image.filename
+    game.image_size = sys.getsizeof(image)
+    db_session.commit()
+    return jsonify({"game_id":game.g_id,
+                    "game_title":game.title,
+                    "platform":game.platform.name,
+                    "platform_id":game.platform.p_id,
+                    "info":game.info,
+                    "picture":game.picture,
+                    "release_date":game.release_date.strftime("%Y-%m-%d"),
+                    "developer":game.developer,
+                    "publisher":game.publisher,
+                    "edited_by":game.edited_by,
+                    "relations":game.relations})
+
+@backend.route('/api/game/<int:id>/image/', methods=['GET'])
+def game_image(id):
+    game = db_session.query(Game).get(id)
+    response = make_response()
+    response.headers['Pragma'] = 'public'
+    response.headers['Content-Type'] = 'txt'
+    response.headers['Content-Transfer-Encoding'] = 'binary'
+    response.headers['Content-Description'] = 'File Transfer'
+    response.headers['Content-Disposition'] = 'attachment; filename=%s' % game.image_name
+    response.headers['Content-Length'] = game.image_size
+    response.data = game.image
+    return response
 
 @backend.route('/api/game/<int:id>/relation/', methods=['GET'])
 def game_relations(id):
