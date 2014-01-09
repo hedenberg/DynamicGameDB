@@ -79,16 +79,20 @@ def edit_game(id):
         print date
         return render_template('edit_game.html',game=game, platforms=platforms)
         
-@frontend.route('/game/<int:id>/edit_picture/', methods=['GET','POST'])
+@frontend.route('/game/<int:id>/edit_picture/', methods=['POST'])
 @frontend.login_required
 def edit_picture(id):
+
     game = dgdb.game(id)
     #platforms = dgdb.platforms()
-    print "edit game"
+    print "edit picture ****************************************"
     if request.method == 'POST':
-        try:
-            picture = request.form['picture']
-            print picture
+        print "test"
+        #try:
+        print "try test"
+        picture = request.files['picture']
+        print "test moar"
+        print "THIS FILE UPLOAD", picture
             # game = dgdb.edit_game(id, 
             #                   title=request.form['title'],
             #                   platform_id=request.form['platform'],
@@ -97,10 +101,8 @@ def edit_picture(id):
             #                   release_date=request.form['release_date'],
             #                   developer=request.form['developer'],
             #                   publisher=request.form['publisher'])
-        except Exception, e:
-            flash(e.message)
-            return redirect(url_for('frontend.edit_game', id=id))
-        print "after backend call"
+        #except Exception, e:
+            #flash(e.message)
         return redirect(url_for('frontend.game', id=game.id))
     else:
         date = datetime.utcnow()
