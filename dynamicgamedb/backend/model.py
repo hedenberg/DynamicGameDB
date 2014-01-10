@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, BYTEA
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.dialects.postgresql import BYTEA
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 from database import Base
