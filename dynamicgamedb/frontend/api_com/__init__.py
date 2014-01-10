@@ -201,7 +201,7 @@ class DynamicGameDB(object):
         headers.update(
             client_id=str(self.client_id),
             client_secret=self.client_secret,
-            token=g.frontend_token))
+            token=g.frontend_token)
         headers.update({"Content-Type":content_type})
         headers.update({'Content-Length':str(len(body))})
 
