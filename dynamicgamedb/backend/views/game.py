@@ -2,11 +2,15 @@
 from dynamicgamedb.backend import backend
 from dynamicgamedb.backend.model import Game, Platform, Relation, UniqueRelation
 from dynamicgamedb.backend.database import db_session
-from flask import request, jsonify, redirect, url_for, g
+from flask import request, jsonify, redirect, url_for, g, make_response, send_file
 import dateutil.parser
 import datetime
 import sys
+import mimetypes
 from sqlalchemy import desc
+
+BACKEND_URL = 'http://localhost:8000/api'
+#BACKEND_URL = 'http://dynamicgamedb.herokuapp.com/api'
 
 @backend.route('/api/games/', methods=['POST', 'GET'])
 def games():
@@ -169,6 +173,7 @@ def edit_game(id):
 @backend.route('/api/game/<int:id>/edit_image/', methods=['POST'])
 #@backend.user_required
 def edit_image(id):
+    print "Edit image backend"
     image = request.files['image']
     #fn = secure_filename(f.filename)
     #f_size = sys.getsizeof(f) 
@@ -178,6 +183,7 @@ def edit_image(id):
     game.image = image.read()
     game.image_name = image.filename
     game.image_size = sys.getsizeof(image)
+    game.picture = BACKEND_URL+'/game/'+str(id)+'/image/'
     db_session.commit()
     return jsonify({"game_id":game.g_id,
                     "game_title":game.title,
@@ -196,10 +202,9 @@ def game_image(id):
     game = db_session.query(Game).get(id)
     response = make_response()
     response.headers['Pragma'] = 'public'
-    response.headers['Content-Type'] = 'txt'
+    response.headers['Content-Type'] = mimetypes.guess_type(game.image_name)[0]
     response.headers['Content-Transfer-Encoding'] = 'binary'
-    response.headers['Content-Description'] = 'File Transfer'
-    response.headers['Content-Disposition'] = 'attachment; filename=%s' % game.image_name
+    response.headers['Content-Disposition'] = 'filename=%s' % game.image_name
     response.headers['Content-Length'] = game.image_size
     response.data = game.image
     return response
