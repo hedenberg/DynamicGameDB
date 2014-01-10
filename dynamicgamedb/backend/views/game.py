@@ -146,7 +146,6 @@ def edit_game(id):
         return backend.get_error_response(
                 message="A game with that title and platform already exists.",
                 status_code=400)
-    game.picture = request.form['picture']
     game.info = request.form['info']
     game.release_date = dateutil.parser.parse(request.form['release_date'])
     game.developer = request.form['developer']
