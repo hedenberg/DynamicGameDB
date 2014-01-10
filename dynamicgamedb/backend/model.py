@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, BLOB
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, BYTEA
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 from database import Base
@@ -47,7 +47,7 @@ class Game(Base):
     platform_id = Column(Integer, ForeignKey('platforms.p_id'))
     platform = relationship("Platform", backref=backref('games'))
     picture = Column(String(250), default="http://i.imgur.com/g4zDXeF.png")
-    image = Column(BLOB)
+    image = Column(BYTEA)
     image_name = Column(String(250))
     image_size = Column(Integer)
     info = Column(String(1500), default="")
