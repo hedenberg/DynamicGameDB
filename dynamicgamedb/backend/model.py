@@ -49,6 +49,7 @@ class Game(Base):
     picture = Column(String(250), default="http://i.imgur.com/g4zDXeF.png")
     image = Column(BLOB)
     image_name = Column(String(250))
+    image_size = Column(Integer)
     info = Column(String(1500), default="")
     release_date = Column(DateTime, default=datetime.now)
     developer = Column(String(250), default="")
