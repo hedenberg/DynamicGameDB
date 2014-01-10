@@ -9,8 +9,8 @@ import sys
 import mimetypes
 from sqlalchemy import desc
 
-BACKEND_URL = 'http://localhost:8000/api'
-#BACKEND_URL = 'http://dynamicgamedb.herokuapp.com/api'
+#BACKEND_URL = 'http://localhost:8000/api'
+BACKEND_URL = 'http://dynamicgamedb.herokuapp.com/api'
 
 @backend.route('/api/games/', methods=['POST', 'GET'])
 def games():
