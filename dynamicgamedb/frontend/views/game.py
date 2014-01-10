@@ -82,7 +82,6 @@ def edit_game(id):
 @frontend.route('/game/<int:id>/edit_picture/', methods=['POST'])
 @frontend.login_required
 def edit_picture(id):
-
     game = dgdb.game(id)
     #platforms = dgdb.platforms()
     print "edit picture ****************************************"
@@ -103,6 +102,8 @@ def edit_picture(id):
             #                   publisher=request.form['publisher'])
         #except Exception, e:
             #flash(e.message)
+        game = dgdb.edit_game_image(id, picture)
+        print "Image sent from frontend view"
         return redirect(url_for('frontend.game', id=game.id))
     else:
         date = datetime.utcnow()
