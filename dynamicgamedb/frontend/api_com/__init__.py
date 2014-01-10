@@ -73,6 +73,7 @@ class DynamicGameDB(object):
                                                      file=image)
         if not response.status == 200:
             self.error_handler(content)
+        print "Image sent from frontend"
         return Game.from_dict(json.loads(content))
 
     # -- Platform --
@@ -164,7 +165,7 @@ class DynamicGameDB(object):
     # The two methods below originate from the following post
     # http://code.activestate.com/recipes/146306-http-client-to-post-using-multipartform-data/
     
-    def encode_multipart_formdata(fields, files):
+    def encode_multipart_formdata(self, files):
         """
         fields is a sequence of (name, value) elements for regular form fields.
         files is a sequence of (name, filename, value) elements for data to be uploaded as files
@@ -173,15 +174,15 @@ class DynamicGameDB(object):
         BOUNDARY = '----------ThIs_Is_tHe_bouNdaRY_$'
         CRLF = '\r\n'
         L = []
-        for (key, value) in fields:
-            L.append('--' + BOUNDARY)
-            L.append('Content-Disposition: form-data; name="%s"' % key)
-            L.append('')
-            L.append(value)
+        #for (key, value) in fields:
+        #    L.append('--' + BOUNDARY)
+        #    L.append('Content-Disposition: form-data; name="%s"' % key)
+        #    L.append('')
+        #    L.append(value)
         for (key, filename, value) in files:
             L.append('--' + BOUNDARY)
             L.append('Content-Disposition: form-data; name="%s"; filename="%s"' % (key, filename))
-            L.append('Content-Type: %s' % get_content_type(filename))
+            L.append('Content-Type: %s' % self.get_content_type(filename))
             L.append('')
             L.append(value)
         L.append('--' + BOUNDARY + '--')
@@ -190,19 +191,21 @@ class DynamicGameDB(object):
         content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
         return content_type, body
 
-    def get_content_type(filename):
+    def get_content_type(self, filename):
         return mimetypes.guess_type(filename)[0] or 'application/octet-stream'
 
     def login_required_file(self, endpoint, file):
-        content_type, body = encode_multipart_formdata(fields, files)
+
+        files = [('image', 'game', file.read())]
+        content_type, body = self.encode_multipart_formdata(files)
         headers = dict()
         headers.update(
             client_id=str(self.client_id),
             client_secret=self.client_secret)
         headers.update({"Content-Type":content_type})
         headers.update({'Content-Length':str(len(body))})
-        if body:
-            body=urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in body.items()))
+
+        http = httplib2.Http()
         response, content = http.request(API_URL+"/api"+endpoint,
                                          method='POST',
                                          headers=headers,
