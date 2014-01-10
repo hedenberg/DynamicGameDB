@@ -170,7 +170,7 @@ def edit_game(id):
                     "relations":game.relations})
 
 @backend.route('/api/game/<int:id>/edit_image/', methods=['POST'])
-#@backend.user_required
+@backend.user_required
 def edit_image(id):
     print "Edit image backend"
     image = request.files['image']
