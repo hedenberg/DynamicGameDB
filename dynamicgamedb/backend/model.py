@@ -47,7 +47,7 @@ class Game(Base):
     platform_id = Column(Integer, ForeignKey('platforms.p_id'))
     platform = relationship("Platform", backref=backref('games'))
     picture = Column(String(250), default="http://i.imgur.com/g4zDXeF.png")
-    image = Column(BLOB) #Is this a problem?
+    image = Column(BLOB)
     image_name = Column(String(250))
     image_size = Column(Integer)
     info = Column(String(1500), default="")
